@@ -2,6 +2,8 @@ page-login {
     .scroll-content {
         padding: 15px;
         padding-top: 80px;
+        background: url('../assets/img/emoji-bg.png') no-repeat transparent;
+        background-size: cover;
     }
     .page-logo {
         background: url('../assets/img/logo.svg') no-repeat transparent;
@@ -29,10 +31,11 @@ page-login {
     }
     .item-ios {
         padding-left: 0px;
-        
+        background-color: transparent;
     }
     .item-md {
         padding-left: 0px;
+        background-color: transparent;
     }
     .list-ios {
         .item-block {
@@ -43,6 +46,9 @@ page-login {
                 border-bottom: 2px solid #488aff;
             }
         }
+    }
+    .list-md {
+        @extend .list-ios ;
     }
     .p-btn {
         margin-top: 20px;
@@ -93,10 +99,11 @@ page-login {
     .social-login {
         .button-inner {
             position: relative;
+            @include justify-content(flex-end); 
         }
         ion-icon {
             position: absolute;
-            left: 0;
+            left: 0px;
 
             img {
                 width: 16px;
@@ -109,10 +116,13 @@ page-login {
             border-width: 1.5px;
         } 
         .button-ios {
-            height: 45px;;
+            width: 48%;
+            font-size: 14px;
         }
         .button-md {
-            height: 45px;;
+            height: 45px;
+            width: 48%;
+            font-size: 14px;
         }
     }
     .back-to-link {
