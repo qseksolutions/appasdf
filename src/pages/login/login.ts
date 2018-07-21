@@ -20,32 +20,33 @@ export class LoginPage {
   };
 
   // Our translated text strings
-  private loginErrorString: string;
+  // private loginErrorString: string;
 
   constructor(public navCtrl: NavController,
     public user: User,
     public toastCtrl: ToastController,
     public translateService: TranslateService) {
 
-    this.translateService.get('LOGIN_ERROR').subscribe((value) => {
-      this.loginErrorString = value;
-    })
+    // this.translateService.get('LOGIN_ERROR').subscribe((value) => {
+    //   this.loginErrorString = value;
+    // })
   }
 
   // Attempt to login in through our User service
   doLogin() {
-    this.user.login(this.account).subscribe((resp) => {
-      this.navCtrl.push('TabsPage');
-    }, (err) => {
-      this.navCtrl.push('TabsPage');
-      // Unable to log in
-      let toast = this.toastCtrl.create({
-        message: this.loginErrorString,
-        duration: 3000,
-        position: 'top'
-      });
-      toast.present();
-    });
+    this.navCtrl.setRoot('HomePage');
+    // this.user.login(this.account).subscribe((resp) => {
+    //   this.navCtrl.setRoot('HomePage');
+    // }, (err) => {
+    //   this.navCtrl.setRoot('HomePage');
+    //   // Unable to log in
+    //   let toast = this.toastCtrl.create({
+    //     message: this.loginErrorString,
+    //     duration: 3000,
+    //     position: 'top'
+    //   });
+    //   toast.present();
+    // });
   }
 
   goSignup() {

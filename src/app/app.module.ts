@@ -48,7 +48,7 @@ export function provideSettings(storage: Storage) {
         deps: [HttpClient]
       }
     }),
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, { tabsPlacement: 'top' }),
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
