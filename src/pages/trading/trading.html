@@ -17,10 +17,10 @@
 </ion-header>
 <ion-content>
 
-  <ion-card *ngFor="let item of cardItems" (click)="post(item)">
+  <ion-card *ngFor="let item of cardItems">
 
     <ion-item class="post-title">
-      <h2>{{item.user.name}}</h2>
+      <h2 (click)="post(item)">{{item.user.name}}</h2>
 
       <button ion-button clear icon-only end color="dark">
         <ion-icon name="more"></ion-icon>
@@ -37,7 +37,7 @@
         </button>
       </ion-col>
       <ion-col>
-        <button ion-button color="light-dark" clear small icon-start>
+        <button ion-button color="light-dark" clear small icon-start (click)="post(item)">
           <ion-icon name='text'></ion-icon>
           4 Comments
         </button>
@@ -53,8 +53,4 @@
     </ion-row>
 
   </ion-card>
-<<<<<<< HEAD
-=======
-
->>>>>>> e23e07b70f45ce5f7215b4bb08e33d862819c3a8
 </ion-content>
