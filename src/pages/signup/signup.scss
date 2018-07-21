@@ -1,0 +1,119 @@
+page-signup {
+    .scroll-content {
+        padding: 15px;
+        padding-top: 80px;
+    }
+    .page-logo {
+        background: url('../assets/img/logo.svg') no-repeat transparent;
+        background-size: 100%;
+        width: 100px;
+        height: 30px;
+        margin-bottom: 20px;
+    }
+    .page-w-text {
+        h6 {
+            font-size: 22px;
+            margin-bottom: 0px;
+        }
+        span {
+            font-size: 16px;
+            font-weight: 300;
+            color: $primary;
+        }
+    }
+    ion-label {
+        margin-bottom: 5px;
+        font-size: 16px;
+        font-weight: 300;
+        color: $primary;
+    }
+    .item-ios {
+        padding-left: 0px;
+    }
+    .item-md {
+        padding-left: 0px;
+    }
+    .list-ios {
+        .item-block {
+            &:first-child {
+                border-top: none;
+            }
+            .item-inner {
+                border-bottom: 2px solid #488aff;
+            }
+        }
+    }
+    .list-md {
+        @extend .list-ios ;
+    }
+    .p-btn {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .devider {
+        text-align: center;
+        margin-bottom: 30px;
+        position: relative;
+
+        &::after {
+            position: absolute;
+            content: "";
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            width: 100%;
+            background-color: $light-dark;
+        }
+
+        span {
+            padding: 3px 10px;
+            background-color: #ffffff;
+            color: $light-dark;
+            display: inline-block;
+            position: relative;
+            font-weight: 300;
+            font-size: 16px;
+            z-index: 1;
+        }
+    }
+    .button-md-primary {
+        @include linear-gradient();
+        min-width: 150px;
+        @include box-shadow( 0 , 0.5rem ,  1rem , rgba(7, 24, 51, 0.1));
+    }
+    .button-ios-primary {
+        @extend .button-md-primary ;
+    }
+    .social-login {
+        .button-inner {
+            position: relative;
+        }
+        ion-icon {
+            position: absolute;
+            left: 0;
+
+            img {
+                width: 16px;
+            }
+        }
+        .button-outline-ios {
+            border-width: 1.5px;
+        }
+        .button-outline-md {
+            border-width: 1.5px;
+        }
+        .button-ios {
+            height: 45px;;
+        }
+        .button-md {
+            height: 45px;;
+        }
+    }
+    .back-to-link {
+        text-align: center;
+        margin-top: 20px;
+        font-weight: 400;
+        color: $primary;
+    }
+}

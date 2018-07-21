@@ -1,0 +1,73 @@
+page-welcome {
+  .splash-bg {
+    position: relative;
+    // background: url('../assets/img/splashbg.png') no-repeat transparent;
+    @include linear-gradient();
+    background-size: cover;
+    height: 100%;
+    z-index: 1;
+    background-repeat: repeat-x;
+    animation: animatedBackground 40s linear infinite;
+    @include flexbox();
+    @include align-items(center);
+    @include flex-direction(column);
+    @include justify-content(space-between);
+  }
+
+  @keyframes animatedBackground {
+    from { background-position: 0 0; }
+    to { background-position: 100% 0; }
+  }
+  .splash-title {
+    h4{
+      font-size: 24px;
+      margin-top: 0px;
+      margin-bottom: 20px;
+      color: white;
+      font-weight: 300;
+    }
+  }
+  .splash-info {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding-top: 100px;
+  }
+  .splash-logo {
+    margin: auto;
+    background: url('../assets/img/white-fuskk.svg') no-repeat transparent;
+    background-size: 100%;
+    width: 140px;
+    height: 60px;
+  }
+  .splash-intro {
+    font-size: 16px;
+    font-weight: 300;
+    max-width: 80%;
+    margin: auto;
+    color: white;
+  }
+  button.signup {
+    background-color: white;
+    color: $dark;
+    padding: 0 3em;
+
+    &.activated {
+      background-color: white;
+      color: $dark;
+    }
+  }
+  button.login {
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+    color: white;
+    border-width: 2px;
+    border-color: white;
+    padding: 0 3em;
+
+    &.activated {
+      background-color: white;
+      color: $dark;
+    }
+  }
+
+}

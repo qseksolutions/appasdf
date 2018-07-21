@@ -1,0 +1,83 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button menuToggle icon-only color="dark">
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      <img src="../assets/img/logo.svg" />
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only  color="dark">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+  <div class="tabs">
+    <a class="tab-item">
+      Tab 1
+    </a>
+  
+    <a class="tab-item">
+      Tab 2
+    </a>
+  
+    <a class="tab-item">
+      Tab 3
+    </a>
+  </div>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card *ngFor="let item of cardItems">
+
+    <ion-item class="post-title">
+      <h2>{{item.user.name}}</h2>
+
+      <button ion-button clear icon-only end (click)="openMenu()" color="dark" >
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-item>
+
+    <img [src]="item.image">
+
+    <ion-row>
+      <ion-col>
+        <button ion-button color="light-dark" clear small icon-start>
+            <ion-icon name='thumbs-up'></ion-icon>
+            12 Likes
+          </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button color="light-dark" clear small icon-start>
+            <ion-icon name='text'></ion-icon>
+            4 Comments
+          </button>
+      </ion-col>
+
+      <ion-col text-right>
+        <button ion-button clear small color="light-dark" icon-start>
+          <ion-icon name='share-alt'></ion-icon>
+          Share
+        </button>
+      </ion-col>
+      
+    </ion-row>
+
+  </ion-card>
+
+  <ion-tabs>
+   <ion-tab tabIcon="contact">Home</ion-tab>
+    <ion-tab tabIcon="compass">Video</ion-tab>
+    <ion-tab tabIcon="analytics">Add</ion-tab>
+    <ion-tab tabIcon="settings">Search</ion-tab>
+    <ion-tab tabIcon="settings">Profile</ion-tab>
+  </ion-tabs>
+
+</ion-content>
+
