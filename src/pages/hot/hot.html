@@ -52,7 +52,7 @@
     <ion-item class="post-title">
       <h2 (click)="post(item)">{{item.user.name}}</h2>
 
-      <button ion-button clear icon-only end color="dark">
+      <button ion-button clear icon-only end color="dark" (click)="report()">
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-item>

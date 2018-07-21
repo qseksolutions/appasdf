@@ -1,13 +1,13 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{ item.user.name }}</ion-title>
+    <ion-title>Post</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
   <ion-card>
     <ion-item class="post-title">
       <h2>{{item.user.name}}</h2>
-      <button ion-button clear icon-only end (click)="openMenu()" color="dark">
+      <button ion-button clear icon-only end color="dark" (click)="report()">
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-item>
@@ -33,9 +33,51 @@
       </ion-col>
     </ion-row>
   </ion-card>
+
+  <ion-list>
+    <ion-list-header>
+      Comments
+    </ion-list-header>
+  
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="assets/img/advance-card-bttf.png">
+      </ion-avatar>
+      <h2>Finn</h2>
+      <h3>I'm a big deal</h3>
+      <p>Listen, I've had a pretty messed up day...</p>
+    </ion-item>
+  
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="assets/img/advance-card-bttf.png">
+      </ion-avatar>
+      <h2>Han</h2>
+      <h3>Look, kid...</h3>
+      <p>I've got enough on my plate as it is, and I...</p>
+    </ion-item>
+  
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="assets/img/advance-card-bttf.png">
+      </ion-avatar>
+      <h2>Rey</h2>
+      <h3>I can handle myself</h3>
+      <p>You will remove these restraints and leave...</p>
+    </ion-item>
+  
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="assets/img/advance-card-bttf.png">
+      </ion-avatar>
+      <h2>Luke</h2>
+      <h3>Your thoughts betray you</h3>
+      <p>I feel the good in you, the conflict...</p>
+    </ion-item>
+  </ion-list>
 </ion-content>
 <ion-footer>
-  <ion-input type="text" placeholder="start typing..."></ion-input>
+  <ion-input type="text" placeholder="Write comment..."></ion-input>
   <ion-buttons end>
     <button ion-button icon-only>
       <ion-icon name="ios-send"></ion-icon>

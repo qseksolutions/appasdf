@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, AlertController } from 'ionic-angular';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
 
@@ -13,6 +13,8 @@ export class HotPage {
   cardItems: any[];
   constructor(
     public navCtrl: NavController, 
+    public popoverCtrl: PopoverController,
+    public alertCtrl: AlertController,
     private socialSharing: SocialSharing,
     public navParams: NavParams) {
     this.cardItems = [
@@ -52,6 +54,76 @@ export class HotPage {
 
   post(item) {
     this.navCtrl.push('PostPage', { item: item });
+  }
+
+  report() {
+    console.log('call');
+    let alert = this.alertCtrl.create({
+      title: 'Report',
+      inputs: [
+        {
+          label: 'Spam',
+          name: 'report',
+          type:'radio',
+        },
+        {
+          label:'Hatred and bullying',
+          name: 'report',
+          type: 'radio',
+        },
+        {
+          label:'Self-harm',
+          name: 'report',
+          type: 'radio',
+        },
+        {
+          label: 'Violent, gory and harmful content',
+          name: 'report',
+          type: 'radio',
+        },
+        {
+          label: 'Child porn',
+          name: 'report',
+          type: 'radio',
+        },
+        {
+          label: 'Illegal activities (e.g drug uses)',
+          name: 'report',
+          type: 'radio',
+        },
+        {
+          label: 'Deceptive content',
+          name: 'report',
+          type: 'radio',
+        },
+        {
+          label: 'Copyright and trademark infringement',
+          name: 'report',
+          type: 'radio',
+        },
+        {
+          label: 'I just don\'t like it',
+          name: 'report',
+          type: 'radio',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Ok',
+          handler: data => {
+            console.log('Ok');
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+      ]
+    });
+    alert.present();
   }
 
   share(){
