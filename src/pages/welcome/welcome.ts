@@ -17,10 +17,10 @@ export class WelcomePage {
   constructor(public navCtrl: NavController) { }
 
   login() {
-    this.navCtrl.push('LoginPage');
+    this.navCtrl.setRoot('LoginPage');
   }
 
   signup() {
-    this.navCtrl.push('SignupPage');
+    this.navCtrl.setRoot('SignupPage');
   }
 }

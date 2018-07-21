@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
 
 import { User } from '../../providers';
-import { MainPage } from '../';
+// import { MainPage } from '../';
 
 @IonicPage()
 @Component({
@@ -35,9 +35,9 @@ export class LoginPage {
   // Attempt to login in through our User service
   doLogin() {
     this.user.login(this.account).subscribe((resp) => {
-      this.navCtrl.push(MainPage);
+      this.navCtrl.push('TabsPage');
     }, (err) => {
-      this.navCtrl.push(MainPage);
+      this.navCtrl.push('TabsPage');
       // Unable to log in
       let toast = this.toastCtrl.create({
         message: this.loginErrorString,
@@ -48,11 +48,7 @@ export class LoginPage {
     });
   }
 
-  login() {
-    this.navCtrl.push('LoginPage');
-  }
-
-  signup() {
-    this.navCtrl.push('SignupPage');
+  goSignup() {
+    this.navCtrl.setRoot('SignupPage');
   }
 }
