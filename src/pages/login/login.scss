@@ -96,10 +96,11 @@ page-login {
     .social-login {
         .button-inner {
             position: relative;
+            @include justify-content(flex-end); 
         }
         ion-icon {
             position: absolute;
-            left: 0;
+            left: 0px;
 
             img {
                 width: 16px;
@@ -112,10 +113,13 @@ page-login {
             border-width: 1.5px;
         } 
         .button-ios {
-            height: 45px;;
+            width: 48%;
+            font-size: 14px;
         }
         .button-md {
-            height: 45px;;
+            height: 45px;
+            width: 48%;
+            font-size: 14px;
         }
     }
     .back-to-link {
