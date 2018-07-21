@@ -18,6 +18,7 @@ $dark: #333;
 $primary: #575757;
 $light-dark: #8d96a3;
 $body-bg: #eef3f6;
+$white: #fff;
 
 // Named Color Variables
 // --------------------------------------------------
@@ -44,6 +45,9 @@ $font-family-base: 'Signika', sans-serif;
 $button-ios-height: 40px;
 $button-ios-border-radius: 7px;
 $button-ios-box-shadow: 0  0.5rem  1rem  0  rgba(7, 24, 51, 0.1);
+$tabs-ios-background: linear-gradient(135deg, #65a2fc 0%, #0366fc 100%);
+$tabs-ios-tab-text-color: $white;
+$tabs-ios-tab-icon-color: $white;
 
 // App Material Design Variables
 // --------------------------------------------------
@@ -52,6 +56,9 @@ $font-family-md-base: 'Signika', sans-serif;
 $button-md-height: 40px;
 $button-md-border-radius: 7px;
 $button-md-box-shadow: 0  0.5rem  1rem  0  rgba(7, 24, 51, 0.1);
+$tabs-md-background: linear-gradient(135deg, #65a2fc 0%, #0366fc 100%);
+$tabs-md-tab-text-color: $white;
+$tabs-md-tab-icon-color: $white;
 
 
 
