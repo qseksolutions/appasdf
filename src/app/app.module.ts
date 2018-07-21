@@ -13,6 +13,8 @@ import { Items } from '../mocks/providers/items';
 import { Settings, User, Api } from '../providers';
 import { MyApp } from './app.component';
 
+import { SocialSharing } from '@ionic-native/social-sharing';
+
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
 export function createTranslateLoader(http: HttpClient) {
@@ -48,7 +50,7 @@ export function provideSettings(storage: Storage) {
         deps: [HttpClient]
       }
     }),
-    IonicModule.forRoot(MyApp, { tabsPlacement: 'top' }),
+    IonicModule.forRoot(MyApp, { tabsPlacement: 'top', tabsHideOnSubPages: true }),
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
@@ -64,7 +66,8 @@ export function provideSettings(storage: Storage) {
     StatusBar,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    SocialSharing,
   ]
 })
 export class AppModule { }

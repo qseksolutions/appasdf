@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the LetestPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 @IonicPage()
 @Component({
@@ -15,7 +9,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LetestPage {
   cardItems: any[];
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController, 
+    private socialSharing: SocialSharing,
+    public navParams: NavParams) {
     this.cardItems = [
       {
         user: {
@@ -49,6 +46,30 @@ export class LetestPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LetestPage');
+  }
+
+  post(item) {
+    this.navCtrl.push('PostPage', { item: item });
+  }
+
+  share() {
+    // Check if sharing via email is supported
+    this.socialSharing.canShareViaEmail().then(() => {
+      // Sharing via email is possible
+      console.log('haring via email is possible');
+    }).catch((e) => {
+      console.log(e, 'Sharing via email is not possible');
+      // Sharing via email is not possible
+    });
+
+    // Share via email
+    this.socialSharing.shareViaEmail('Body', 'Subject', ['recipient@example.org']).then(() => {
+      // Success!
+      console.log('Success!');
+    }).catch((e) => {
+      // Error!
+      console.log(e, 'Error!');
+    });
   }
 
 }

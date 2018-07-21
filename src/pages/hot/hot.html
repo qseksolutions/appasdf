@@ -16,8 +16,38 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
+  <ion-list>
+    <ion-chip>
+      <ion-label>Default</ion-label>
+    </ion-chip>
+  </ion-list>
+  <!-- <ion-slides padding paginationType spaceBetween="2" slidesPerView="4"> -->
+    <!-- <ion-slide>
+      <ion-chip>
+        <ion-label>Default</ion-label>
+      </ion-chip>
+    </ion-slide>
+    <ion-slide>
+      <ion-chip>
+        <ion-label>Default</ion-label>
+      </ion-chip>
+    </ion-slide>
+    <ion-slide>
+      <ion-chip>
+        <ion-label>Default</ion-label>
+      </ion-chip>
+    </ion-slide>
+    <ion-slide>
+      <ion-chip>
+        <ion-label>Default</ion-label>
+      </ion-chip>
+    </ion-slide> -->
+    <!-- <ion-slide> -->
+      
+    <!-- </ion-slide> -->
+  <!-- </ion-slides> -->
 
-  <ion-card *ngFor="let item of cardItems">
+  <ion-card *ngFor="let item of cardItems" (click)="post(item)">
 
     <ion-item class="post-title">
       <h2>{{item.user.name}}</h2>
@@ -44,7 +74,7 @@
       </ion-col>
 
       <ion-col text-right>
-        <button ion-button clear small color="light-dark" icon-start>
+        <button ion-button clear small color="light-dark" icon-start (click)="share()">
           <ion-icon name='share-alt'></ion-icon>
           Share
         </button>
@@ -53,13 +83,4 @@
     </ion-row>
 
   </ion-card>
-
-  <ion-tabs>
-    <ion-tab tabIcon="contact">Home</ion-tab>
-    <ion-tab tabIcon="compass">Video</ion-tab>
-    <ion-tab tabIcon="analytics">Add</ion-tab>
-    <ion-tab tabIcon="settings">Search</ion-tab>
-    <ion-tab tabIcon="settings">Profile</ion-tab>
-  </ion-tabs>
-
 </ion-content>
