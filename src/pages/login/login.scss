@@ -47,6 +47,9 @@ page-login {
             }
         }
     }
+    .list-md {
+        @extend .list-ios ;
+    }
     .p-btn {
         margin-top: 20px;
         text-align: center;
