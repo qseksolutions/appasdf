@@ -30,9 +30,8 @@ page-home {
         .tab-button{
             border-bottom: solid 2px transparent;
             &[aria-selected=true] {
-                color: $white !important;
+                color: $white;
                 border-bottom: solid 2px $white;
-                opacity: 1;
             }
         }
         .enable-hover {
@@ -49,7 +48,41 @@ page-home {
     .tabs-md {
         @extend .tabs-ios ;
     }
+    ion-segment {
+        @include linear-gradient();
+    }
+    .segment-md {
+         .segment-button {
+            height: 4.2rem;
+            color: #ffffff;
+            font-size: 14px;
+            border-radius: 0px;
+            @include flexbox();
+            @include align-items(center);
+            @include justify-content(center);
 
+            &.segment-activated {
+                border-bottom-color: $white;
+                background-color: transparent;
+            }
+         }
+    }
+    .segment-ios {
+        @extend .segment-md ;
+        .segment-button {
+            border: none;
+            border-bottom-width: 2px;
+            border-bottom-style: solid;
+            border-bottom-color: rgba(0, 0, 0, 0.1);
+            
+            &:last-of-type {
+                border-radius: 0px;
+            }
+            &:first-of-type {
+                border-radius: 0px;
+            }
+        }
+    }
     ion-footer {
         background-color: $white;
         @include box-shadow(0px, -1px, 10px, rgba(0,0,0,0.15));
