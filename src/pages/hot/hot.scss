@@ -1,3 +1,23 @@
 page-hot {
+    .tag-list {
+        @include flexbox();
+        @include align-items(center);
+        margin-top: 10px;
+        margin-bottom: 0px;
+        padding-bottom: 5px;
+        overflow: auto;
 
+        .chip {
+            margin: 0px 3px;
+        }
+        .chip-ios {
+            height: 28px;
+            line-height: 28px;
+            background-color: #d2dbe7;
+            @include box-shadow(0px , 1px , 1px , rgba(0,0,0,0.2));
+        }
+        .chip-md {
+            @extend .chip-ios ;
+        }
+    }
 }

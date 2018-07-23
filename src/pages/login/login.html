@@ -1,5 +1,3 @@
-
-
 <ion-content>
   <div class="page-logo"></div>
   <div class="page-w-text">
@@ -31,7 +29,7 @@
       <div class="p-btn">
         <button ion-button color="primary">{{ 'LOGIN_BUTTON' | translate }}</button>
 
-        <button ion-button clear class="btn-forgot">Forgot Password</button>
+        <button ion-button clear class="btn-forgot" (click)="goForgot()">Forgot Password</button>
       </div>
 
     </ion-list>

@@ -99,7 +99,6 @@ page-login {
     .social-login {
         .button-inner {
             position: relative;
-            @include justify-content(flex-end); 
         }
         ion-icon {
             position: absolute;

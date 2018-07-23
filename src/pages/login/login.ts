@@ -52,4 +52,8 @@ export class LoginPage {
   goSignup() {
     this.navCtrl.setRoot('SignupPage');
   }
+
+  goForgot() {
+    this.navCtrl.setRoot('ForgotpasswordPage');
+  }
 }
