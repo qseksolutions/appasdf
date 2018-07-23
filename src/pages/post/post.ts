@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController, AlertController } from 'ionic-angular';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 @IonicPage()
 @Component({
@@ -12,6 +13,7 @@ export class PostPage {
   constructor(
     public navCtrl: NavController, 
     public popoverCtrl: PopoverController,
+    private socialSharing: SocialSharing,
     public alertCtrl: AlertController,
     navParams: NavParams) {
     this.item = navParams.get('item');
@@ -90,6 +92,26 @@ export class PostPage {
       ]
     });
     alert.present();
+  }
+
+  share() {
+    // Check if sharing via email is supported
+    this.socialSharing.canShareViaEmail().then(() => {
+      // Sharing via email is possible
+      console.log('haring via email is possible');
+    }).catch((e) => {
+      console.log(e, 'Sharing via email is not possible');
+      // Sharing via email is not possible
+    });
+
+    // Share via email
+    this.socialSharing.shareViaEmail('Body', 'Subject', ['recipient@example.org']).then(() => {
+      // Success!
+      console.log('Success!');
+    }).catch((e) => {
+      // Error!
+      console.log(e, 'Error!');
+    });
   }
 
 }

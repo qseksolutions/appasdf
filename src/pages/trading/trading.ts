@@ -57,7 +57,6 @@ export class TradingPage {
   }
 
   report() {
-    console.log('call');
     let alert = this.alertCtrl.create({
       title: 'Report',
       inputs: [

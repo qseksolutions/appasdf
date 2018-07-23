@@ -6,7 +6,7 @@
       </button>
     </ion-buttons>
     <ion-title>
-      <img src="../assets/img/logo.svg" height="20px" />
+      <img src="/assets/img/logo.svg" height="20px" />
     </ion-title>
     <ion-buttons end>
       <button ion-button icon-only color="dark">
@@ -27,7 +27,7 @@
       </button>
     </ion-item>
 
-    <img [src]="item.image">
+    <img [src]="item.image" (click)="post(item)" [alt]="item.user.name">
 
     <ion-row>
       <ion-col>

@@ -6,7 +6,7 @@
       </button>
     </ion-buttons>
     <ion-title center>
-      <img src="../assets/img/logo.svg" height="20px" />
+      <img src="/assets/img/logo.svg" height="20px" />
     </ion-title>
     <ion-buttons end>
       <button ion-button icon-only color="dark">
@@ -21,32 +21,6 @@
       <ion-label>Default</ion-label>
     </ion-chip>
   </ion-list>
-  <!-- <ion-slides padding paginationType spaceBetween="2" slidesPerView="4"> -->
-    <!-- <ion-slide>
-      <ion-chip>
-        <ion-label>Default</ion-label>
-      </ion-chip>
-    </ion-slide>
-    <ion-slide>
-      <ion-chip>
-        <ion-label>Default</ion-label>
-      </ion-chip>
-    </ion-slide>
-    <ion-slide>
-      <ion-chip>
-        <ion-label>Default</ion-label>
-      </ion-chip>
-    </ion-slide>
-    <ion-slide>
-      <ion-chip>
-        <ion-label>Default</ion-label>
-      </ion-chip>
-    </ion-slide> -->
-    <!-- <ion-slide> -->
-      
-    <!-- </ion-slide> -->
-  <!-- </ion-slides> -->
-
   <ion-card *ngFor="let item of cardItems">
 
     <ion-item class="post-title">
@@ -57,7 +31,7 @@
       </button>
     </ion-item>
 
-    <img [src]="item.image">
+    <img [src]="item.image" (click)="post(item)" [alt]="item.user.name">
 
     <ion-row>
       <ion-col>

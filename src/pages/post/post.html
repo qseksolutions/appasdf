@@ -11,7 +11,7 @@
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-item>
-    <img [src]="item.image">
+    <img [src]="item.image" [alt]="item.user.name">
     <ion-row>
       <ion-col>
         <button ion-button color="light-dark" clear small icon-start>
@@ -26,7 +26,7 @@
         </button>
       </ion-col>
       <ion-col text-right>
-        <button ion-button clear small color="light-dark" icon-start>
+        <button ion-button clear small color="light-dark" icon-start (click)="share()">
           <ion-icon name='share-alt'></ion-icon>
           Share
         </button>
