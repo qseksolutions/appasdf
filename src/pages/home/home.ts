@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, PopoverController, AlertController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, PopoverController, AlertController, NavParams, ActionSheetController, ModalController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
 @IonicPage()
@@ -10,9 +10,12 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 export class HomePage {
 
   cardItems: any[];
+  tabs = "letest";
   constructor(
     public navCtrl: NavController,
     public popoverCtrl: PopoverController,
+    public actionSheetCtrl: ActionSheetController,
+    public modalCtrl: ModalController,
     public alertCtrl: AlertController,
     private socialSharing: SocialSharing,
     public navParams: NavParams) {
@@ -49,6 +52,40 @@ export class HomePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LetestPage');
+  }
+
+  addPost() {
+    const actionSheet = this.actionSheetCtrl.create({
+      // title: 'Modify your album',
+      buttons: [
+        {
+          icon: 'images',
+          text: 'Choose From Gallery',
+          role: 'gallery',
+          handler: () => {
+            this.addImagePost();
+            console.log('Gallery clicked');
+          }
+        }, {
+          icon: 'image',
+          text: 'Paste Image URL',
+          role: 'image',
+          handler: () => {
+            this.addImagePost();
+            console.log('Image URL clicked');
+          }
+        }, {
+          icon: 'videocam',
+          text: 'Paste Video URL',
+          role: 'video',
+          handler: () => {
+            this.addVideoPost();
+            console.log('Video URL clicked');
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
   post(item) {
@@ -147,5 +184,23 @@ export class HomePage {
   gotoHome() {
     this.navCtrl.setRoot('HomePage');
   }
+
+  gotoProfile() {
+    this.navCtrl.push('ProfilePage');
+  }
   
+  addImagePost(){
+    const image_modal = this.modalCtrl.create('ModalAddImageUrlPage');
+    image_modal.present();
+  }
+
+  addVideoPost() {
+    const video_modal = this.modalCtrl.create('ModalAddVideoUrlPage');
+    video_modal.present();
+  }
+
+  addImageFromGalleryPost(){
+    
+  }
+
 }
