@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
+import { ModalAddImageFromGalleryPage } from './modal-add-image-from-gallery';
 import { TranslateModule } from '@ngx-translate/core';
-import { ModalAddVideoUrlPage } from './modal-add-video-url';
 
 @NgModule({
   declarations: [
-    ModalAddVideoUrlPage,
+    ModalAddImageFromGalleryPage,
   ],
   imports: [
-    IonicPageModule.forChild(ModalAddVideoUrlPage),
+    IonicPageModule.forChild(ModalAddImageFromGalleryPage),
     TranslateModule.forChild()
   ],
 })
-export class ModalAddVideoUrlPageModule {}
+export class ModalAddImageFromGalleryPageModule {}

@@ -5,10 +5,10 @@ import { IonicPage, NavController, ViewController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-modal-add-image-url',
-  templateUrl: 'modal-add-image-url.html',
+  selector: 'page-modal-add-image-from-gallery',
+  templateUrl: 'modal-add-image-from-gallery.html',
 })
-export class ModalAddImageUrlPage {
+export class ModalAddImageFromGalleryPage {
   @ViewChild('fileInput') fileInput;
 
   isReadyToSave: boolean;

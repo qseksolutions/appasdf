@@ -63,7 +63,7 @@ export class HomePage {
           text: 'Choose From Gallery',
           role: 'gallery',
           handler: () => {
-            this.addImagePost();
+            this.addImageFromGalleryPost();
             console.log('Gallery clicked');
           }
         }, {
@@ -197,10 +197,11 @@ export class HomePage {
   addVideoPost() {
     const video_modal = this.modalCtrl.create('ModalAddVideoUrlPage');
     video_modal.present();
-  }
-
-  addImageFromGalleryPost(){
     
   }
-
+  
+  addImageFromGalleryPost(){
+    const galler_modal = this.modalCtrl.create('ModalAddImageFromGalleryPage');
+    galler_modal.present();
+  }
 }
