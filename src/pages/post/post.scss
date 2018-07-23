@@ -1,6 +1,22 @@
 page-post {
-  ion-input {
-    position: absolute;
-    width: 88%;
+  .comm-box {
+    @include flexbox();
+    @include align-items(center);
+    @include justify-content(space-between);
+    background-color: $white;
+
+    ion-input {
+        margin-left: 5px;
+        border-radius: 5px;
+        border: solid 1px $light-dark;
+        padding-left: 10px;
+    }
+
+    .button-ios {
+      @include linear-gradient();
+    }
+    .button-md {
+      @include linear-gradient();
+    }
   }
 }
