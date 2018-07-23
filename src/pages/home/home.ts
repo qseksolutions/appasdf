@@ -147,9 +147,5 @@ export class HomePage {
   gotoHome() {
     this.navCtrl.setRoot('HomePage');
   }
-
-  gotoSearch() {
-    this.navCtrl.setRoot('SearchPage');
-  }
   
 }

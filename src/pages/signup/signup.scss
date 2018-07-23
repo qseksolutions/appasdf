@@ -94,7 +94,8 @@ page-signup {
             position: relative;
         }
         ion-icon {
-            margin-right: 5px;
+            position: absolute;
+            left: 0;
 
             img {
                 width: 16px;

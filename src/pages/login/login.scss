@@ -101,7 +101,8 @@ page-login {
             position: relative;
         }
         ion-icon {
-            margin-right: 5px;
+            position: absolute;
+            left: 0px;
 
             img {
                 width: 16px;
