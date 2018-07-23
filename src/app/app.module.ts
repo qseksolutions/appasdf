@@ -50,7 +50,7 @@ export function provideSettings(storage: Storage) {
         deps: [HttpClient]
       }
     }),
-    IonicModule.forRoot(MyApp, { tabsPlacement: 'top', tabsHideOnSubPages: true }),
+    IonicModule.forRoot(MyApp, {}), //{ tabsPlacement: 'top', tabsHideOnSubPages: true }
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],

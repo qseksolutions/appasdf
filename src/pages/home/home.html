@@ -1,23 +1,5 @@
-<ion-tabs tabbarPlacement="top" primary class="withNavbar" >
-    <ion-tab [root]="letestRoot" tabTitle="Letest"></ion-tab>
-    <ion-tab [root]="hotRoot" tabTitle="Hot"></ion-tab>
-    <ion-tab [root]="tradingRoot" tabTitle="Trading"></ion-tab>
+<ion-tabs tabsPlacement="top" primary class="withNavbar" >
+    <ion-tab [root]="letestRoot" tabTitle="Letest" tabsHideOnSubPages="true"></ion-tab>
+    <ion-tab [root]="hotRoot" tabTitle="Hot" tabsHideOnSubPages="true"></ion-tab>
+    <ion-tab [root]="tradingRoot" tabTitle="Trading" tabsHideOnSubPages="true"></ion-tab>
 </ion-tabs>
-<ion-footer>
-    <ion-toolbar>
-        <ion-segment>
-            <ion-segment-button value="something">
-                <ion-icon name="pin"></ion-icon>
-                <span>something</span>
-            </ion-segment-button>
-            <ion-segment-button value="something2">
-                <ion-icon name="cash"></ion-icon>
-                <span>something2</span>
-            </ion-segment-button>
-            <ion-segment-button value="something3">
-                <ion-icon name="cash2"></ion-icon>
-                <span>something3</span>
-            </ion-segment-button>
-        </ion-segment>
-    </ion-toolbar>
-</ion-footer>
