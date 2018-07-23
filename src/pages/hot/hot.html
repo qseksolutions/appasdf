@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons start>
+    <ion-buttons left>
       <button ion-button menuToggle icon-only color="dark">
         <ion-icon name='menu'></ion-icon>
       </button>
@@ -16,9 +16,25 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <ion-list>
+  <ion-list class="tag-list">
     <ion-chip>
-      <ion-label>Default</ion-label>
+      <ion-label>Funny</ion-label>
+    </ion-chip>
+
+    <ion-chip>
+      <ion-label>WTF</ion-label>
+    </ion-chip>
+
+    <ion-chip>
+      <ion-label>Word cup</ion-label>
+    </ion-chip>
+
+    <ion-chip>
+      <ion-label>Ronaldo</ion-label>
+    </ion-chip>
+
+    <ion-chip>
+      <ion-label>Naymar</ion-label>
     </ion-chip>
   </ion-list>
   <ion-card *ngFor="let item of cardItems">

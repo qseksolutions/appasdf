@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, AlertController } from 'ionic-angular';
 
 import { User } from '../../providers';
 // import { MainPage } from '../';
@@ -25,6 +25,7 @@ export class LoginPage {
   constructor(public navCtrl: NavController,
     public user: User,
     public toastCtrl: ToastController,
+    public alertCtrl: AlertController ,
     public translateService: TranslateService) {
 
     // this.translateService.get('LOGIN_ERROR').subscribe((value) => {
@@ -47,6 +48,34 @@ export class LoginPage {
     //   });
     //   toast.present();
     // });
+  }
+
+  doForgot() {
+    let prompt = this.alertCtrl.create({
+      title: 'Forgot Password',
+      message: "Forgot your password",
+      inputs: [
+        {
+          name: 'Email',
+          placeholder: 'Email Address'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Send',
+          handler: data => {
+            console.log('Send clicked');
+          }
+        }
+      ]
+    });
+    prompt.present();
   }
 
   goSignup() {
