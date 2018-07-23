@@ -54,21 +54,24 @@
 
   </ion-card>
 </ion-content>
-<ion-footer>
+<ion-footer no-border text-center>
   <ion-toolbar>
-    <ion-segment>
-      <ion-segment-button value="something">
-        <ion-icon name="pin"></ion-icon>
-        <span>something</span>
-      </ion-segment-button>
-      <ion-segment-button value="something2">
-        <ion-icon name="cash"></ion-icon>
-        <span>something2</span>
-      </ion-segment-button>
-      <ion-segment-button value="something3">
-        <ion-icon name="cash2"></ion-icon>
-        <span>something3</span>
-      </ion-segment-button>
-    </ion-segment>
+    <ion-buttons left>
+      <button ion-button icon-only clear color="dark">
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons class="add-btn">
+      <button ion-button icon-only clear color="dark">
+        <ion-icon>
+          <img src="assets/img/add.svg" />
+        </ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons right>
+      <button ion-button icon-only clear color="dark">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-footer>

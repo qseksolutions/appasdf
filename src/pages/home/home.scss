@@ -30,8 +30,14 @@ page-home {
         .tab-button{
             border-bottom: solid 2px transparent;
             &[aria-selected=true] {
-                color: $white;
+                color: $white !important;
                 border-bottom: solid 2px $white;
+                opacity: 1;
+            }
+        }
+        .enable-hover {
+            a {
+                opacity: 1;
             }
         }
         &[tabsPlacement=top] {
