@@ -34,46 +34,151 @@
     </ion-row>
   </ion-card>
 
-  <ion-list>
+  <ion-list class="comm-list">
     <ion-list-header>
       Comments
     </ion-list-header>
   
+    
     <ion-item>
-      <ion-avatar item-start>
-        <img src="assets/img/advance-card-bttf.png">
-      </ion-avatar>
-      <h2>Finn</h2>
-      <h3>I'm a big deal</h3>
-      <p>Listen, I've had a pretty messed up day...</p>
+      <div class="comm-item">
+        <div class="comm-head">
+          <div class="comm-avtar">
+            <img src="assets/img/advance-card-bttf.png">
+          </div>
+          <div class="comm-title">
+            <h2>Finn</h2>
+            <span>2h</span>
+          </div>
+
+          <button ion-button clear icon-only end color="dark" (click)="report()">
+            <ion-icon name="more"></ion-icon>
+          </button>
+        </div>
+        <div class="comm-body">
+          <p>Listen, I've had a pretty messed up day...</p>  
+        </div>
+        <div class="comm-foot">
+          <ul class="list-unstyled">
+            <li>
+              <a href="#">
+                <ion-icon name='thumbs-up'></ion-icon> 12
+              </a>
+            </li>
+
+            <li>
+              <a href="#">
+                <ion-icon ios="ios-undo" md="md-undo"></ion-icon> Replay
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="comm-item">
+        <div class="comm-head">
+          <div class="comm-avtar">
+            <img src="assets/img/advance-card-bttf.png">
+          </div>
+          <div class="comm-title">
+            <h2>Finn</h2>
+            <span>2h</span>
+          </div>
+      
+          <button ion-button clear icon-only end color="dark" (click)="report()">
+            <ion-icon name="more"></ion-icon>
+          </button>
+        </div>
+        <div class="comm-body">
+          <p>Listen, I've had a pretty messed up day...</p>
+        </div>
+        <div class="comm-foot">
+          <ul class="list-unstyled">
+            <li>
+              <a href="#">
+                <ion-icon name='thumbs-up'></ion-icon> 12
+              </a>
+            </li>
+      
+            <li>
+              <a href="#">
+                <ion-icon ios="ios-undo" md="md-undo"></ion-icon> Replay
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="comm-item">
+        <div class="comm-head">
+          <div class="comm-avtar">
+            <img src="assets/img/advance-card-bttf.png">
+          </div>
+          <div class="comm-title">
+            <h2>Finn</h2>
+            <span>2h</span>
+          </div>
+      
+          <button ion-button clear icon-only end color="dark" (click)="report()">
+            <ion-icon name="more"></ion-icon>
+          </button>
+        </div>
+        <div class="comm-body">
+          <p>Listen, I've had a pretty messed up day...</p>
+        </div>
+        <div class="comm-foot">
+          <ul class="list-unstyled">
+            <li>
+              <a href="#">
+                <ion-icon name='thumbs-up'></ion-icon> 12
+              </a>
+            </li>
+      
+            <li>
+              <a href="#">
+                <ion-icon ios="ios-undo" md="md-undo"></ion-icon> Replay
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="comm-item">
+        <div class="comm-head">
+          <div class="comm-avtar">
+            <img src="assets/img/advance-card-bttf.png">
+          </div>
+          <div class="comm-title">
+            <h2>Finn</h2>
+            <span>2h</span>
+          </div>
+      
+          <button ion-button clear icon-only end color="dark" (click)="report()">
+            <ion-icon name="more"></ion-icon>
+          </button>
+        </div>
+        <div class="comm-body">
+          <p>Listen, I've had a pretty messed up day...</p>
+        </div>
+        <div class="comm-foot">
+          <ul class="list-unstyled">
+            <li>
+              <a href="#">
+                <ion-icon name='thumbs-up'></ion-icon> 12
+              </a>
+            </li>
+      
+            <li>
+              <a href="#">
+                <ion-icon ios="ios-undo" md="md-undo"></ion-icon> Replay
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
     </ion-item>
-  
-    <ion-item>
-      <ion-avatar item-start>
-        <img src="assets/img/advance-card-bttf.png">
-      </ion-avatar>
-      <h2>Han</h2>
-      <h3>Look, kid...</h3>
-      <p>I've got enough on my plate as it is, and I...</p>
-    </ion-item>
-  
-    <ion-item>
-      <ion-avatar item-start>
-        <img src="assets/img/advance-card-bttf.png">
-      </ion-avatar>
-      <h2>Rey</h2>
-      <h3>I can handle myself</h3>
-      <p>You will remove these restraints and leave...</p>
-    </ion-item>
-  
-    <ion-item>
-      <ion-avatar item-start>
-        <img src="assets/img/advance-card-bttf.png">
-      </ion-avatar>
-      <h2>Luke</h2>
-      <h3>Your thoughts betray you</h3>
-      <p>I feel the good in you, the conflict...</p>
-    </ion-item>
+    
   </ion-list>
 </ion-content>
   <ion-footer class="comm-box">
