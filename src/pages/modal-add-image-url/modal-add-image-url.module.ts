@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { TranslateModule } from '@ngx-translate/core';
 import { ModalAddImageUrlPage } from './modal-add-image-url';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
