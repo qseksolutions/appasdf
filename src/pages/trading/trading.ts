@@ -144,4 +144,8 @@ export class TradingPage {
       console.log(e, 'Error!');
     });
   }
+
+  gotoHome() {
+    this.navCtrl.setRoot('SettingsPage');
+  }
 }

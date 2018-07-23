@@ -143,4 +143,7 @@ export class LetestPage {
     });
   }
 
+  gotoHome() {
+    this.navCtrl.setRoot('HomePage');
+  }
 }

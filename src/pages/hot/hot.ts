@@ -144,4 +144,8 @@ export class HotPage {
       console.log(e,'Error!');
     });
   }
+
+  gotoHome(){
+    this.navCtrl.setRoot('HomePage');
+  }
 }
