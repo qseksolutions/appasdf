@@ -150,7 +150,7 @@
 <ion-footer no-border text-center>
     <ion-toolbar>
         <ion-buttons left>
-            <button ion-button icon-only clear color="dark" (click)="gotoHome()">
+            <button ion-button icon-only clear color="dark" [ngClass]="is_active == 'home'?'activated':''" (click)="gotoHome()">
                 <ion-icon name="home"></ion-icon>
             </button>
         </ion-buttons>
@@ -162,7 +162,7 @@
             </button>
         </ion-buttons>
         <ion-buttons right>
-            <button ion-button icon-only clear color="dark" (click)="gotoProfile()">
+            <button ion-button icon-only clear color="dark" [ngClass]="is_active == 'profile'?'activated':''" (click)="gotoProfile()">
                 <ion-icon name="contact"></ion-icon>
             </button>
         </ion-buttons>

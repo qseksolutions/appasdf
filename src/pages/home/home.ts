@@ -11,6 +11,7 @@ export class HomePage {
 
   cardItems: any[];
   tabs = "letest";
+  is_active = "home";
   constructor(
     public navCtrl: NavController,
     public popoverCtrl: PopoverController,
@@ -182,10 +183,12 @@ export class HomePage {
   }
 
   gotoHome() {
+    this.is_active = "home";
     this.navCtrl.setRoot('HomePage');
   }
 
   gotoProfile() {
+    this.is_active = "profile";
     this.navCtrl.push('ProfilePage');
   }
   
