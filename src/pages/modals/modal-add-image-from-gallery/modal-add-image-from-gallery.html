@@ -35,10 +35,9 @@
       </div>
       <div class="profile-image" [style.backgroundImage]="getProfileImageStyle()" *ngIf="this.form.controls.profilePic.value"></div>
     </div>
-    <ion-list>
-      <ion-item>
-        <ion-input type="text" placeholder="{{ 'ITEM_NAME_PLACEHOLDER' | translate }}" formControlName="name"></ion-input>
-      </ion-item>
-    </ion-list>
+      <div class="add-title">
+        <ion-label >Title</ion-label>
+        <ion-input type="text"  formControlName="name" placeholder="Discribe your post..."></ion-input>
+      </div>
   </form>
 </ion-content>
