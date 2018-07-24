@@ -1,0 +1,119 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title end>Category</ion-title>
+    <!-- <ion-buttons start>
+      <button ion-button (click)="gotoHome()">
+        <ion-icon name="arrow-round-back"></ion-icon>
+      </button>
+    </ion-buttons> -->
+  </ion-navbar>
+  <ion-segment [(ngModel)]="tabs">
+    <ion-segment-button value="letest">
+      Letest
+    </ion-segment-button>
+    <ion-segment-button value="hot">
+      Hot
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+<ion-content>
+  <div [ngSwitch]="tabs">
+    <ion-list *ngSwitchCase="'hot'">
+      <ion-card *ngFor="let item of cardItems">
+
+        <ion-item class="post-title">
+          <h2 (click)="post(item)">{{item.user.name}}</h2>
+
+          <button ion-button clear icon-only end color="dark" (click)="report()">
+            <ion-icon name="more"></ion-icon>
+          </button>
+        </ion-item>
+
+        <img [src]="item.image" (click)="post(item)" [alt]="item.user.name">
+
+        <ion-row>
+          <ion-col>
+            <button ion-button color="light-dark" clear small icon-start>
+              <ion-icon name='thumbs-up'></ion-icon>
+              12 Likes
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button color="light-dark" clear small icon-start (click)="post(item)">
+              <ion-icon name='text'></ion-icon>
+              4 Comments
+            </button>
+          </ion-col>
+
+          <ion-col text-right>
+            <button ion-button clear small color="light-dark" icon-start (click)="share()">
+              <ion-icon name='share-alt'></ion-icon>
+              Share
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'letest'">
+      <ion-card *ngFor="let item of cardItems">
+
+        <ion-item class="post-title">
+          <h2 (click)="post(item)">{{item.user.name}}</h2>
+
+          <button ion-button clear icon-only end color="dark" (click)="report()">
+            <ion-icon name="more"></ion-icon>
+          </button>
+        </ion-item>
+
+        <img [src]="item.image" (click)="post(item)" [alt]="item.user.name">
+
+        <ion-row>
+          <ion-col>
+            <button ion-button color="light-dark" clear small icon-start>
+              <ion-icon name='thumbs-up'></ion-icon>
+              12 Likes
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button color="light-dark" clear small icon-start (click)="post(item)">
+              <ion-icon name='text'></ion-icon>
+              4 Comments
+            </button>
+          </ion-col>
+
+          <ion-col text-right>
+            <button ion-button clear small color="light-dark" icon-start (click)="share()">
+              <ion-icon name='share-alt'></ion-icon>
+              Share
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-list>
+  </div>
+</ion-content>
+<ion-footer no-border text-center>
+  <ion-toolbar>
+    <ion-buttons left>
+      <button ion-button icon-only clear color="dark" [ngClass]="is_active == 'home'?'activated':''" (click)="gotoHome()">
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons class="add-btn">
+      <button ion-button icon-only clear color="dark" (click)="addPost()">
+        <ion-icon>
+          <img src="assets/img/add.svg" />
+        </ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons right>
+      <button ion-button icon-only clear color="dark" [ngClass]="is_active == 'profile'?'activated':''" (click)="gotoProfile()">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
