@@ -1,0 +1,170 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Praful Patel</ion-title>
+  </ion-navbar>
+  <ion-segment [(ngModel)]="ptabs">
+    <ion-segment-button value="overview">
+      Overview
+    </ion-segment-button>
+    <ion-segment-button value="posts">
+       Posts
+    </ion-segment-button>
+    <ion-segment-button value="likes">
+       Likes
+    </ion-segment-button>
+    <ion-segment-button value="comments">
+       Comments
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+<ion-content>
+  <div [ngSwitch]="ptabs">
+    <ion-list *ngSwitchCase="'overview'">
+      <ion-card *ngFor="let item of cardItems">
+
+        <ion-item class="post-title">
+          <h2 (click)="post(item)">{{item.user.name}}</h2>
+
+          <button ion-button clear icon-only end color="dark" (click)="report()">
+            <ion-icon name="more"></ion-icon>
+          </button>
+        </ion-item>
+
+        <img [src]="item.image" (click)="post(item)" [alt]="item.user.name">
+
+        <ion-row>
+          <ion-col>
+            <button ion-button color="light-dark" clear small icon-start>
+              <ion-icon name='thumbs-up'></ion-icon>
+              12 Likes
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button color="light-dark" clear small icon-start (click)="post(item)">
+              <ion-icon name='text'></ion-icon>
+              4 Comments
+            </button>
+          </ion-col>
+
+          <ion-col text-right>
+            <button ion-button clear small color="light-dark" icon-start (click)="share()">
+              <ion-icon name='share-alt'></ion-icon>
+              Share
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'posts'">
+      <ion-card *ngFor="let item of cardItems">
+
+        <ion-item class="post-title">
+          <h2 (click)="post(item)">{{item.user.name}}</h2>
+
+          <button ion-button clear icon-only end color="dark" (click)="report()">
+            <ion-icon name="more"></ion-icon>
+          </button>
+        </ion-item>
+
+        <img [src]="item.image" (click)="post(item)" [alt]="item.user.name">
+
+        <ion-row>
+          <ion-col>
+            <button ion-button color="light-dark" clear small icon-start>
+              <ion-icon name='thumbs-up'></ion-icon>
+              12 Likes
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button color="light-dark" clear small icon-start (click)="post(item)">
+              <ion-icon name='text'></ion-icon>
+              4 Comments
+            </button>
+          </ion-col>
+
+          <ion-col text-right>
+            <button ion-button clear small color="light-dark" icon-start (click)="share()">
+              <ion-icon name='share-alt'></ion-icon>
+              Share
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'likes'">
+      <ion-card *ngFor="let item of cardItems">
+
+        <ion-item class="post-title">
+          <h2 (click)="post(item)">{{item.user.name}}</h2>
+
+          <button ion-button clear icon-only end color="dark" (click)="report()">
+            <ion-icon name="more"></ion-icon>
+          </button>
+        </ion-item>
+
+        <img [src]="item.image" (click)="post(item)" [alt]="item.user.name">
+
+        <ion-row>
+          <ion-col>
+            <button ion-button color="light-dark" clear small icon-start>
+              <ion-icon name='thumbs-up'></ion-icon>
+              12 Likes
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button color="light-dark" clear small icon-start (click)="post(item)">
+              <ion-icon name='text'></ion-icon>
+              4 Comments
+            </button>
+          </ion-col>
+
+          <ion-col text-right>
+            <button ion-button clear small color="light-dark" icon-start (click)="share()">
+              <ion-icon name='share-alt'></ion-icon>
+              Share
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'comments'">
+      <ion-card *ngFor="let item of cardItems">
+    
+        <ion-item class="post-title">
+          <h2 (click)="post(item)">{{item.user.name}}</h2>
+    
+          <button ion-button clear icon-only end color="dark" (click)="report()">
+            <ion-icon name="more"></ion-icon>
+          </button>
+        </ion-item>
+    
+        <img [src]="item.image" (click)="post(item)" [alt]="item.user.name">
+    
+        <ion-row>
+          <ion-col>
+            <button ion-button color="light-dark" clear small icon-start>
+              <ion-icon name='thumbs-up'></ion-icon>
+              12 Likes
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button color="light-dark" clear small icon-start (click)="post(item)">
+              <ion-icon name='text'></ion-icon>
+              4 Comments
+            </button>
+          </ion-col>
+    
+          <ion-col text-right>
+            <button ion-button clear small color="light-dark" icon-start (click)="share()">
+              <ion-icon name='share-alt'></ion-icon>
+              Share
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-list>
+  </div>
+</ion-content>

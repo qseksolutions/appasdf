@@ -1,18 +1,28 @@
-<!--
-  Generated template for the ProfilePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>profile</ion-title>
-  </ion-navbar>
-
+    <ion-navbar>
+        <ion-title>Profile</ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="gotoEditProfils()">
+            <ion-icon name="create"></ion-icon>
+            <!-- <span ion-text color="white">Edit</span> -->
+            </button>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
-
-
-<ion-content padding>
-
+<ion-content class="card-background-page">
+    <ion-card>
+        <img src="/assets/img/advance-card-tmntr.jpg" onerror="this.src='assets/img/default-user-avatars.png'" />
+        <div class="card-title">Praful Patel</div>
+        <div class="card-subtitle" (click)="gotoPtabs('overview')">View Profile</div>
+    </ion-card>
+    <ion-list>
+        <ion-item (click)="gotoPtabs('overview')">Overview</ion-item>
+        <ion-item (click)="gotoPtabs('posts')">Posts</ion-item>
+        <ion-item (click)="gotoPtabs('likes')">Likes</ion-item>
+        <ion-item (click)="gotoPtabs('comments')">Comments</ion-item>
+    </ion-list>
+    <ion-list>
+        <ion-item (click)="gotoSettings()">Settings</ion-item>
+        <ion-item>Give Feedback</ion-item>
+    </ion-list>
 </ion-content>

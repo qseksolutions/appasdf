@@ -1,12 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the ProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -14,12 +7,37 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
+  details: any = [];
+  members: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public loadingCtrl: LoadingController,
+    public modalCtrl: ModalController,
+    ){
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfilePage');
+  ionViewCanEnter() {
   }
 
+  ionViewWillEnter() {
+  }
+
+  gotoSettings(){
+    this.navCtrl.push('SettingsPage');
+  }
+
+  gotoViewProfile() {
+    this.navCtrl.push('ViewProfilePage');
+  }
+  
+  gotoPtabs(ptabs){
+    this.navCtrl.push('ViewProfilePage', { ptabs: ptabs});
+  }
+
+  gotoEditProfils() {
+    this.navCtrl.push('EditProfilePage');
+  }
+  
 }
