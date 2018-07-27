@@ -1,4 +1,13 @@
 page-modal-add-image-from-gallery {
+  .nav-bg {
+    @include linear-gradient;
+    .toolbar-background-ios {
+        background: transparent
+    }
+    .toolbar-background-md {
+        @extend .toolbar-background-ios ;
+    } 
+  }
   .profile-image-wrapper {
     text-align: center;
     padding: 0px 20px;
@@ -35,8 +44,8 @@ page-modal-add-image-from-gallery {
   }
   .add-title {
     ion-label {
-      font-size: 18px;
-      margin-left: 15px;
+      font-size: 18px !important;
+      color: $primary !important;
       margin-bottom: 0px;
     }
   }

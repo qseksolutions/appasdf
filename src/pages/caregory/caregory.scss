@@ -1,4 +1,13 @@
 page-caregory {
+    .nav-bg {
+        @include linear-gradient;
+        .toolbar-background-ios {
+            background: transparent
+        }
+        .toolbar-background-md {
+            @extend .toolbar-background-ios ;
+        } 
+    }
     .content-md {
         background-color: $body-bg;
     }

@@ -18,8 +18,10 @@ $dark: #333;
 $primary: #575757;
 $light-dark: #8d96a3;
 $body-bg: #eef3f6;
-$white: #fff;
+$white: #ffffff;
 $light-gray: #bac2cd;
+$blue-color: #0366fc;
+$light:      #f4f4f4;
 
 // Named Color Variables
 // --------------------------------------------------
@@ -30,12 +32,13 @@ $light-gray: #bac2cd;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
+  primary:    #0366fc,
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
   light-dark: #8d96a3,
+  white:      #ffffff,
 );
 
 
@@ -51,6 +54,7 @@ $tabs-ios-tab-text-color: $white;
 $tabs-ios-tab-icon-color: $white;
 $action-sheet-ios-button-text-color: $dark;
 $action-sheet-ios-button-font-size: 16px;
+$toolbar-ios-title-text-color: $white;
 
 // App Material Design Variables
 // --------------------------------------------------
@@ -64,6 +68,7 @@ $tabs-md-tab-text-color: $white;
 $tabs-md-tab-icon-color: $white;
 $action-sheet-md-button-text-color: $dark;
 $action-sheet-ios-button-font-size: 16px;
+$toolbar-md-title-text-color: $white;
 
 
 

@@ -1,11 +1,11 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Edit Profile</ion-title>
+  <ion-navbar class="nav-bg">
+    <ion-title color="color">Edit Profile</ion-title>
     <!--   {{ 'ITEM_CREATE_TITLE' | translate }} -->
     <ion-buttons end>
-      <button ion-button (click)="done()" [disabled]="!isReadyToSave" strong>
-        <span color="primary" showWhen="ios">
+      <button ion-button (click)="done()" [disabled]="!isReadyToSave" strong color="white">
+        <span showWhen="ios">
           {{ 'DONE_BUTTON' | translate }}
         </span>
         <ion-icon name="md-checkmark" showWhen="core,android,windows"></ion-icon>
@@ -18,38 +18,47 @@
 
 <ion-content>
   <form *ngIf="form" [formGroup]="form" (ngSubmit)="createItem()">
-    <input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebImage($event)" />
+    <input type="file" #fileInput style="visibility: hidden; height: 0px ; display: none;" name="files[]" (change)="processWebImage($event)" />
     <div class="profile-image-wrapper" (click)="getPicture()">
       <div class="profile-image-placeholder" *ngIf="!this.form.controls.profilePic.value">
         <ion-icon name="add"></ion-icon>
-        <div>
-          {{ 'ITEM_CREATE_CHOOSE_IMAGE' | translate }}
-        </div>
       </div>
       <div class="profile-image" [style.backgroundImage]="getProfileImageStyle()" *ngIf="this.form.controls.profilePic.value"></div>
+      <div class="chnage-note"> Change profile Photo</div>
     </div>
     <ion-list>
       <ion-item>
-        <ion-icon name="browsers" item-start></ion-icon>
-        <ion-input></ion-input>
+        <ion-label>Name</ion-label>
+        <ion-input type="text" value="praful"></ion-input>
       </ion-item>
-      <br><br><br>
 
       <ion-item>
-          <ion-icon name="browsers" item-start></ion-icon> <!-- item-start -->
-          <ion-input type="text" placeholder="{{ 'ITEM_NAME_PLACEHOLDER' | translate }}" formControlName="name"></ion-input>
+        <ion-label>Username</ion-label>
+        <ion-input type="text" value="Praful Patel"></ion-input>
       </ion-item>
+
       <ion-item>
-          <ion-icon name="browsers" item-start></ion-icon>
-          <ion-input type="text" placeholder="{{ 'ITEM_NAME_PLACEHOLDER' | translate }}" formControlName="name"></ion-input>
+        <ion-label>Bio</ion-label>
+        <ion-input type="text" value="Dream keep me alive"></ion-input>
       </ion-item>
+
       <ion-item>
-        <ion-icon name="browsers" item-start></ion-icon>
-        <ion-input type="text" placeholder="{{ 'ITEM_NAME_PLACEHOLDER' | translate }}" formControlName="name"></ion-input>
+        <ion-label class="small-text">Email address</ion-label>
+        <ion-input type="email" value="prafulpatel@gmail.comprafulpatel@gmail.com"></ion-input>
       </ion-item>
+      
       <ion-item>
-          <ion-icon name="browsers" item-start></ion-icon>
-          <ion-input type="text" placeholder="{{ 'ITEM_NAME_PLACEHOLDER' | translate }}" formControlName="name"></ion-input>
+        <ion-label>Phone</ion-label>
+        <ion-input type="number" value="+919628564852"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Gender</ion-label>
+        <ion-select>
+          <ion-option value="not spacified" >Not Spacified</ion-option>
+          <ion-option value="male" selected="true">Male</ion-option>
+          <ion-option value="female">Female</ion-option>
+        </ion-select>
       </ion-item>
     </ion-list>
   </form>

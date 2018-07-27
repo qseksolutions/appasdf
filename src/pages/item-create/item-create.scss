@@ -1,4 +1,13 @@
 page-item-create {
+  .nav-bg {
+    @include linear-gradient;
+    .toolbar-background-ios {
+        background: transparent
+    }
+    .toolbar-background-md {
+        @extend .toolbar-background-ios ;
+    } 
+  }
   .profile-image-wrapper {
     text-align: center;
     margin: 20px 0;

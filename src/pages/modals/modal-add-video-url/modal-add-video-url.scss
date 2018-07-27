@@ -1,9 +1,18 @@
 page-modal-add-video-url {
+    .nav-bg {
+        @include linear-gradient;
+        .toolbar-background-ios {
+            background: transparent
+        }
+        .toolbar-background-md {
+            @extend .toolbar-background-ios ;
+        } 
+    }
     .add-title {
         ion-label {
-        font-size: 18px;
-        margin-left: 15px;
-        margin-bottom: 0px;
+            font-size: 18px !important;
+            color: $primary !important;
+            margin-bottom: 0px;
         }
     }
 }
