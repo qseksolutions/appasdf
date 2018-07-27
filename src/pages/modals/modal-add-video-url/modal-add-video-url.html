@@ -15,7 +15,7 @@
         <span showWhen="ios">
           {{ 'DONE_BUTTON' | translate }}
         </span>
-        <ion-icon name="md-checkmark" showWhen="core,android,windows"></ion-icon>
+        <ion-icon name="md-checkmark" showWhen="core,android,windows" color="white"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -24,6 +24,12 @@
 
 
 <ion-content>
+  <div class="video-heading">
+    <img src="assets/img/upload-video.svg" />
+
+    <h5>Paste your URL! We take Mp4 and YouTube</h5>
+  </div>
+
   <form *ngIf="form" [formGroup]="form" (ngSubmit)="createItem()">
     <ion-list>
       <ion-item class="add-title">

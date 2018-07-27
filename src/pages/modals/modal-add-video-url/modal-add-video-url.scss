@@ -15,4 +15,20 @@ page-modal-add-video-url {
             margin-bottom: 0px;
         }
     }
+    .video-heading {
+        padding: 20px 0;
+        text-align: center;
+        background: $light;
+
+        img {
+            margin: 15px 0px;
+            width: 100px;
+        }
+
+        h5{
+            margin-top: 15px;
+            color: $blue-color;
+            font-size: 16px;
+        }
+    }
 }
