@@ -1,0 +1,55 @@
+page-modals-modal-add-category {
+    .nav-bg {
+        @include linear-gradient;
+        .toolbar-background-ios {
+            background: transparent
+        }
+        .toolbar-background-md {
+            @extend .toolbar-background-ios ;
+        } 
+        .bar-button-default-ios {
+            color: $white;
+        }
+    }
+    .radio-ios {
+        margin-right: 0px !important;
+        @extend .radio-md ; 
+        .radio-checked {
+            .radio-inner {
+                left: 2px;
+                top: 2px;
+                border-radius: 50%;
+                position: absolute;
+                width: 8px;
+                height: 8px;
+                border: none;
+                transform: rotate(unset);
+            }
+        }
+    }
+    .cate-list {
+        @include flexbox();
+        @include align-items(center);
+        img {
+            width: 18px;
+            margin-right: 10px;
+            margin-left: 7px;
+        }
+    }
+    .item-ios {
+        padding-left: 0px;
+    }
+    .item-md {
+        padding-left: 0px;
+        .radio-md {
+            margin-right: 0px;
+        }
+    }
+    .list-ios {
+        > .item-block {
+            &:first-child {
+                border-top: none;
+            }
+        }
+    }
+}

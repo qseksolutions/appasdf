@@ -1,0 +1,56 @@
+
+<ion-header>
+  <ion-navbar class="nav-bg">
+    <ion-title class="white">Add tag</ion-title>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button color="white" (click)="goCatelist()">
+        <span>NEXT</span>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content >
+  <div class="taged-post">
+    <div class="taged-img">
+      <img src="assets/img/queen-live.png" />
+    </div>
+
+    <div class="taged-title">
+      <h4>The name of brand</h4>
+    </div>
+  </div>
+
+  <div class="tag-list">
+    <label>Want to add any tags?</label>
+    <ion-list>
+      <ion-item class="add-title">
+        <ion-label>
+          <ion-icon name="pricetag"></ion-icon>
+        </ion-label> 
+        <ion-input type="text" placeholder="Tag 1"></ion-input>
+      </ion-item>
+
+      <ion-item class="add-title">
+        <ion-label>
+          <ion-icon name="pricetag"></ion-icon>
+        </ion-label> 
+        <ion-input type="text" placeholder="Tag 1"></ion-input>
+      </ion-item>
+
+      <ion-item class="add-title">
+        <ion-label>
+          <ion-icon name="pricetag"></ion-icon>
+        </ion-label> 
+        <ion-input type="text" placeholder="Tag 1"></ion-input>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

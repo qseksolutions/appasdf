@@ -2,20 +2,14 @@
 
   <ion-navbar class="nav-bg">
     <ion-title color="white">{{ 'ITEM_CREATE_TITLE' | translate }}</ion-title>
-    <ion-buttons start>
-      <button ion-button (click)="cancel()"  color="white">
-        <span  showWhen="ios">
-          {{ 'CANCEL_BUTTON' | translate }}
-        </span>
-        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="cancel()">
+        <ion-icon name="arrow-back"></ion-icon>
       </button>
     </ion-buttons>
     <ion-buttons end>
-      <button ion-button (click)="done()" [disabled]="!isReadyToSave" strong color="white">
-        <span  showWhen="ios">
-          {{ 'DONE_BUTTON' | translate }}
-        </span>
-        <ion-icon name="md-checkmark" showWhen="core,android,windows" color="white"></ion-icon>
+      <button ion-button (click)="addPosttags()" [disabled]="!isReadyToSave" color="white">
+        <span>NEXT</span>
       </button>
     </ion-buttons>
   </ion-navbar>

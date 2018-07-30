@@ -7,6 +7,9 @@ page-modal-add-image-url {
         .toolbar-background-md {
             @extend .toolbar-background-ios ;
         } 
+        .bar-button-default-ios {
+            color: $white;
+        }
     }
     .add-title {
         ion-label {

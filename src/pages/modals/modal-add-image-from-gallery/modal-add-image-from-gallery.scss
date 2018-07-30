@@ -7,6 +7,9 @@ page-modal-add-image-from-gallery {
     .toolbar-background-md {
         @extend .toolbar-background-ios ;
     } 
+    .bar-button-default-ios {
+      color: $white;
+    }
   }
   .profile-image-wrapper {
     text-align: center;

@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
-import { IonicPage, NavController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, ViewController, ModalController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -17,7 +17,7 @@ export class ModalAddImageFromGalleryPage {
 
   form: FormGroup;
 
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera) {
+  constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera, public modalCtrl: ModalController) {
     this.form = formBuilder.group({
       profilePic: [''],
       name: ['', Validators.required],
@@ -69,6 +69,11 @@ export class ModalAddImageFromGalleryPage {
    */
   cancel() {
     this.viewCtrl.dismiss();
+  }
+
+  addPosttags() {
+    const image_modal = this.modalCtrl.create('ModalsModalAddTagPage');
+    image_modal.present();
   }
 
   /**
