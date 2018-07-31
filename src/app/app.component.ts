@@ -16,17 +16,17 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   pages: any[] = [
-    { title: 'Welcome', component: 'WelcomePage' },
-    { title: 'Caregory', component: 'CaregoryPage' },
-    { title: 'Tabs', component: 'TabsPage' },
-    { title: 'Cards', component: 'CardsPage' },
-    { title: 'Content', component: 'ContentPage' },
-    { title: 'Login', component: 'LoginPage' },
-    { title: 'Signup', component: 'SignupPage' },
-    { title: 'Master Detail', component: 'ListMasterPage' },
-    { title: 'Menu', component: 'MenuPage' },
-    { title: 'Settings', component: 'SettingsPage' },
-    { title: 'Search', component: 'SearchPage' }
+    { title: 'Funny', image: 'assets/img/category/funny.svg', component: '' },
+    { title: 'Sports', image: 'assets/img/category/sports.svg', component: '' },
+    { title: 'Animals', image: 'assets/img/category/animals.svg', component: '' },
+    { title: 'WTF', image: 'assets/img/category/wtf.png', component: '' },
+    { title: 'Politics', image: 'assets/img/category/politics.svg', component: '' },
+    { title: 'Awesome', image: 'assets/img/category/awesome.png', component: '' },
+    { title: 'Country', image: 'assets/img/category/country.svg', component: '' },
+    { title: 'Girl', image: 'assets/img/category/girl.svg', component: '' },
+    { title: 'Bollywood', image: 'assets/img/category/bollywood.png', component: '' },
+    { title: 'Hollywood', image: 'assets/img/category/hollywood.svg', component: '' },
+    { title: 'GIF', image: 'assets/img/category/gif.svg', component: '' }
   ]
 
   constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {

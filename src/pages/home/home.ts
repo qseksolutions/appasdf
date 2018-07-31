@@ -191,6 +191,10 @@ export class HomePage {
     this.is_active = "profile";
     this.navCtrl.push('ProfilePage');
   }
+
+  gotoSearch() {
+    this.navCtrl.push('SearchPage');
+  }
   
   addImagePost(){
     const image_modal = this.modalCtrl.create('ModalAddImageUrlPage');

@@ -1,12 +1,12 @@
-<ion-header>
 
-  <ion-navbar class="nav-bg">
-    <ion-title>{{ pageTitle }}</ion-title>
-  </ion-navbar>
-
-</ion-header>
 <ion-content>
-  <ion-searchbar (ionInput)="getItems($event)" placeholder="{{ 'SEARCH_PLACEHOLDER' | translate }}"></ion-searchbar>
+  <div class="search-box">
+    <ion-searchbar (ionInput)="getItems($event)" placeholder="{{ 'SEARCH_PLACEHOLDER' | translate }}"></ion-searchbar>
+   
+    <button ion-button (click)="cancel()" color="white" clear>
+      <span>{{ 'CANCEL_BUTTON' | translate }}</span>
+    </button> 
+  </div>
   <ion-list>
     <button ion-item (click)="openItem(item)" *ngFor="let item of currentItems">
       <ion-avatar item-start>

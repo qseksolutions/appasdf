@@ -1,3 +1,14 @@
 page-menu {
-
+    .nav-bg {
+        background: transparent;
+        .toolbar-background-ios {
+            background: transparent
+        }
+        .toolbar-background-md {
+            @extend .toolbar-background-ios ;
+        } 
+    }
+    .menu-inner {
+        @include linear-gradient ;
+    }
 }

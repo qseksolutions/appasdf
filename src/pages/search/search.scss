@@ -8,4 +8,17 @@ page-search {
             @extend .toolbar-background-ios ;
         } 
     }
+    .search-box {
+        @include flexbox();
+        @include align-items(center);
+        @include justify-content(center);
+        @include linear-gradient();
+    }
+    .searchbar-md {
+        @extend .searchbar-ios ;
+        background: none;
+    }
+    .searchbar-ios {
+        background: none;
+    }
 }

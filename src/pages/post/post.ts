@@ -10,6 +10,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 export class PostPage {
 
   item: any;
+  data: string;
   constructor(
     public navCtrl: NavController, 
     public popoverCtrl: PopoverController,
@@ -79,7 +80,7 @@ export class PostPage {
         {
           text: 'Ok',
           handler: data => {
-            console.log('Ok');
+            console.log(data);
           }
         },
         {

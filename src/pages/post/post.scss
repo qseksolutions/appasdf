@@ -7,6 +7,9 @@ page-post {
     .toolbar-background-md {
         @extend .toolbar-background-ios ;
     } 
+    .bar-button-default-ios {
+      color: $white;
+    }
   }
   .content-md {
       background-color: $body-bg;

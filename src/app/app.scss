@@ -14,3 +14,33 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+.ios {
+    .menu-inner {
+        @include linear-gradient ;
+        
+        .item-ios {
+            color: $white;
+            background-color: transparent;
+
+
+            .item-inner{
+                background-image: none !important;
+                border-bottom: none;
+                padding-right: 0px;
+            }
+        }
+        .content-ios {
+            background-color: transparent;
+        }
+    }
+    ion-label {
+        @include flexbox();
+        @include align-items(center);
+        width: 100%;
+    }
+    .cate-img {
+        width: 20px;
+        height: 20px;
+        margin-right: 15px;
+    }
+}
