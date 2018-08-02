@@ -153,7 +153,10 @@ export class HomePage {
   gotoSearch() {
     this.navCtrl.push('SearchPage');
   }
-  
+    
+  gotoNotification() {
+    this.navCtrl.push('NotificationPage');
+  }
   addImagePost(){
     const image_modal = this.modalCtrl.create('ModalAddImageUrlPage');
     image_modal.present();
@@ -164,7 +167,7 @@ export class HomePage {
     video_modal.present();
     
   }
-  
+
   addImageFromGalleryPost(){
     const galler_modal = this.modalCtrl.create('ModalAddImageFromGalleryPage');
     galler_modal.present();

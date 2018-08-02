@@ -1,0 +1,14 @@
+page-notification {
+    .nav-bg {
+        @include linear-gradient;
+        .toolbar-background-ios {
+            background: transparent
+        }
+        .toolbar-background-md {
+            @extend .toolbar-background-ios ;
+        } 
+    }
+    .bar-button-default-ios {
+        color: $white;
+    }
+}

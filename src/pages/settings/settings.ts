@@ -1,15 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 import { Settings } from '../../providers';
 
-/**
- * The Settings page is a simple form that syncs with a Settings provider
- * to enable the user to customize settings for the app.
- *
- */
 @IonicPage()
 @Component({
   selector: 'page-settings',
@@ -38,6 +33,7 @@ export class SettingsPage {
     public settings: Settings,
     public formBuilder: FormBuilder,
     public navParams: NavParams,
+    public viewCtrl: ViewController,
     public translate: TranslateService) {
   }
 
@@ -68,6 +64,7 @@ export class SettingsPage {
   ionViewDidLoad() {
     // Build an empty form for the template to render
     this.form = this.formBuilder.group({});
+    this.viewCtrl.setBackButtonText('');
   }
 
   ionViewWillEnter() {
@@ -89,6 +86,12 @@ export class SettingsPage {
     });
   }
 
+  gotoEditProfils() {
+    this.navCtrl.push('EditProfilePage');
+  }
+  gotoChangepass() {
+    this.navCtrl.push('ChangePasswordPage');
+  }
   ngOnChanges() {
     console.log('Ng All Changes');
   }

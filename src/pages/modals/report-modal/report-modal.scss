@@ -100,6 +100,22 @@ page-report-modal {
     }
     .list-md {
         @extend .list-ios ;
+
+        .item-input {
+            &.item-input-has-focus {
+                &:last-child {
+                    border-bottom-color: transparent;
+                    box-shadow: none;
+                }
+                .item-inner {
+                    border-bottom-color: transparent;
+                    box-shadow: none;
+                }
+                ion-input {
+                    border-color: $blue-color;
+                }
+            }
+        }
     } 
     .item-ios {
         padding-left: 15px;
@@ -119,4 +135,11 @@ page-report-modal {
             padding-left: 0px;
         }
     } 
+    .item-md {
+        &.item-input {
+            ion-textarea {
+                padding-left: 15px;
+            }
+        }
+    }
 }
