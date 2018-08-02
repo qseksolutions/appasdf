@@ -1,0 +1,55 @@
+<ion-header>
+
+  <ion-navbar class="nav-bg">
+    <!-- <ion-title class="white">Report </ion-title> -->
+    <ion-buttons end>
+      <button ion-button icon-only (click)="cancel()">
+        <span>Cancel</span>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div class="report-title">
+     <h3>Report</h3>
+     <p>Give right reason help us process the report as soon as possible</p>
+  </div>
+
+  
+  <form>
+    <div class="post-r-name">
+      <h4><span>Report To</span>"Ghor-Se-Suno-Kapil-Ko"</h4>
+    </div>
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Reason</ion-label>
+        <ion-input type="text" name="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Description</ion-label>
+        <ion-textarea name="description"></ion-textarea>
+      </ion-item>
+    </ion-list>
+    <div class="report-note">
+      <h6>Report as illegal activities? </h6>
+      <span>We remove and may report to legal entity about:</span>
+      <ul>
+        <li>Comments promoting illegal activities, e.g. the use of hard drugs</li>
+        <li>Comments intended to sell or distribute drugs</li>
+      </ul>
+      <span>you report someone's comment, Fuskk doesn't tell them who reported it.</span> 
+    </div>
+
+    <div class="p-btn">
+      <ion-buttons>
+        <button ion-button color="primary">
+          <span>Report</span>
+        </button>
+      </ion-buttons>
+    </div>
+  </form>
+
+</ion-content>

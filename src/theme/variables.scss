@@ -56,6 +56,11 @@ $action-sheet-ios-button-text-color: $dark;
 $action-sheet-ios-button-font-size: 16px;
 $toolbar-ios-title-text-color: $white;
 $menu-width: 250px;
+$menu-ios-background: linear-gradient(135deg, #65a2fc 0%, #0366fc 100%);
+$toolbar-ios-title-font-weight: 300;
+$toolbar-ios-title-font-size: 16px;
+$toolbar-ios-height: 44px;
+$toolbar-ios-button-font-size: 14px;
 
 // App Material Design Variables
 // --------------------------------------------------
@@ -70,7 +75,11 @@ $tabs-md-tab-icon-color: $white;
 $action-sheet-md-button-text-color: $dark;
 $action-sheet-ios-button-font-size: 16px;
 $toolbar-md-title-text-color: $white;
-
+$menu-md-background: linear-gradient(135deg, #65a2fc 0%, #0366fc 100%);
+$toolbar-md-title-font-weight: 300;
+$toolbar-md-title-font-size: 16px;
+$toolbar-md-height: 44px;
+$toolbar-md-button-font-size: 14px;
 
 
 // App Windows Variables
@@ -106,6 +115,7 @@ $toolbar-md-title-text-color: $white;
 body {
   font-family: 'Signika', sans-serif;
 }
+.back-button-icon-ios {font-size: 12}
 @mixin linear-gradient() {
   background-image: -moz-linear-gradient(135deg, #65a2fc 0%, #0366fc 100%);
   background-image: -webkit-gradient(135deg, #65a2fc 0%, #0366fc 100%);

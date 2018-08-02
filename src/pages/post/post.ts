@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, AlertController, ActionSheetController, ModalController, ViewController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
 @IonicPage()
@@ -16,6 +16,9 @@ export class PostPage {
     public popoverCtrl: PopoverController,
     private socialSharing: SocialSharing,
     public alertCtrl: AlertController,
+    public modalCtrl: ModalController,
+    public viewCtrl: ViewController,
+    public actionSheetCtrl: ActionSheetController ,
     navParams: NavParams) {
     this.item = navParams.get('item');
     console.log(this.item);
@@ -23,76 +26,35 @@ export class PostPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PostPage');
+    this.viewCtrl.setBackButtonText('');
   }
 
   report() {
     console.log('call');
-    let alert = this.alertCtrl.create({
-      title: 'Report',
-      inputs: [
-        {
-          label: 'Spam',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Hatred and bullying',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Self-harm',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Violent, gory and harmful content',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Child porn',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Illegal activities (e.g drug uses)',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Deceptive content',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Copyright and trademark infringement',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'I just don\'t like it',
-          name: 'report',
-          type: 'radio',
-        },
-      ],
+    const actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
-          text: 'Ok',
-          handler: data => {
-            console.log(data);
+          text: 'Report Post',
+          role: 'Report',
+          handler: () => {
+            this.reportModal();
           }
         },
         {
           text: 'Cancel',
           role: 'cancel',
-          handler: data => {
+          handler: () => {
             console.log('Cancel clicked');
           }
-        },
+        }
       ]
     });
-    alert.present();
+    actionSheet.present();
+  }
+
+  reportModal() {
+    let model = this.modalCtrl.create('ReportModalPage');
+    model.present()
   }
 
   share() {

@@ -30,7 +30,7 @@ export class EditProfilePage {
   }
 
   ionViewDidLoad() {
-
+    this.viewCtrl.setBackButtonText('');
   }
 
   getPicture() {

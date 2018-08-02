@@ -63,7 +63,7 @@ page-home {
     .segment-md {
          .segment-button {
             height: 4.2rem;
-            color: #ffffff;
+            color: $white;
             font-size: 14px;
             border-radius: 0px;
             @include flexbox();
@@ -110,7 +110,6 @@ page-home {
             ion-buttons {
                 height: 4.2rem;
                 border: none;
-                opacity: 0.3;
                 @include flexbox();
                 @include align-items(center);
                 @include justify-content(center);

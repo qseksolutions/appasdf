@@ -17,21 +17,35 @@
 .ios {
     .menu-inner {
         @include linear-gradient ;
+    }
+}
+.menu-inner {
+
+    .item-ios {
+        color: $white;
+        background-color: transparent;
+
+
+        .item-inner{
+            background-image: none !important;
+            border-bottom: none !important;
+            padding-right: 0px;
+        }
+    }
+    .activated{
+        &.item-md {
+            background-color: rgba(0,0,0,0.1);
+        } 
+    }
+    .item-md {
+        @extend .item-ios ;
         
-        .item-ios {
-            color: $white;
-            background-color: transparent;
-
-
-            .item-inner{
-                background-image: none !important;
-                border-bottom: none;
-                padding-right: 0px;
-            }
-        }
-        .content-ios {
-            background-color: transparent;
-        }
+    }
+    .content-ios {
+        background-color: transparent;
+    }
+    .content-md {
+        @extend .content-ios ;
     }
     ion-label {
         @include flexbox();
@@ -42,5 +56,10 @@
         width: 20px;
         height: 20px;
         margin-right: 15px;
+    }
+}
+.md {
+    .menu-inner {
+        @include linear-gradient ;
     }
 }

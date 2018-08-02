@@ -94,74 +94,32 @@ export class HomePage {
   }
 
   report() {
-    let alert = this.alertCtrl.create({
-      title: 'Report',
-      inputs: [
-        {
-          label: 'Spam',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Hatred and bullying',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Self-harm',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Violent, gory and harmful content',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Child porn',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Illegal activities (e.g drug uses)',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Deceptive content',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Copyright and trademark infringement',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'I just don\'t like it',
-          name: 'report',
-          type: 'radio',
-        },
-      ],
+    console.log('call');
+    const actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
-          text: 'Ok',
-          handler: data => {
-            console.log('Ok');
+          text: 'Report Post',
+          role: 'Report',
+          handler: () => {
+            this.reportModal();
           }
         },
         {
           text: 'Cancel',
           role: 'cancel',
-          handler: data => {
+          handler: () => {
             console.log('Cancel clicked');
           }
-        },
+        }
       ]
     });
-    alert.present();
+    actionSheet.present();
   }
 
+  reportModal() {
+    let model = this.modalCtrl.create('ReportModalPage');
+    model.present()
+  }
   share() {
     // Check if sharing via email is supported
     this.socialSharing.canShareViaEmail().then(() => {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController, ViewController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -17,6 +17,7 @@ export class ProfilePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
+    public viewCtrl: ViewController,
     public modalCtrl: ModalController,
   ) {
   this.ptabs = this.navParams.get('ptabs');
@@ -51,11 +52,10 @@ export class ProfilePage {
       }
     ];
   }
-  
-
-  ionViewCanEnter() {
+ 
+  ionViewDidLoad() {
+    this.viewCtrl.setBackButtonText('');
   }
-
   ionViewWillEnter() {
   }
 
