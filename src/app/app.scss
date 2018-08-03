@@ -20,8 +20,18 @@
             @include linear-gradient ;
         }
     }
+    .side-profile {
+        padding-top: 15px;
+        padding-bottom: 10px;
+        background: rgba(0,0,0,0.1);
+    }
+    .side-cat-list {
+        padding-bottom: 10px;
+    }
     .menu-inner {
-    
+        ion-list {
+            border-bottom: solid 1px $light;
+        }
         .item-ios {
             color: $white;
             background-color: transparent;
@@ -64,14 +74,14 @@
             @include linear-gradient ;
         }
     }
-    .list-ios > {
-        .item-block {
-            &:first-child {
-                border-top: none;
-            }
-            &:last-child {
-                border-bottom: none;
-            }
-        }
-    }
+    // .list-ios > {
+    //     .item-block {
+    //         &:first-child {
+    //             border-top: none;
+    //         }
+    //         &:last-child {
+    //             border-bottom: none;
+    //         }
+    //     }
+    // }
 }

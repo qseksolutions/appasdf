@@ -2,7 +2,15 @@
     
 
     <ion-content>
-        <ion-list>
+        <ion-list class="side-profile"  >
+            <ion-item>
+                <ion-avatar item-start>
+                    <img src="assets/img/ian-avatar.png">
+                </ion-avatar>
+                <h2>Praful Patel</h2>
+            </ion-item>
+        </ion-list>
+        <ion-list class="side-cat-list">
             <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
                 <img class="cate-img" src="{{p.image}}" onerror="this.src='assets/img/default-user-avatars.png'" />
                 {{p.title}}
