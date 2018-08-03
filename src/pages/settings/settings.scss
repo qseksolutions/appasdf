@@ -32,9 +32,21 @@ page-settings {
                 margin-left: 10px;
             }
         }
+        .icon-md {
+            img {
+                width: 24px;
+                height: 24px;
+            }
+        }
     }
     .list-ios {
         margin-bottom: 10px;
+        .icon-ios {
+            img {
+                width: 24px;
+                height: 24px;
+            }
+        }
     }
     
 }
