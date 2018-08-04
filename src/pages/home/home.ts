@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, PopoverController, AlertController, NavParams, ActionSheetController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, PopoverController, AlertController, NavParams, ActionSheetController, ModalController, LoadingController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
+
+import { User } from '../../providers';
 
 @IonicPage()
 @Component({
@@ -9,46 +11,98 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 })
 export class HomePage {
 
-  cardItems: any[];
+  Lfilter = { order: 'id', page: 1, tab: 'letest', is_last: false };
+  Hfilter = { order: 'total_comment', page: 1, tab: 'hot', is_last: false };
+  Tfilter = { order: 'like_count', page: 1, tab: 'trading', is_last: false };
+
+  Ldata = [];
+  Hdata = [];
+  Tdata = [];
+
   tabs = "letest";
   is_active = "home";
   constructor(
+    public user: User,
     public navCtrl: NavController,
     public popoverCtrl: PopoverController,
     public actionSheetCtrl: ActionSheetController,
     public modalCtrl: ModalController,
+    public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     private socialSharing: SocialSharing,
     public navParams: NavParams) {
-    this.cardItems = [
-      {
-        user: {
-          avatar: 'assets/img/marty-avatar.png',
-          name: 'Marty McFly'
-        },
-        date: 'November 5, 1955',
-        image: 'assets/img/advance-card-bttf.png',
-        content: 'Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.',
-      },
-      {
-        user: {
-          avatar: 'assets/img/sarah-avatar.png.jpeg',
-          name: 'Sarah Connor'
-        },
-        date: 'May 12, 1984',
-        image: 'assets/img/advance-card-tmntr.jpg',
-        content: 'I face the unknown future, with a sense of hope. Because if a machine, a Terminator, can learn the value of human life, maybe we can too.'
-      },
-      {
-        user: {
-          avatar: 'assets/img/ian-avatar.png',
-          name: 'Dr. Ian Malcolm'
-        },
-        date: 'June 28, 1990',
-        image: 'assets/img/advance-card-jp.jpg',
-        content: 'Your scientists were so preoccupied with whether or not they could, that they didn\'t stop to think if they should.'
+
+    // postlist
+    this.postlist(this.Lfilter);
+    this.postlist(this.Hfilter);
+    this.postlist(this.Tfilter);
+  }
+
+  doInfinite(curent_tab): Promise<any> {
+    console.log('curent_tab::' + curent_tab);
+    return new Promise((resolve) => {
+
+      let load_tab_data;
+      if (curent_tab == 'letest') {
+        this.Lfilter.page = this.Lfilter.page + 1;
+        load_tab_data = this.Lfilter;
       }
-    ];
+      else if (curent_tab == 'hot') {
+        this.Hfilter.page = this.Hfilter.page + 1;
+        load_tab_data = this.Hfilter;
+      }
+      else if (curent_tab == 'trading') {
+        this.Tfilter.page = this.Tfilter.page + 1;
+        load_tab_data = this.Tfilter;
+      }
+      if (load_tab_data) {
+        this.user.postlist(load_tab_data).subscribe((resp: any) => {
+          if (resp.status) {
+            if (curent_tab == 'letest') {
+              for (var i = 0; i < resp.data.length; i++) {
+                this.Ldata.push(resp.data[i]);
+              }
+            }
+            else if (curent_tab == 'hot') {
+              for (var j = 0; j < resp.data.length; j++) {
+                this.Hdata.push(resp.data[j]);
+              }
+            }
+            else if (curent_tab == 'trading') {
+              for (var k = 0; k < resp.data.length; k++) {
+                this.Tdata.push(resp.data[k]);
+              }
+            }
+          }
+          resolve();
+        }, (err) => {
+          resolve();
+          console.log(err);
+        });
+      }
+      else {
+        resolve();
+      }
+    });
+  }
+
+  postlist(flt) {
+    this.user.postlist(flt).subscribe((resp: any) => {
+      if (resp.status) {
+        if (flt.tab == 'letest') {
+          this.Ldata = resp.data;
+        }
+        else if (flt.tab == 'hot') {
+          this.Hdata = resp.data;
+        }
+        else if (flt.tab == 'trading') {
+          this.Tdata = resp.data;
+        }
+      }
+    }, (err) => {
+      // Unable to log in
+      console.log(err);
+    });
   }
 
   ionViewDidLoad() {
@@ -153,11 +207,8 @@ export class HomePage {
   gotoSearch() {
     this.navCtrl.push('SearchPage');
   }
-    
-  gotoNotification() {
-    this.navCtrl.push('NotificationPage');
-  }
-  addImagePost(){
+
+  addImagePost() {
     const image_modal = this.modalCtrl.create('ModalAddImageUrlPage');
     image_modal.present();
   }
@@ -165,10 +216,10 @@ export class HomePage {
   addVideoPost() {
     const video_modal = this.modalCtrl.create('ModalAddVideoUrlPage');
     video_modal.present();
-    
+
   }
 
-  addImageFromGalleryPost(){
+  addImageFromGalleryPost() {
     const galler_modal = this.modalCtrl.create('ModalAddImageFromGalleryPage');
     galler_modal.present();
   }

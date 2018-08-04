@@ -2,10 +2,11 @@ import { Component, ViewChild } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { Config, Nav, Platform } from 'ionic-angular';
+import { Config, Nav, Platform, MenuController } from 'ionic-angular';
 
 import { FirstRunPage } from '../pages';
-import { Settings } from '../providers';
+import { Settings, User } from '../providers';
+import { GLOBAL } from './global';
 
 @Component({
   templateUrl: 'app.html',
@@ -29,7 +30,24 @@ export class MyApp {
     { title: 'GIF', image: 'assets/img/category/gif.svg', component: '' }
   ]
 
-  constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
+  constructor(
+    public user: User,
+    private translate: TranslateService,
+    platform: Platform,
+    settings: Settings,
+    private config: Config,
+    private statusBar: StatusBar,
+    private splashScreen: SplashScreen,
+    private menuCtrl: MenuController
+  ) {
+
+    this.user.category().subscribe((resp: any) => {
+      if (resp.status) {
+        this.pages = resp.data;
+      }
+    }, (err) => {
+    });
+
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -75,5 +93,13 @@ export class MyApp {
   }
   openProfile() {
     this.nav.push('ProfilePage');
+  }
+
+  logout() {
+    GLOBAL.IS_LOGGEDIN = false;
+    GLOBAL.USER = null;
+    localStorage.removeItem('is_loggedin');
+    this.nav.setRoot('LoginPage');
+    this.menuCtrl.close();
   }
 }

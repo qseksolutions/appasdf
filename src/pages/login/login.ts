@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, AlertController, MenuController, LoadingController } from 'ionic-angular';
 
 import { User } from '../../providers';
 // import { MainPage } from '../';
@@ -15,8 +15,8 @@ export class LoginPage {
   // If you're using the username field with or without email, make
   // sure to add it to the type
   account: { email: string, password: string } = {
-    email: 'test@example.com',
-    password: 'test'
+    email: 'admin@qseksolutions.com',
+    password: 'admin@1234'
   };
 
   // Our translated text strings
@@ -25,29 +25,46 @@ export class LoginPage {
   constructor(public navCtrl: NavController,
     public user: User,
     public toastCtrl: ToastController,
-    public alertCtrl: AlertController ,
+    public alertCtrl: AlertController,
+    public menuCtrl: MenuController,
+    public loadingCtrl: LoadingController,
     public translateService: TranslateService) {
 
-    // this.translateService.get('LOGIN_ERROR').subscribe((value) => {
-    //   this.loginErrorString = value;
-    // })
+    this.menuCtrl.swipeEnable(false);
   }
 
   // Attempt to login in through our User service
   doLogin() {
-    this.navCtrl.setRoot('HomePage');
-    // this.user.login(this.account).subscribe((resp) => {
-    //   this.navCtrl.setRoot('HomePage');
-    // }, (err) => {
-    //   this.navCtrl.setRoot('HomePage');
-    //   // Unable to log in
-    //   let toast = this.toastCtrl.create({
-    //     message: this.loginErrorString,
-    //     duration: 3000,
-    //     position: 'top'
-    //   });
-    //   toast.present();
-    // });
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    loading.present();
+    this.user.login(this.account).subscribe((resp: any) => {
+      loading.dismiss();
+      if (resp.status) {
+        setTimeout(() => {
+          this.navCtrl.setRoot('HomePage');
+        }, 1000);
+
+        let toast = this.toastCtrl.create({
+          message: resp.message,
+          duration: 1000,
+          cssClass: 'toast-success',
+          position: 'bottom'
+        });
+        toast.present();
+      }
+    }, (err) => {
+      // Unable to log in
+      loading.dismiss();
+      let toast = this.toastCtrl.create({
+        message: err.error.message,
+        duration: 3000,
+        cssClass: 'toast-error',
+        position: 'bottom'
+      });
+      toast.present();
+    });
   }
 
   doForgot() {

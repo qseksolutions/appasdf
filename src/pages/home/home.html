@@ -6,7 +6,7 @@
             </button>
         </ion-buttons>
         <ion-title center>
-            <img src="/assets/img/white-fuskk.svg" height="20px" />
+            <img src="assets/img/white-fuskk.svg" height="20px" />
         </ion-title>
         <ion-buttons end>
             <button ion-button icon-only color="white" (click)="gotoNotification()">
@@ -28,107 +28,40 @@
 </ion-header>
 <ion-content>
 <div [ngSwitch]="tabs">
-    <ion-list *ngSwitchCase="'hot'">
-        <ion-card *ngFor="let item of cardItems">
-        
-            <ion-item class="post-title">
-                <h2 (click)="post(item)">{{item.user.name}}</h2>
-        
-                <button ion-button clear icon-only end color="dark" (click)="report()">
-                    <ion-icon name="more"></ion-icon>
-                </button>
-            </ion-item>
-        
-            <img [src]="item.image" (click)="post(item)" [alt]="item.user.name">
-        
-            <ion-row>
-                <ion-col>
-                    <button ion-button color="light-dark" class="liked" clear small icon-start>
-                        <ion-icon name='thumbs-up'></ion-icon>
-                        12 Likes
-                    </button>
-                </ion-col>
-                <ion-col>
-                    <button ion-button color="light-dark" clear small icon-start (click)="post(item)">
-                        <ion-icon name='text'></ion-icon>
-                        4 Comments
-                    </button>
-                </ion-col>
-        
-                <ion-col text-right>
-                    <button ion-button clear small color="light-dark" icon-start (click)="share()">
-                        <ion-icon name='share-alt'></ion-icon>
-                        Share
-                    </button>
-                </ion-col>
-            </ion-row>
-        </ion-card>
-    </ion-list>
-
     <ion-list *ngSwitchCase="'letest'">
-        <ion-card *ngFor="let item of cardItems">
-        
+        <ion-card *ngFor="let item of Ldata">
+
             <ion-item class="post-title">
-                <h2 (click)="post(item)">{{item.user.name}}</h2>
-        
+                <h2 (click)="post(item)">{{item.title}}</h2>
+
                 <button ion-button clear icon-only end color="dark" (click)="report()">
                     <ion-icon name="more"></ion-icon>
                 </button>
             </ion-item>
-        
-            <img [src]="item.image" (click)="post(item)" [alt]="item.user.name">
-        
-            <ion-row>
-                <ion-col>
-                    <button ion-button color="light-dark" class="liked" clear small icon-start>
-                        <ion-icon name='thumbs-up'></ion-icon>
-                        12 Likes
-                    </button>
-                </ion-col>
-                <ion-col>
-                    <button ion-button color="light-dark" clear small icon-start (click)="post(item)">
-                        <ion-icon name='text'></ion-icon>
-                        4 Comments
-                    </button>
-                </ion-col>
-        
-                <ion-col text-right>
-                    <button ion-button clear small color="light-dark" icon-start (click)="share()">
-                        <ion-icon name='share-alt'></ion-icon>
-                        Share
-                    </button>
-                </ion-col>
-            </ion-row>
-        </ion-card>
-    </ion-list>
-    
-    <ion-list *ngSwitchCase="'trading'">
-        <ion-card *ngFor="let item of cardItems">
-        
-            <ion-item class="post-title">
-                <h2 (click)="post(item)">{{item.user.name}}</h2>
-        
-                <button ion-button clear icon-only end color="dark" (click)="report()">
-                    <ion-icon name="more"></ion-icon>
-                </button>
-            </ion-item>
-        
-            <img [src]="item.image" (click)="post(item)" [alt]="item.user.name">
-        
+            <img *ngIf="item.type!='video'" [src]="item.media" (load)="item.loaded = true" [hidden]="!item.loaded" onerror="this.src='assets/img/blur.jpg'"
+                (click)="post(item)" [alt]="item.title" />
+            <img *ngIf="item.type!='video'" [src]="item.media_thumb" [hidden]="item.loaded" onerror="this.src='assets/img/blur.jpg'"
+                (click)="post(item)" [alt]="item.title">
+
+            <video *ngIf="item.type=='video'">
+                <source src="https://fuskk.com/upload/video/1942_20180801063935.mp4" type="video/mp4">
+            </video>
+            <!-- <img [src]="item.media_thumb" onerror="this.src='assets/img/blur.jpg'" (click)="post(item)" [alt]="item.title"> -->
+
             <ion-row>
                 <ion-col>
                     <button ion-button color="light-dark" clear small icon-start>
                         <ion-icon name='thumbs-up'></ion-icon>
-                        12 Likes
+                        {{item.like_count}} Likes
                     </button>
                 </ion-col>
                 <ion-col>
                     <button ion-button color="light-dark" clear small icon-start (click)="post(item)">
                         <ion-icon name='text'></ion-icon>
-                        4 Comments
+                        {{item.total_comment}} Comments
                     </button>
                 </ion-col>
-        
+
                 <ion-col text-right>
                     <button ion-button clear small color="light-dark" icon-start (click)="share()">
                         <ion-icon name='share-alt'></ion-icon>
@@ -137,6 +70,97 @@
                 </ion-col>
             </ion-row>
         </ion-card>
+        <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite('letest'))">
+            <ion-infinite-scroll-content></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'hot'">
+        <ion-card *ngFor="let item of Hdata">
+
+            <ion-item class="post-title">
+                <h2 (click)="post(item)">{{item.title}}</h2>
+
+                <button ion-button clear icon-only end color="dark" (click)="report()">
+                    <ion-icon name="more"></ion-icon>
+                </button>
+            </ion-item>
+
+            <img [src]="item.media" (load)="item.loaded = true" [hidden]="!item.loaded" onerror="this.src='assets/img/blur.jpg'" (click)="post(item)"
+                [alt]="item.title" />
+            <img [src]="item.media_thumb" [hidden]="item.loaded" onerror="this.src='assets/img/blur.jpg'" (click)="post(item)" [alt]="item.title">
+            <!-- <img [src]="item.media_thumb" onerror="this.src='assets/img/blur.jpg'" (click)="post(item)" [alt]="item.title"> -->
+
+            <ion-row>
+                <ion-col>
+                    <button ion-button color="light-dark" clear small icon-start>
+                        <ion-icon name='thumbs-up'></ion-icon>
+                        {{item.like_count}} Likes
+                    </button>
+                </ion-col>
+                <ion-col>
+                    <button ion-button color="light-dark" clear small icon-start (click)="post(item)">
+                        <ion-icon name='text'></ion-icon>
+                        {{item.total_comment}} Comments
+                    </button>
+                </ion-col>
+
+                <ion-col text-right>
+                    <button ion-button clear small color="light-dark" icon-start (click)="share()">
+                        <ion-icon name='share-alt'></ion-icon>
+                        Share
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-card>
+        <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite('hot'))">
+            <ion-infinite-scroll-content></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+    </ion-list>
+
+
+
+    <ion-list *ngSwitchCase="'trading'">
+        <ion-card *ngFor="let item of Tdata">
+
+            <ion-item class="post-title">
+                <h2 (click)="post(item)">{{item.title}}</h2>
+
+                <button ion-button clear icon-only end color="dark" (click)="report()">
+                    <ion-icon name="more"></ion-icon>
+                </button>
+            </ion-item>
+
+            <img [src]="item.media" (load)="item.loaded = true" [hidden]="!item.loaded" onerror="this.src='assets/img/blur.jpg'" (click)="post(item)"
+                [alt]="item.title" />
+            <img [src]="item.media_thumb" [hidden]="item.loaded" onerror="this.src='assets/img/blur.jpg'" (click)="post(item)" [alt]="item.title">
+            <!-- <img [src]="item.media_thumb" onerror="this.src='assets/img/blur.jpg'" (click)="post(item)" [alt]="item.title"> -->
+
+            <ion-row>
+                <ion-col>
+                    <button ion-button color="light-dark" clear small icon-start>
+                        <ion-icon name='thumbs-up'></ion-icon>
+                        {{item.like_count}} Likes
+                    </button>
+                </ion-col>
+                <ion-col>
+                    <button ion-button color="light-dark" clear small icon-start (click)="post(item)">
+                        <ion-icon name='text'></ion-icon>
+                        {{item.total_comment}} Comments
+                    </button>
+                </ion-col>
+
+                <ion-col text-right>
+                    <button ion-button clear small color="light-dark" icon-start (click)="share()">
+                        <ion-icon name='share-alt'></ion-icon>
+                        Share
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-card>
+        <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite('trading'))">
+            <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText=""></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
     </ion-list>
 </div>
 </ion-content>

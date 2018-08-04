@@ -9,27 +9,18 @@
 
       <ion-item>
         <ion-label floating>{{ 'EMAIL' | translate }}</ion-label>
-        <ion-input type="email" name="email"></ion-input>
+        <ion-input type="email" name="email" [(ngModel)]="account.email"></ion-input>
       </ion-item>
-
-      <!--
-      Want to use a Username instead of an Email? Here you go:
-
-      <ion-item>
-        <ion-label floating>{{ 'USERNAME' | translate }}</ion-label>
-        <ion-input type="text" [(ngModel)]="account.username" name="username"></ion-input>
-      </ion-item>
-      -->
-
+      
       <ion-item>
         <ion-label floating>{{ 'PASSWORD' | translate }}</ion-label>
-        <ion-input type="password" name="password"></ion-input>
+        <ion-input type="password" name="password" [(ngModel)]="account.password"></ion-input>
       </ion-item>
-
+      
       <div class="p-btn">
         <button ion-button color="primary">{{ 'LOGIN_BUTTON' | translate }}</button>
-
-        <button ion-button clear class="btn-forgot" type="button" (click)="doForgot()">Forgot Password</button>
+      
+        <button ion-button clear type="button" class="btn-forgot" (click)="doForgot()">Forgot Password</button>
       </div>
 
     </ion-list>
@@ -42,11 +33,11 @@
 
     <button ion-button outline color="light-dark">
       <ion-icon>
-        <img src="../assets/img/facebook.svg" />
+        <img src="assets/img/facebook.svg" />
       </ion-icon> Login facebook</button>
     <button ion-button outline color="light-dark">
       <ion-icon>
-        <img src="../assets/img/google.svg" />
+        <img src="assets/img/google.svg" />
       </ion-icon>Login Google</button>
   </div>
 
