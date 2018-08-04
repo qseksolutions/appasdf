@@ -64,4 +64,7 @@ page-notification {
     .list-md {
         @extend .list-ios ;
     }
+    .new_noti {
+        background-color: rgba(8, 105, 252, 0.1);
+    }
 }

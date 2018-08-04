@@ -70,4 +70,10 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+  openHome() {
+      this.nav.setRoot('HomePage');
+  }
+  openProfile() {
+    this.nav.push('ProfilePage');
+  }
 }

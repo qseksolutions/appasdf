@@ -98,39 +98,37 @@ page-profile {
       color: #fff;
     }
   }
-  ion-segment {
-    }
-    .segment-md {
-      .segment-button {
-        height: 4.2rem;
-        color: $dark;
-        font-size: 14px;
-        border-radius: 0px;
-        @include flexbox();
-        @include align-items(center);
-        @include justify-content(center);
+  .segment-md {
+    .segment-button {
+      height: 4.2rem;
+      color: $dark;
+      font-size: 14px;
+      border-radius: 0px;
+      @include flexbox();
+      @include align-items(center);
+      @include justify-content(center);
 
-        &.segment-activated {
-            border-bottom-color: rgba(0, 0, 0, 0.1);
-            background-color: transparent;
-            color: $blue-color;
-        }
+      &.segment-activated {
+          border-bottom-color: rgba(0, 0, 0, 0.1);
+          background-color: transparent;
+          color: $blue-color;
       }
     }
-    .segment-ios {
-        @extend .segment-md ;
-        .segment-button {
-            border: none;
-            border-bottom-width: 2px;
-            border-bottom-style: solid;
-            border-bottom-color: rgba(0, 0, 0, 0.1);
-            
-            &:last-of-type {
-                border-radius: 0px;
-            }
-            &:first-of-type {
-                border-radius: 0px;
-            }
-        }
-    }
+  }
+  .segment-ios {
+      @extend .segment-md ;
+      .segment-button {
+          border: none;
+          border-bottom-width: 2px;
+          border-bottom-style: solid;
+          border-bottom-color: rgba(0, 0, 0, 0.1);
+          
+          &:last-of-type {
+              border-radius: 0px;
+          }
+          &:first-of-type {
+              border-radius: 0px;
+          }
+      }
+  }
 }
