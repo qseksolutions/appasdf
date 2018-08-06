@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, PopoverController, AlertController, NavParams, ActionSheetController, ModalController, LoadingController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { Posts } from '../../providers/posts/posts';
 
-import { User } from '../../providers';
+
 
 @IonicPage()
 @Component({
@@ -22,7 +23,7 @@ export class HomePage {
   tabs = "letest";
   is_active = "home";
   constructor(
-    public user: User,
+    public posts: Posts,
     public navCtrl: NavController,
     public popoverCtrl: PopoverController,
     public actionSheetCtrl: ActionSheetController,
@@ -34,12 +35,29 @@ export class HomePage {
 
     // postlist
     this.postlist(this.Lfilter);
-    this.postlist(this.Hfilter);
-    this.postlist(this.Tfilter);
+    
+  } 
+
+  changed(segment){
+    this.Ldata = [];
+    this.Hdata = [];
+    this.Tdata = [];
+
+    if (segment=='letest'){
+      this.Lfilter = { order: 'id', page: 1, tab: 'letest', is_last: false };
+      this.postlist(this.Lfilter);
+    }
+    else if (segment == 'hot') {
+      this.Hfilter = { order: 'total_comment', page: 1, tab: 'hot', is_last: false };
+      this.postlist(this.Hfilter);
+    }
+    else if (segment == 'trading') {
+      this.Tfilter = { order: 'like_count', page: 1, tab: 'trading', is_last: false };
+      this.postlist(this.Tfilter);
+    }
   }
 
   doInfinite(curent_tab): Promise<any> {
-    console.log('curent_tab::' + curent_tab);
     return new Promise((resolve) => {
 
       let load_tab_data;
@@ -56,7 +74,7 @@ export class HomePage {
         load_tab_data = this.Tfilter;
       }
       if (load_tab_data) {
-        this.user.postlist(load_tab_data).subscribe((resp: any) => {
+        this.posts.postlist(load_tab_data).subscribe((resp: any) => {
           if (resp.status) {
             if (curent_tab == 'letest') {
               for (var i = 0; i < resp.data.length; i++) {
@@ -87,7 +105,7 @@ export class HomePage {
   }
 
   postlist(flt) {
-    this.user.postlist(flt).subscribe((resp: any) => {
+    this.posts.postlist(flt).subscribe((resp: any) => {
       if (resp.status) {
         if (flt.tab == 'letest') {
           this.Ldata = resp.data;
@@ -143,8 +161,8 @@ export class HomePage {
     actionSheet.present();
   }
 
-  post(item) {
-    this.navCtrl.push('PostPage', { item: item });
+  post(post_id) {
+    this.navCtrl.push('PostPage', { post_id: post_id });
   }
 
   report() {

@@ -13,15 +13,6 @@ export class User {
     return this.api.get('category', { header: GLOBAL.API_HEADER }).share();
   }
 
-  postlist(fdata) {
-    let body = new FormData();
-    body.append('order_by', fdata.order);
-    body.append('page', fdata.page);
-    body.append('header', GLOBAL.API_HEADER);
-
-    return this.api.post('postlist', body).share();
-  }
-
   /**
    * Send a POST request to our login endpoint with the data
    * the user entered on the form.
@@ -77,6 +68,6 @@ export class User {
    * Process a login/signup response to store user data
    */
   _loggedIn(resp) {
-    localStorage.setItem('is_loggedin', JSON.stringify(resp));
+    localStorage.setItem('is_loggedin', JSON.stringify(resp.data));
   }
 }

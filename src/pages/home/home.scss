@@ -1,4 +1,8 @@
 page-home {
+    video{
+        width: 100%;
+        max-height: 370px;
+    }
     .nav-bg {
         @include linear-gradient;
         .toolbar-background-ios {
@@ -8,13 +12,7 @@ page-home {
             @extend .toolbar-background-ios ;
         } 
     }
-    .scroll-content{
-        overflow: hidden;
-    }
-    .scroll-content > div {
-        overflow: auto;
-        height: 100%;
-    }
+    
     .content-md {
         background-color: $body-bg;
     }

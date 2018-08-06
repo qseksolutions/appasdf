@@ -4,25 +4,34 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <ion-card>
+  <ion-card *ngIf="item">
     <ion-item class="post-title">
-      <h2>{{item.user.name}}</h2>
+      <h2>{{item.title}}</h2>
       <button ion-button clear icon-only end color="dark" (click)="report()">
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-item>
-    <img [src]="item.image" [alt]="item.user.name">
+    <img *ngIf="item.type=='image'" [src]="item.media" (load)="item.loaded = true" [hidden]="!item.loaded" onerror="this.src='assets/img/blur.jpg'"
+      (click)="post(item)" [alt]="item.title" />
+    <img *ngIf="item.type=='image'" [src]="item.media_thumb" [hidden]="item.loaded" onerror="this.src='assets/img/blur.jpg'"
+      (click)="post(item)" [alt]="item.title">
+    
+    <video *ngIf="item.type=='video'" width="100%" controls muted [poster]="item.media_thumb">
+      <source [src]="item.media" type="video/mp4">
+    </video>
+    
+    <p *ngIf="item.type=='editor'" [innerHtml]="item.display_text"></p>
     <ion-row>
       <ion-col>
-        <button ion-button color="light-dark" clear small icon-start>
+        <button ion-button [color]="item.is_like==true?'blue-color':'light-dark'" clear small icon-start>
           <ion-icon name='thumbs-up'></ion-icon>
-          12 Likes
+           {{item.like_count}} Likes
         </button>
       </ion-col>
       <ion-col>
         <button ion-button color="light-dark" clear small icon-start>
           <ion-icon name='text'></ion-icon>
-          4 Comments
+           {{item.total_comment}} Comments
         </button>
       </ion-col>
       <ion-col text-right>
@@ -40,15 +49,15 @@
     </ion-list-header>
   
     
-    <ion-item>
-      <div class="comm-item">
+    <ion-item *ngIf="item">
+      <div class="comm-item" *ngFor="let comment of item.comments">
         <div class="comm-head">
           <div class="comm-avtar">
-            <img src="assets/img/advance-card-bttf.png">
+            <img [src]="comment.userimage" onerror="this.src='assets/img/blur.jpg'" />
           </div>
           <div class="comm-title">
-            <h2>Finn</h2>
-            <span>2h</span>
+            <h2>{{comment.username}}</h2>
+            <span>{{comment.insert_date}}</span>
           </div>
 
           <button ion-button clear icon-only end color="dark" (click)="report()">
@@ -56,13 +65,15 @@
           </button>
         </div>
         <div class="comm-body">
-          <p>Listen, I've had a pretty messed up day...</p>  
+          <p *ngIf="comment.comment">{{comment.comment}}</p>  
+          <p *ngIf="comment.meme_comment">{{comment.meme_comment}}</p>  
+          <img *ngIf="comment.image" [src]="comment.image" onerror="this.src='assets/img/blur.jpg'" />
         </div>
         <div class="comm-foot">
           <ul class="list-unstyled">
             <li>
               <a href="#">
-                <ion-icon name='thumbs-up'></ion-icon> 12
+                <ion-icon name='thumbs-up'></ion-icon> {{comment.comment_like_count}}
               </a>
             </li>
 
@@ -75,41 +86,7 @@
         </div>
       </div>
 
-      <div class="comm-item">
-        <div class="comm-head">
-          <div class="comm-avtar">
-            <img src="assets/img/advance-card-bttf.png">
-          </div>
-          <div class="comm-title">
-            <h2>Finn</h2>
-            <span>2h</span>
-          </div>
-      
-          <button ion-button clear icon-only end color="dark" (click)="report()">
-            <ion-icon name="more"></ion-icon>
-          </button>
-        </div>
-        <div class="comm-body">
-          <p>Listen, I've had a pretty messed up day...</p>
-        </div>
-        <div class="comm-foot">
-          <ul class="list-unstyled">
-            <li>
-              <a href="#">
-                <ion-icon name='thumbs-up'></ion-icon> 12
-              </a>
-            </li>
-      
-            <li>
-              <a href="#">
-                <ion-icon ios="ios-undo" md="md-undo"></ion-icon> Replay
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="comm-item">
+      <!-- <div class="comm-item">
         <div class="comm-head">
           <div class="comm-avtar">
             <img src="assets/img/advance-card-bttf.png">
@@ -176,6 +153,40 @@
           </ul>
         </div>
       </div>
+
+      <div class="comm-item">
+        <div class="comm-head">
+          <div class="comm-avtar">
+            <img src="assets/img/advance-card-bttf.png">
+          </div>
+          <div class="comm-title">
+            <h2>Finn</h2>
+            <span>2h</span>
+          </div>
+      
+          <button ion-button clear icon-only end color="dark" (click)="report()">
+            <ion-icon name="more"></ion-icon>
+          </button>
+        </div>
+        <div class="comm-body">
+          <p>Listen, I've had a pretty messed up day...</p>
+        </div>
+        <div class="comm-foot">
+          <ul class="list-unstyled">
+            <li>
+              <a href="#">
+                <ion-icon name='thumbs-up'></ion-icon> 12
+              </a>
+            </li>
+      
+            <li>
+              <a href="#">
+                <ion-icon ios="ios-undo" md="md-undo"></ion-icon> Replay
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div> -->
 
     </ion-item>
     
