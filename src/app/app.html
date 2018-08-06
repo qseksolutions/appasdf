@@ -20,7 +20,7 @@
         <ion-list class="side-cat-list">
             <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
                 <img class="cate-img" src="{{p.image}}" onerror="this.src='assets/img/default-user-avatars.png'" />
-                {{p.title}}
+                {{p.category_name}}
             </button>
         </ion-list>
     </ion-content>
