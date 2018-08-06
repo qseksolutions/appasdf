@@ -17,6 +17,15 @@ export class Posts {
 
     return this.api.post('postlist', body).share();
   }
+ 
+  postlike(post_id) {
+    let body = new FormData();
+    body.append('post_id', post_id);
+    body.append('user_id', GLOBAL.USER.id);
+    body.append('header', GLOBAL.API_HEADER);
+
+    return this.api.post('postlike', body).share();
+  }
 
   singlepost(post_id) {
     let body = new FormData();

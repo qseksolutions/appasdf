@@ -23,7 +23,7 @@
     <p *ngIf="item.type=='editor'" [innerHtml]="item.display_text"></p>
     <ion-row>
       <ion-col>
-        <button ion-button [color]="item.is_like==true?'blue-color':'light-dark'" clear small icon-start>
+        <button ion-button (click)="postlike(item)" [color]="item.is_like==true?'blue-color':'light-dark'" clear small icon-start>
           <ion-icon name='thumbs-up'></ion-icon>
            {{item.like_count}} Likes
         </button>

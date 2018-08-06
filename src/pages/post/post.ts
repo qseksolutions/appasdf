@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, AlertController, ActionSheetController, ModalController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, AlertController, ActionSheetController, ModalController, ViewController, ToastController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Posts } from '../../providers/posts/posts';
+import { GLOBAL } from '../../app/global';
 
 @IonicPage()
 @Component({
@@ -14,6 +15,7 @@ export class PostPage {
   item: any;
   constructor(
     public posts: Posts,
+    public toastCtrl: ToastController, 
     public navCtrl: NavController, 
     public popoverCtrl: PopoverController,
     private socialSharing: SocialSharing,
@@ -67,7 +69,7 @@ export class PostPage {
     model.present()
   }
 
-  share() {
+  share(post) {
     // Check if sharing via email is supported
     this.socialSharing.canShareViaEmail().then(() => {
       // Sharing via email is possible
@@ -78,13 +80,39 @@ export class PostPage {
     });
 
     // Share via email
-    this.socialSharing.shareViaEmail('Body', 'Subject', ['recipient@example.org']).then(() => {
+    this.socialSharing.shareViaEmail('https://fuskk.com/' + post.tag_slug, post.title, [GLOBAL.USER.email]).then(() => {
       // Success!
       console.log('Success!');
     }).catch((e) => {
       // Error!
       console.log(e, 'Error!');
     });
+  }
+
+  postlike(post): Promise<any> {
+    if (GLOBAL.IS_LOGGEDIN) {
+      return new Promise((resolve) => {
+        this.posts.postlike(post.id).subscribe((resp: any) => {
+          if (resp.status) {
+            post.is_like = resp.like;
+            post.like_count = resp.like_count;
+          }
+        }, (err) => {
+          // Unable to log in
+          console.log(err);
+        });
+        resolve();
+      });
+    }
+    else {
+      let toast = this.toastCtrl.create({
+        message: 'Please Login First',
+        duration: 3000,
+        cssClass: 'toast-error',
+        position: 'bottom'
+      });
+      toast.present();
+    }
   }
 
 }

@@ -50,7 +50,7 @@
 
             <ion-row>
                 <ion-col>
-                    <button ion-button [color]="item1.is_like==true?'blue-color':'light-dark'" clear small icon-start>
+                    <button ion-button (click)="postlike(item1)" [color]="item1.is_like==true?'blue-color':'light-dark'" clear small icon-start>
                         <ion-icon name='thumbs-up'></ion-icon>
                         {{item1.like_count}} Likes
                     </button>
@@ -63,7 +63,7 @@
                 </ion-col>
 
                 <ion-col text-right>
-                    <button ion-button clear small color="light-dark" icon-start (click)="share()">
+                    <button ion-button clear small color="light-dark" icon-start (click)="share(item1)">
                         <ion-icon name='share-alt'></ion-icon>
                         Share
                     </button>
@@ -99,7 +99,7 @@
 
             <ion-row>
                 <ion-col>
-                    <button ion-button [color]="item2.is_like==true?'blue-color':'light-dark'" clear small icon-start>
+                    <button ion-button (click)="postlike(item2)" [color]="item2.is_like==true?'blue-color':'light-dark'" clear small icon-start>
                         <ion-icon name='thumbs-up'></ion-icon>
                         {{item2.like_count}} Likes
                     </button>
@@ -112,7 +112,7 @@
                 </ion-col>
 
                 <ion-col text-right>
-                    <button ion-button clear small color="light-dark" icon-start (click)="share()">
+                    <button ion-button clear small color="light-dark" icon-start (click)="share(item2)">
                         <ion-icon name='share-alt'></ion-icon>
                         Share
                     </button>
@@ -148,7 +148,7 @@
 
             <ion-row>
                 <ion-col>
-                    <button ion-button [color]="item3.is_like==true?'blue-color':'light-dark'" clear small icon-start>
+                    <button ion-button (click)="postlike(item3)" [color]="item3.is_like==true?'blue-color':'light-dark'" clear small icon-start>
                         <ion-icon name='thumbs-up'></ion-icon>
                         {{item3.like_count}} Likes
                     </button>
@@ -161,7 +161,7 @@
                 </ion-col>
 
                 <ion-col text-right>
-                    <button ion-button clear small color="light-dark" icon-start (click)="share()">
+                    <button ion-button clear small color="light-dark" icon-start (click)="share(item3)">
                         <ion-icon name='share-alt'></ion-icon>
                         Share
                     </button>
