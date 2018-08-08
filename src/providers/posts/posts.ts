@@ -26,6 +26,30 @@ export class Posts {
 
     return this.api.post('postlike', body).share();
   }
+  
+  postreport(report) {
+    let body = new FormData();
+
+    body.append('post_id', report.id);
+    body.append('user_id', GLOBAL.USER.id);
+    body.append('reason', report.reason);
+    body.append('detail', report.detail);
+    body.append('header', GLOBAL.API_HEADER);
+
+    return this.api.post('postreport', body).share();
+  }
+
+  commentreport(report) {
+    let body = new FormData();
+
+    body.append('comment_id', report.id);
+    body.append('user_id', GLOBAL.USER.id);
+    body.append('reason', report.reason);
+    body.append('detail', report.detail);
+    body.append('header', GLOBAL.API_HEADER);
+
+    return this.api.post('postlike', body).share();
+  }
 
   singlepost(post_id) {
     let body = new FormData();

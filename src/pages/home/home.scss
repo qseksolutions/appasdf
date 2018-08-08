@@ -1,7 +1,8 @@
 page-home {
     video{
         width: 100%;
-        max-height: 370px;
+        // max-height: 370px;
+        max-height: -webkit-fill-available;
     }
     .nav-bg {
         @include linear-gradient;

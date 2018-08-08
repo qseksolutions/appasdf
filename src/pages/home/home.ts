@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, PopoverController, AlertController, NavParams, ActionSheetController, ModalController, LoadingController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, PopoverController, AlertController, NavParams, ActionSheetController, ModalController, LoadingController, ToastController, Events } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Posts } from '../../providers/posts/posts';
 import { GLOBAL } from '../../app/global';
@@ -13,6 +13,8 @@ import { GLOBAL } from '../../app/global';
 })
 export class HomePage {
 
+  report_detail:any;
+
   Lfilter = { order: 'id', page: 1, tab: 'letest', is_last: false };
   Hfilter = { order: 'total_comment', page: 1, tab: 'hot', is_last: false };
   Tfilter = { order: 'like_count', page: 1, tab: 'trading', is_last: false };
@@ -22,9 +24,10 @@ export class HomePage {
   Tdata = [];
 
   tabs = "letest";
-  is_active = "home";
+  
   constructor(
     public posts: Posts,
+    public events: Events,
     public toastCtrl: ToastController,
     public navCtrl: NavController,
     public popoverCtrl: PopoverController,
@@ -37,7 +40,6 @@ export class HomePage {
 
     // postlist
     this.postlist(this.Lfilter);
-    
   } 
 
   changed(segment){
@@ -126,7 +128,17 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LetestPage');
+    this.events.subscribe('is_repost', (is_repost) => {
+      if (this.tabs == 'letest') {
+        this.Ldata.splice(this.Ldata.indexOf(is_repost), 1);
+      }
+      else if (this.tabs == 'hot') {
+        this.Hdata.splice(this.Hdata.indexOf(is_repost), 1);
+      }
+      else if (this.tabs == 'trading') {
+        this.Tdata.splice(this.Tdata.indexOf(is_repost), 1);
+      }
+    });
   }
 
   addPost() {
@@ -163,8 +175,8 @@ export class HomePage {
     actionSheet.present();
   }
 
-  post(post_id) {
-    this.navCtrl.push('PostPage', { post_id: post_id });
+  post(post) {
+    this.navCtrl.push('PostPage', { post: post });
   }
 
   postlike(post): Promise<any> {
@@ -175,11 +187,12 @@ export class HomePage {
             post.is_like = resp.like;
             post.like_count = resp.like_count;
           }
+          resolve();
         }, (err) => {
           // Unable to log in
           console.log(err);
+          resolve();
         });
-        resolve();
       });
     }
     else{
@@ -193,8 +206,8 @@ export class HomePage {
     }
   }
 
-  report() {
-    console.log('call');
+  postreport(post) {
+    this.report_detail = post;
     const actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
@@ -217,9 +230,15 @@ export class HomePage {
   }
 
   reportModal() {
-    let model = this.modalCtrl.create('ReportModalPage');
-    model.present()
+    let model = this.modalCtrl.create('ReportModalPage', { rpost: this.report_detail});
+    model.present();
+    model.onDidDismiss((is_report) => {
+      if (is_report) {
+        this.events.publish('is_repost', this.report_detail);       
+      }
+    });
   }
+  
   share(post) {
     // Check if sharing via email is supported
     this.socialSharing.canShareViaEmail().then(() => {

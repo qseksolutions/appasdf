@@ -19,18 +19,18 @@
   </div>
 
   
-  <form>
+  <form #formCtrl="ngForm" (submit)="doReport()">
     <div class="post-r-name">
-      <h4><span>Report To</span>"Ghor-Se-Suno-Kapil-Ko"</h4>
+      <h4><span>Report To</span> "{{report_details.title}}" </h4>
     </div>
     <ion-list>
       <ion-item>
         <ion-label stacked>Reason</ion-label>
-        <ion-input type="text" name="title"></ion-input>
+        <ion-input type="text" name="reason" required [(ngModel)]="report_details.reason"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label stacked>Description</ion-label>
-        <ion-textarea name="description"></ion-textarea>
+        <ion-textarea name="detail" required [(ngModel)]="report_details.detail"></ion-textarea>
       </ion-item>
     </ion-list>
     <div class="report-note">
@@ -45,7 +45,7 @@
 
     <div class="p-btn">
       <ion-buttons>
-        <button ion-button color="primary">
+        <button ion-button color="primary" [disabled]="!formCtrl.form.valid">
           <span>Report</span>
         </button>
       </ion-buttons>

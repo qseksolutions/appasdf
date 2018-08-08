@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, AlertController, ActionSheetController, ModalController, ViewController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, AlertController, ActionSheetController, ModalController, ViewController, ToastController, Events } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Posts } from '../../providers/posts/posts';
 import { GLOBAL } from '../../app/global';
@@ -11,10 +11,15 @@ import { GLOBAL } from '../../app/global';
 })
 export class PostPage {
 
-  post_id: any;
+  post: any;
   item: any;
+  report_detail: any;
+
+  check_is_report = false;
+
   constructor(
     public posts: Posts,
+    private events: Events,
     public toastCtrl: ToastController, 
     public navCtrl: NavController, 
     public popoverCtrl: PopoverController,
@@ -24,25 +29,33 @@ export class PostPage {
     public viewCtrl: ViewController,
     public actionSheetCtrl: ActionSheetController ,
     navParams: NavParams) {
-    this.post_id = navParams.get('post_id');
+    this.post = navParams.get('post');
     
   }
-
+  
+  ionViewWillEnter(){
+    
+  }
+  
   ionViewDidLoad() {
     this.viewCtrl.setBackButtonText('');
-
-    this.posts.singlepost(this.post_id).subscribe((resp: any) => {
-      if (resp.status) {
+    try {
+      this.posts.singlepost(this.post.id).subscribe((resp: any) => {
+        if (resp.status) {
           this.item = resp.data;
-        console.log(this.item);
-      }
-    }, (err) => {
-      // Unable to log in
-      console.log(err);
-    });
+        }
+      }, (err) => {
+        // Unable to log in
+        console.log(err);
+      });
+    } catch (error) {
+      console.log(error);      
+      this.navCtrl.setRoot('HomePage');
+    }
   }
 
-  report() {
+  postreport(post) {
+    this.report_detail = post;
     const actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
@@ -65,8 +78,25 @@ export class PostPage {
   }
 
   reportModal() {
-    let model = this.modalCtrl.create('ReportModalPage');
-    model.present()
+    if (this.check_is_report == false){
+      let model = this.modalCtrl.create('ReportModalPage', { rpost: this.report_detail});
+      model.present();
+      model.onDidDismiss((is_report) => {
+        if (is_report) {
+          this.check_is_report = true;
+          this.events.publish('is_repost', this.report_detail);
+        }
+      });
+    }
+    else{
+      let toast = this.toastCtrl.create({
+        message: 'You have already reported this post',
+        duration: 3000,
+        cssClass: 'toast-error',
+        position: 'bottom'
+      });
+      toast.present();
+    }
   }
 
   share(post) {
@@ -89,7 +119,7 @@ export class PostPage {
     });
   }
 
-  postlike(post): Promise<any> {
+  postlike(post) {
     if (GLOBAL.IS_LOGGEDIN) {
       return new Promise((resolve) => {
         this.posts.postlike(post.id).subscribe((resp: any) => {
@@ -97,11 +127,13 @@ export class PostPage {
             post.is_like = resp.like;
             post.like_count = resp.like_count;
           }
+          resolve();
         }, (err) => {
           // Unable to log in
           console.log(err);
+          resolve();
         });
-        resolve();
+        
       });
     }
     else {

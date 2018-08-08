@@ -4,34 +4,34 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <ion-card *ngIf="item">
+  <ion-card *ngIf="post">
     <ion-item class="post-title">
-      <h2>{{item.title}}</h2>
-      <button ion-button clear icon-only end color="dark" (click)="report()">
+      <h2>{{post.title}}</h2>
+      <button ion-button clear icon-only end color="dark" (click)="postreport(post)">
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-item>
-    <img *ngIf="item.type=='image'" [src]="item.media" (load)="item.loaded = true" [hidden]="!item.loaded" onerror="this.src='assets/img/blur.jpg'"
-      (click)="post(item)" [alt]="item.title" />
-    <img *ngIf="item.type=='image'" [src]="item.media_thumb" [hidden]="item.loaded" onerror="this.src='assets/img/blur.jpg'"
-      (click)="post(item)" [alt]="item.title">
+    <img *ngIf="post.type=='image'" [src]="post.media" (load)="post.loaded = true" [hidden]="!post.loaded" onerror="this.src='assets/img/blur.jpg'"
+      (click)="post(post)" [alt]="post.title" />
+    <img *ngIf="post.type=='image'" [src]="post.media_thumb" [hidden]="post.loaded" onerror="this.src='assets/img/blur.jpg'"
+      (click)="post(post)" [alt]="post.title">
     
-    <video *ngIf="item.type=='video'" width="100%" controls muted [poster]="item.media_thumb">
-      <source [src]="item.media" type="video/mp4">
+    <video *ngIf="post.type=='video'" width="100%" controls muted [poster]="post.media_thumb">
+      <source [src]="post.media" type="video/mp4">
     </video>
     
-    <p *ngIf="item.type=='editor'" [innerHtml]="item.display_text"></p>
+    <p *ngIf="post.type=='editor'" [innerHtml]="post.display_text"></p>
     <ion-row>
       <ion-col>
-        <button ion-button (click)="postlike(item)" [color]="item.is_like==true?'blue-color':'light-dark'" clear small icon-start>
+        <button ion-button (click)="postlike(post)" [color]="post.is_like==true?'blue-color':'light-dark'" clear small icon-start>
           <ion-icon name='thumbs-up'></ion-icon>
-           {{item.like_count}} Likes
+           {{post.like_count}} Likes
         </button>
       </ion-col>
       <ion-col>
         <button ion-button color="light-dark" clear small icon-start>
           <ion-icon name='text'></ion-icon>
-           {{item.total_comment}} Comments
+           {{post.total_comment}} Comments
         </button>
       </ion-col>
       <ion-col text-right>
@@ -60,7 +60,7 @@
             <span>{{comment.insert_date}}</span>
           </div>
 
-          <button ion-button clear icon-only end color="dark" (click)="report()">
+          <button ion-button clear icon-only end color="dark" (click)="report(comment.id)">
             <ion-icon name="more"></ion-icon>
           </button>
         </div>
