@@ -54,27 +54,55 @@ export class PostPage {
     }
   }
 
+  replay_cumment(cmt){
+    console.log(cmt); 
+  }
+
+  loadsubcomment(cmt){
+    cmt.page = 1;
+    cmt.subs = [];
+    if (this.is_login()) {
+      return new Promise((resolve) => {
+        this.posts.loadsubcomment(cmt).subscribe((resp: any) => {
+          if (resp.status) {
+            cmt.subs = resp.data;
+            // for (var i = 0; i < resp.data.length; i++) {
+            //   cmt.subs.push(resp.data[i]);
+            // }
+          }
+          resolve();
+        }, (err) => {
+          // Unable to log in
+          console.log(err);
+          resolve();
+        });
+      });
+    }
+  }
+
   postreport(post) {
-    this.report_detail = post;
-    const actionSheet = this.actionSheetCtrl.create({
-      buttons: [
-        {
-          text: 'Report Post',
-          role: 'Report',
-          handler: () => {
-            this.reportModal();
+    if (this.is_login()) {
+      this.report_detail = post;
+      const actionSheet = this.actionSheetCtrl.create({
+        buttons: [
+          {
+            text: 'Report Post',
+            role: 'Report',
+            handler: () => {
+              this.reportModal();
+            }
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
           }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
-    });
-    actionSheet.present();
+        ]
+      });
+      actionSheet.present();
+    }
   }
 
   reportModal() {
@@ -120,7 +148,7 @@ export class PostPage {
   }
 
   postlike(post) {
-    if (GLOBAL.IS_LOGGEDIN) {
+    if (this.is_login()) {
       return new Promise((resolve) => {
         this.posts.postlike(post.id).subscribe((resp: any) => {
           if (resp.status) {
@@ -136,6 +164,12 @@ export class PostPage {
         
       });
     }
+  }
+
+  is_login(){
+    if (GLOBAL.IS_LOGGEDIN) {
+      return true;
+    }
     else {
       let toast = this.toastCtrl.create({
         message: 'Please Login First',
@@ -144,7 +178,7 @@ export class PostPage {
         position: 'bottom'
       });
       toast.present();
+      return false;
     }
   }
-
 }

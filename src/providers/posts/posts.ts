@@ -60,4 +60,16 @@ export class Posts {
     return this.api.post('singlepost', body).share();
   }
 
+  loadsubcomment(cmt){
+    let body = new FormData();
+
+    body.append('comment_id', cmt.id);
+    body.append('post_id', cmt.post_id);
+    body.append('page', cmt.page);
+    body.append('user_id', GLOBAL.USER.id);
+    body.append('header', GLOBAL.API_HEADER);
+
+    return this.api.post('loadsubcomment', body).share();
+  }
+
 }

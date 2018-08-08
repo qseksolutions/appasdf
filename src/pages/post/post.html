@@ -72,122 +72,26 @@
         <div class="comm-foot">
           <ul class="list-unstyled">
             <li>
-              <a href="#">
+              <a href="javascript:void(0)">
                 <ion-icon name='thumbs-up'></ion-icon> {{comment.comment_like_count}}
               </a>
             </li>
 
             <li>
-              <a href="#">
-                <ion-icon ios="ios-undo" md="md-undo"></ion-icon> Replay
+              <a href="javascript:void(0)">
+                <ion-icon ios="ios-undo" md="md-undo" (click)="replay_cumment(comment)"></ion-icon> Replay
+              </a>
+            </li>
+            <li *ngIf="comment.sub_comment_count>0" (click)="loadsubcomment(comment)">
+              <a href="javascript:void(0)">
+                <ion-icon ios="ios-undo" md="md-undo"></ion-icon> View {{comment.sub_comment_count}} replies
               </a>
             </li>
           </ul>
         </div>
       </div>
-
-      <!-- <div class="comm-item">
-        <div class="comm-head">
-          <div class="comm-avtar">
-            <img src="assets/img/advance-card-bttf.png">
-          </div>
-          <div class="comm-title">
-            <h2>Finn</h2>
-            <span>2h</span>
-          </div>
-      
-          <button ion-button clear icon-only end color="dark" (click)="report()">
-            <ion-icon name="more"></ion-icon>
-          </button>
-        </div>
-        <div class="comm-body">
-          <p>Listen, I've had a pretty messed up day...</p>
-        </div>
-        <div class="comm-foot">
-          <ul class="list-unstyled">
-            <li>
-              <a href="#">
-                <ion-icon name='thumbs-up'></ion-icon> 12
-              </a>
-            </li>
-      
-            <li>
-              <a href="#">
-                <ion-icon ios="ios-undo" md="md-undo"></ion-icon> Replay
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="comm-item">
-        <div class="comm-head">
-          <div class="comm-avtar">
-            <img src="assets/img/advance-card-bttf.png">
-          </div>
-          <div class="comm-title">
-            <h2>Finn</h2>
-            <span>2h</span>
-          </div>
-      
-          <button ion-button clear icon-only end color="dark" (click)="report()">
-            <ion-icon name="more"></ion-icon>
-          </button>
-        </div>
-        <div class="comm-body">
-          <p>Listen, I've had a pretty messed up day...</p>
-        </div>
-        <div class="comm-foot">
-          <ul class="list-unstyled">
-            <li>
-              <a href="#">
-                <ion-icon name='thumbs-up'></ion-icon> 12
-              </a>
-            </li>
-      
-            <li>
-              <a href="#">
-                <ion-icon ios="ios-undo" md="md-undo"></ion-icon> Replay
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="comm-item">
-        <div class="comm-head">
-          <div class="comm-avtar">
-            <img src="assets/img/advance-card-bttf.png">
-          </div>
-          <div class="comm-title">
-            <h2>Finn</h2>
-            <span>2h</span>
-          </div>
-      
-          <button ion-button clear icon-only end color="dark" (click)="report()">
-            <ion-icon name="more"></ion-icon>
-          </button>
-        </div>
-        <div class="comm-body">
-          <p>Listen, I've had a pretty messed up day...</p>
-        </div>
-        <div class="comm-foot">
-          <ul class="list-unstyled">
-            <li>
-              <a href="#">
-                <ion-icon name='thumbs-up'></ion-icon> 12
-              </a>
-            </li>
-      
-            <li>
-              <a href="#">
-                <ion-icon ios="ios-undo" md="md-undo"></ion-icon> Replay
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div> -->
-
+      <!-- <div *ngIf="comment.sub_comment_count>0"> -->
+      <!-- </div> -->
     </ion-item>
     
   </ion-list>

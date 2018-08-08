@@ -260,12 +260,12 @@ export class HomePage {
   }
 
   gotoHome() {
-    this.is_active = "home";
+    
     this.navCtrl.setRoot('HomePage');
   }
 
   gotoProfile() {
-    this.is_active = "profile";
+    
     this.navCtrl.push('ProfilePage');
   }
 
