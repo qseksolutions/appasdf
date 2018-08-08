@@ -51,43 +51,45 @@
     
     <ion-item *ngIf="item">
       <div class="comm-item" *ngFor="let comment of item.comments">
-        <div class="comm-head">
-          <div class="comm-avtar">
-            <img [src]="comment.userimage" onerror="this.src='assets/img/blur.jpg'" />
-          </div>
-          <div class="comm-title">
-            <h2>{{comment.username}}</h2>
-            <span>{{comment.insert_date}}</span>
-          </div>
+        <div class="comm-item-child">
+          <div class="comm-head">
+            <div class="comm-avtar">
+              <img [src]="comment.userimage" onerror="this.src='assets/img/blur.jpg'" />
+            </div>
+            <div class="comm-title">
+              <h2>{{comment.username}}</h2>
+              <span>{{comment.insert_date}}</span>
+            </div>
 
-          <button ion-button clear icon-only end color="dark" (click)="report(comment.id)">
-            <ion-icon name="more"></ion-icon>
-          </button>
-        </div>
-        <div class="comm-body">
-          <p *ngIf="comment.comment">{{comment.comment}}</p>  
-          <p *ngIf="comment.meme_comment">{{comment.meme_comment}}</p>  
-          <img *ngIf="comment.image" [src]="comment.image" onerror="this.src='assets/img/blur.jpg'" />
-        </div>
-        <div class="comm-foot">
-          <ul class="list-unstyled">
-            <li>
-              <a href="javascript:void(0)">
-                <ion-icon name='thumbs-up'></ion-icon> {{comment.comment_like_count}}
-              </a>
-            </li>
+            <button ion-button clear icon-only end color="dark" (click)="report(comment.id)">
+              <ion-icon name="more"></ion-icon>
+            </button>
+          </div>
+          <div class="comm-body">
+            <p *ngIf="comment.comment">{{comment.comment}}</p>  
+            <p *ngIf="comment.meme_comment">{{comment.meme_comment}}</p>  
+            <img *ngIf="comment.image" [src]="comment.image" onerror="this.src='assets/img/blur.jpg'" />
+          </div>
+          <div class="comm-foot">
+            <ul class="list-unstyled">
+              <li>
+                <a href="javascript:void(0)">
+                  <ion-icon name='thumbs-up'></ion-icon> {{comment.comment_like_count}}
+                </a>
+              </li>
 
-            <li>
-              <a href="javascript:void(0)">
-                <ion-icon ios="ios-undo" md="md-undo" (click)="replay_cumment(comment)"></ion-icon> Replay
-              </a>
-            </li>
-            <li *ngIf="comment.sub_comment_count>0" (click)="loadsubcomment(comment)">
-              <a href="javascript:void(0)">
-                <ion-icon ios="ios-undo" md="md-undo"></ion-icon> View {{comment.sub_comment_count}} replies
-              </a>
-            </li>
-          </ul>
+              <li>
+                <a href="javascript:void(0)">
+                  <ion-icon ios="ios-undo" md="md-undo" (click)="replay_cumment(comment)"></ion-icon> Replay
+                </a>
+              </li>
+              <li *ngIf="comment.sub_comment_count>0" (click)="loadsubcomment(comment)">
+                <a href="javascript:void(0)">
+                  <ion-icon ios="ios-undo" md="md-undo"></ion-icon> View {{comment.sub_comment_count}} replies
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <!-- <div *ngIf="comment.sub_comment_count>0"> -->

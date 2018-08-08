@@ -74,16 +74,18 @@ page-post {
     }
   }
   .comm-item {
-    padding-top: 5px;
-    padding-bottom: 10px;
-    padding-left: 15px;
-    border-left: 2px solid $light-gray;
-
-    &:first-child {
-      border-left: 0px;
-      padding-left: 0px;
-      padding-top: 0px;
+    .comm-item-child{
+      padding-top: 5px;
+      padding-bottom: 10px;
+      padding-left: 15px;
+      border-left: 2px solid $light-gray;
+      &:first-child {
+        border-left: 0px;
+        padding-left: 0px;
+        padding-top: 0px;
+      }
     }
+
   }
   .comm-head {
     @include flexbox;
