@@ -51,7 +51,7 @@
     
     <ion-item *ngIf="item">
       <div class="comm-item" *ngFor="let comment of item.comments">
-        <div class="comm-item-child">
+        <div class="comm-item-child main-comment">
           <div class="comm-head">
             <div class="comm-avtar">
               <img [src]="comment.userimage" onerror="this.src='assets/img/blur.jpg'" />
@@ -91,44 +91,47 @@
             </ul>
           </div>
         </div>
-        <div class="comm-item-child" *ngFor="let subs of comment.subs">
-          <div class="comm-head">
-            <div class="comm-avtar">
-              <img [src]="subs.userimage" onerror="this.src='assets/img/blur.jpg'">
+        <div class="comm-item-child replie-comment" *ngFor="let subs of comment.subs">
+          <div class="comm-item-child_replie" >
+            <div class="comm-head">
+              <div class="comm-avtar">
+                <img [src]="subs.userimage" onerror="this.src='assets/img/blur.jpg'">
+              </div>
+              <div class="comm-title">
+                <h2>{{subs.username}}</h2>
+                <span>{{subs.insert_date}}</span>
+              </div>
+            
+              <button ion-button clear icon-only end color="dark" (click)="report()">
+                <ion-icon name="more"></ion-icon>
+              </button>
             </div>
-            <div class="comm-title">
-              <h2>{{subs.username}}</h2>
-              <span>{{subs.insert_date}}</span>
+            <div class="comm-body">
+              <p *ngIf="subs.comment">{{subs.comment}}</p>
+              <img *ngIf="subs.meme_comment" [src]="subs.meme_comment" onerror="this.src='assets/img/blur.jpg'" />
+              <img *ngIf="subs.image" [src]="subs.image" onerror="this.src='assets/img/blur.jpg'" />
             </div>
-          
-            <button ion-button clear icon-only end color="dark" (click)="report()">
-              <ion-icon name="more"></ion-icon>
-            </button>
-          </div>
-          <div class="comm-body">
-            <p *ngIf="subs.comment">{{subs.comment}}</p>
-            <img *ngIf="subs.meme_comment" [src]="subs.meme_comment" onerror="this.src='assets/img/blur.jpg'" />
-            <img *ngIf="subs.image" [src]="subs.image" onerror="this.src='assets/img/blur.jpg'" />
-          </div>
-          <div class="comm-foot">
-            <ul class="list-unstyled">
-              <li>
-                <a href="javascript:void(0)">
-                  <ion-icon name='thumbs-up'></ion-icon> {{subs.comment_like_count}}
-                </a>
-              </li>
-          
-              <li>
-                <a href="javascript:void(0)">
-                  <ion-icon ios="ios-undo" md="md-undo"></ion-icon> Replay
-                </a>
-              </li>
-            </ul>
+            <div class="comm-foot">
+              <ul class="list-unstyled">
+                <li>
+                  <a href="javascript:void(0)">
+                    <ion-icon name='thumbs-up'></ion-icon> {{subs.comment_like_count}}
+                  </a>
+                </li>
+            
+                <li>
+                  <a href="javascript:void(0)">
+                    <ion-icon ios="ios-undo" md="md-undo"></ion-icon> Replay
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-      <!-- <div *ngIf="comment.sub_comment_count>0"> -->
-      <!-- </div> -->
+      <div class="load-more">
+        <button ion-button color="primary">Load More replie</button>
+      </div>
     </ion-item>
     
   </ion-list>

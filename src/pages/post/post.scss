@@ -74,16 +74,20 @@ page-post {
     }
   }
   .comm-item {
-    .comm-item-child{
+    .replie-comment {
       padding-top: 5px;
       padding-bottom: 10px;
       padding-left: 15px;
       border-left: 2px solid $light-gray;
-      &:first-child {
-        border-left: 0px;
-        padding-left: 0px;
-        padding-top: 0px;
+      &:last-child {
+        margin-bottom: 15px;
       }
+    }
+    .main-comment {
+      border-left: 0px;
+      padding-left: 0px;
+      padding-top: 0px;
+      margin-bottom: 15px;
     }
 
   }
@@ -123,6 +127,7 @@ page-post {
       list-style: none;
       @include flexbox();
       margin-bottom: 0px;
+      margin-top: 5px;
       
       li {
         padding-left: 15px;
@@ -156,5 +161,8 @@ page-post {
         }
       }
     }
+  }
+  .load-more {
+    text-align: center;
   }
 }
