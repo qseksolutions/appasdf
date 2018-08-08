@@ -67,6 +67,54 @@ export class PostPage {
     console.log(cmt); 
   }
 
+  report_or_delete(cmt){
+    if (this.is_login()) {
+      if (cmt.user_id == GLOBAL.USER.id){
+        
+        const actionSheet = this.actionSheetCtrl.create({
+          buttons: [
+            {
+              text: 'Delete Comment',
+              role: 'Report',
+              handler: () => {
+                
+              }
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked');
+              }
+            }
+          ]
+        });
+        actionSheet.present();
+      }
+      else{
+        const actionSheet = this.actionSheetCtrl.create({
+          buttons: [
+            {
+              text: 'Report Comment',
+              role: 'Report',
+              handler: () => {
+                
+              }
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked');
+              }
+            }
+          ]
+        });
+        actionSheet.present();
+      }
+    }
+  }
+
   loadmorecomment(post){
     return new Promise((resolve) => {
       this.posts.loadmorecomment(post).subscribe((resp: any) => {

@@ -61,7 +61,7 @@
               <span>{{comment.insert_date}}</span>
             </div>
 
-            <button ion-button clear icon-only end color="dark" (click)="report(comment.id)">
+            <button ion-button clear icon-only end color="dark" (click)="report_or_delete(comment)">
               <ion-icon name="more"></ion-icon>
             </button>
           </div>
@@ -129,7 +129,7 @@
           </div>
         </div>
         <div class="load-more" *ngIf="comment.is_more_comment">
-          <button ion-button color="primary"  (click)="loadmoresubcomment(comment)">Load More replie</button>
+          <button ion-button color="light-dark"  (click)="loadmoresubcomment(comment)">Load More replie</button>
         </div>
       </div>
       <div class="load-more" *ngIf="is_more_comment">
