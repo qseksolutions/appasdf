@@ -16,7 +16,8 @@ export class PostPage {
   report_detail: any;
 
   check_is_report = false;
-
+  is_more_comment = false;
+  
   constructor(
     public posts: Posts,
     private events: Events,
@@ -43,8 +44,16 @@ export class PostPage {
       this.posts.singlepost(this.post.id).subscribe((resp: any) => {
         if (resp.status) {
           this.item = resp.data;
+          if (this.item.comments.length==10){
+            this.is_more_comment = true; 
+            this.item.page = 2;
+          }
+          else{
+            this.is_more_comment = false; 
+          }
         }
       }, (err) => {
+        this.is_more_comment = false; 
         // Unable to log in
         console.log(err);
       });
@@ -58,6 +67,30 @@ export class PostPage {
     console.log(cmt); 
   }
 
+  loadmorecomment(post){
+    return new Promise((resolve) => {
+      this.posts.loadmorecomment(post).subscribe((resp: any) => {
+        if (resp.status) {
+          for (var i = 0; i < resp.data.length; i++) {
+            this.item.comments.push(resp.data[i]);
+          }
+          if (resp.data.lengt==10){
+            this.item.page++;
+          }
+          else{
+            this.is_more_comment = false;     
+          }
+        }
+        resolve();
+      }, (err) => {
+        this.is_more_comment = false; 
+        // Unable to log in
+        console.log(err);
+        resolve();
+      });
+    });
+  }
+
   loadsubcomment(cmt){
     cmt.page = 1;
     cmt.subs = [];
@@ -66,9 +99,6 @@ export class PostPage {
         this.posts.loadsubcomment(cmt).subscribe((resp: any) => {
           if (resp.status) {
             cmt.subs = resp.data;
-            // for (var i = 0; i < resp.data.length; i++) {
-            //   cmt.subs.push(resp.data[i]);
-            // }
           }
           resolve();
         }, (err) => {

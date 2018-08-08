@@ -128,9 +128,12 @@
             </div>
           </div>
         </div>
+        <!-- <div class="load-more" *ngIf="comment.sub_comment_count>10">
+          <button ion-button color="primary">Load More replie</button>
+        </div> -->
       </div>
-      <div class="load-more">
-        <button ion-button color="primary">Load More replie</button>
+      <div class="load-more" *ngIf="is_more_comment">
+        <button ion-button color="primary" (click)="loadmorecomment(item)">Load More replie</button>
       </div>
     </ion-item>
     

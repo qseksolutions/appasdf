@@ -60,6 +60,17 @@ export class Posts {
     return this.api.post('singlepost', body).share();
   }
 
+  loadmorecomment(post){
+    let body = new FormData();
+
+    body.append('post_id', post.id);
+    body.append('page', post.page);
+    body.append('user_id', GLOBAL.USER.id);
+    body.append('header', GLOBAL.API_HEADER);
+
+    return this.api.post('loadmorecomment', body).share();
+  }
+  
   loadsubcomment(cmt){
     let body = new FormData();
 
