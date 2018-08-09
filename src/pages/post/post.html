@@ -23,7 +23,7 @@
     <p *ngIf="post.type=='editor'" [innerHtml]="post.display_text"></p>
     <ion-row>
       <ion-col>
-        <button ion-button (click)="postlike(post)" [color]="post.is_like==true?'blue-color':'light-dark'" clear small icon-start>
+        <button ion-button (click)="postlike(post)" [color]="post.is_like==true?'liked':'light-dark'" clear small icon-start>
           <ion-icon name='thumbs-up'></ion-icon>
            {{post.like_count}} Likes
         </button>
@@ -51,7 +51,7 @@
     
     <ion-item *ngIf="item">
       <div class="comm-item" *ngFor="let comment of item.comments">
-        <div class="comm-item-child main-comment">
+        <div class="comm-item-child main-comment" *ngIf="!comment.is_reported">
           <div class="comm-head">
             <div class="comm-avtar">
               <img [src]="comment.userimage" onerror="this.src='assets/img/blur.jpg'" />
@@ -61,7 +61,7 @@
               <span>{{comment.insert_date}}</span>
             </div>
 
-            <button ion-button clear icon-only end color="dark" (click)="report_or_delete(comment)">
+            <button ion-button clear icon-only end color="dark" (click)="report_or_delete(comment,'parent')">
               <ion-icon name="more"></ion-icon>
             </button>
           </div>
@@ -73,8 +73,8 @@
           <div class="comm-foot">
             <ul class="list-unstyled">
               <li>
-                <a href="javascript:void(0)">
-                  <ion-icon name='thumbs-up'></ion-icon> {{comment.comment_like_count}}
+                <a href="javascript:void(0)" (click)="commentlike(comment)">
+                  <ion-icon name='thumbs-up' [color]="comment.comment_like==true?'liked':'light-dark'"></ion-icon> {{comment.comment_like_count}}
                 </a>
               </li>
 
@@ -92,7 +92,7 @@
           </div>
         </div>
         <div class="comm-item-child replie-comment" *ngFor="let subs of comment.subs">
-          <div class="comm-item-child_replie" >
+          <div class="comm-item-child_replie" *ngIf="!subs.is_reported">
             <div class="comm-head">
               <div class="comm-avtar">
                 <img [src]="subs.userimage" onerror="this.src='assets/img/blur.jpg'">
@@ -102,7 +102,7 @@
                 <span>{{subs.insert_date}}</span>
               </div>
             
-              <button ion-button clear icon-only end color="dark" (click)="report()">
+              <button ion-button clear icon-only end color="dark" (click)="report_or_delete(subs,comment.subs)">
                 <ion-icon name="more"></ion-icon>
               </button>
             </div>
@@ -114,8 +114,8 @@
             <div class="comm-foot">
               <ul class="list-unstyled">
                 <li>
-                  <a href="javascript:void(0)">
-                    <ion-icon name='thumbs-up'></ion-icon> {{subs.comment_like_count}}
+                  <a href="javascript:void(0)" (click)="commentlike(subs)">
+                    <ion-icon name='thumbs-up' [color]="subs.comment_like==true?'liked':'light-dark'"></ion-icon> {{subs.comment_like_count}}
                   </a>
                 </li>
             
@@ -129,11 +129,11 @@
           </div>
         </div>
         <div class="load-more" *ngIf="comment.is_more_comment">
-          <button ion-button color="light-dark"  (click)="loadmoresubcomment(comment)">Load More replie</button>
+          <button ion-button color="light-dark"  (click)="loadmoresubcomment(comment)">Load More replies</button>
         </div>
       </div>
       <div class="load-more" *ngIf="is_more_comment">
-        <button ion-button color="primary" (click)="loadmorecomment(item)">Load More comment</button>
+        <button ion-button color="primary" (click)="loadmorecomment(item)">Load More comments</button>
       </div>
     </ion-item>
     

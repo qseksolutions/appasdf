@@ -207,26 +207,28 @@ export class HomePage {
   }
 
   postreport(post) {
-    this.report_detail = post;
-    const actionSheet = this.actionSheetCtrl.create({
-      buttons: [
-        {
-          text: 'Report Post',
-          role: 'Report',
-          handler: () => {
-            this.reportModal();
+    if (this.is_login()) {
+      this.report_detail = post;
+      const actionSheet = this.actionSheetCtrl.create({
+        buttons: [
+          {
+            text: 'Report Post',
+            role: 'Report',
+            handler: () => {
+              this.reportModal();
+            }
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
           }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
-    });
-    actionSheet.present();
+        ]
+      });
+      actionSheet.present();
+    }
   }
 
   reportModal() {
@@ -269,6 +271,10 @@ export class HomePage {
     this.navCtrl.push('ProfilePage');
   }
 
+  gotoNotification() {
+    this.navCtrl.push('NotificationPage');
+  }
+
   gotoSearch() {
     this.navCtrl.push('SearchPage');
   }
@@ -287,5 +293,21 @@ export class HomePage {
   addImageFromGalleryPost() {
     const galler_modal = this.modalCtrl.create('ModalAddImageFromGalleryPage');
     galler_modal.present();
+  }
+
+  is_login() {
+    if (GLOBAL.IS_LOGGEDIN) {
+      return true;
+    }
+    else {
+      let toast = this.toastCtrl.create({
+        message: 'Please Login First',
+        duration: 3000,
+        cssClass: 'toast-error',
+        position: 'bottom'
+      });
+      toast.present();
+      return false;
+    }
   }
 }

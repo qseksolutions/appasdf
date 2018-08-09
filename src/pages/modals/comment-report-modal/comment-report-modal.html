@@ -1,0 +1,42 @@
+<ion-header>
+
+  <ion-navbar class="nav-bg">
+    <!-- <ion-title class="white">Report </ion-title> -->
+    <ion-buttons end>
+      <button ion-button icon-only (click)="cancel()">
+        <span>Cancel</span>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div class="report-title">
+    <h3>Report</h3>
+    <p>Give right reason help us process the report as soon as possible</p>
+  </div>
+
+
+  <form #formCtrl="ngForm" (submit)="doReport()">
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Reason</ion-label>
+        <ion-input type="text" name="reason" required [(ngModel)]="report_details.reason"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Description</ion-label>
+        <ion-textarea name="detail" required [(ngModel)]="report_details.detail"></ion-textarea>
+      </ion-item>
+    </ion-list>
+    <div class="p-btn">
+      <ion-buttons>
+        <button ion-button color="primary" [disabled]="!formCtrl.form.valid">
+          <span>Report</span>
+        </button>
+      </ion-buttons>
+    </div>
+  </form>
+
+</ion-content>

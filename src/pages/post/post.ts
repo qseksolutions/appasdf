@@ -14,6 +14,7 @@ export class PostPage {
   post: any;
   item: any;
   report_detail: any;
+  comment_report_detail: any;
 
   check_is_report = false;
   is_more_comment = false;
@@ -54,7 +55,6 @@ export class PostPage {
         }
       }, (err) => {
         this.is_more_comment = false; 
-        // Unable to log in
         console.log(err);
       });
     } catch (error) {
@@ -65,54 +65,6 @@ export class PostPage {
 
   replay_cumment(cmt){
     console.log(cmt); 
-  }
-
-  report_or_delete(cmt){
-    if (this.is_login()) {
-      if (cmt.user_id == GLOBAL.USER.id){
-        
-        const actionSheet = this.actionSheetCtrl.create({
-          buttons: [
-            {
-              text: 'Delete Comment',
-              role: 'Report',
-              handler: () => {
-                
-              }
-            },
-            {
-              text: 'Cancel',
-              role: 'cancel',
-              handler: () => {
-                console.log('Cancel clicked');
-              }
-            }
-          ]
-        });
-        actionSheet.present();
-      }
-      else{
-        const actionSheet = this.actionSheetCtrl.create({
-          buttons: [
-            {
-              text: 'Report Comment',
-              role: 'Report',
-              handler: () => {
-                
-              }
-            },
-            {
-              text: 'Cancel',
-              role: 'cancel',
-              handler: () => {
-                console.log('Cancel clicked');
-              }
-            }
-          ]
-        });
-        actionSheet.present();
-      }
-    }
   }
 
   loadmorecomment(post){
@@ -132,7 +84,6 @@ export class PostPage {
         resolve();
       }, (err) => {
         this.is_more_comment = false; 
-        // Unable to log in
         console.log(err);
         resolve();
       });
@@ -143,8 +94,8 @@ export class PostPage {
     cmt.page = 1;
     cmt.subs = [];
     cmt.is_more_comment = false;
-    console.log(cmt);
-    if (this.is_login()) {
+    // if (this.is_login()) 
+    {
       return new Promise((resolve) => {
         this.posts.loadsubcomment(cmt).subscribe((resp: any) => {
           if (resp.status) {
@@ -160,7 +111,6 @@ export class PostPage {
           resolve();
         }, (err) => {
           cmt.is_more_comment = false;
-          // Unable to log in
           console.log(err);
           resolve();
         });
@@ -169,8 +119,8 @@ export class PostPage {
   }
 
   loadmoresubcomment(cmt) {
-    console.log(cmt);
-    if (this.is_login()) {
+    // if (this.is_login()) 
+    {
       return new Promise((resolve) => {
         this.posts.loadsubcomment(cmt).subscribe((resp: any) => {
           if (resp.status) {
@@ -188,7 +138,6 @@ export class PostPage {
           resolve();
         }, (err) => {
           cmt.is_more_comment = false;
-          // Unable to log in
           console.log(err);
           resolve();
         });
@@ -196,7 +145,6 @@ export class PostPage {
     }
   }
   
-
   postreport(post) {
     if (this.is_login()) {
       this.report_detail = post;
@@ -274,11 +222,28 @@ export class PostPage {
           }
           resolve();
         }, (err) => {
-          // Unable to log in
           console.log(err);
           resolve();
         });
         
+      });
+    }
+  }
+
+  commentlike(post) {
+    if (this.is_login()) {
+      return new Promise((resolve) => {
+        this.posts.commentlike(post).subscribe((resp: any) => {
+          if (resp.status) {
+            post.comment_like = resp.like;
+            post.comment_like_count = resp.like_count;
+          }
+          resolve();
+        }, (err) => {
+          console.log(err);
+          resolve();
+        });
+
       });
     }
   }
@@ -297,5 +262,88 @@ export class PostPage {
       toast.present();
       return false;
     }
+  }
+
+  report_or_delete(cmt,type) {
+    if (this.is_login()) {
+      this.comment_report_detail = cmt;
+      this.comment_report_detail.type = type;
+      if (cmt.user_id == GLOBAL.USER.id) {
+
+        const actionSheet = this.actionSheetCtrl.create({
+          buttons: [
+            {
+              text: 'Delete Comment',
+              role: 'Report',
+              handler: () => {
+                this.deletecomment();
+              }
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked');
+              }
+            }
+          ]
+        });
+        actionSheet.present();
+      }
+      else {
+        
+        const actionSheet = this.actionSheetCtrl.create({
+          buttons: [
+            {
+              text: 'Report Comment',
+              role: 'Report',
+              handler: () => {
+                this.commentreportModal();
+              }
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked');
+              }
+            }
+          ]
+        });
+        actionSheet.present();
+      }
+    }
+  }
+
+  deletecomment(){
+    if (this.is_login()) {
+      return new Promise((resolve) => {
+        
+        this.posts.deletecomment(this.comment_report_detail).subscribe((resp: any) => {
+          if (resp.status) {
+            if (this.comment_report_detail.type == "parent") {
+              this.item.comments.splice(this.item.comments.indexOf(this.comment_report_detail), 1);
+            }
+            else {
+              this.comment_report_detail.type.splice(this.comment_report_detail.type.indexOf(this.comment_report_detail), 1);
+            }
+          }
+          resolve();
+        }, (err) => {
+          console.log(err);
+          resolve();
+        });
+      });
+    }
+  }
+
+  commentreportModal() {
+    let model = this.modalCtrl.create('CommentReportModalPage', { rpost: this.comment_report_detail });
+    model.present();
+    model.onDidDismiss((is_comment_repost) => {
+      if (is_comment_repost) {
+        this.comment_report_detail.is_reported = 1;
+      }
+    });
   }
 }
