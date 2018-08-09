@@ -13,6 +13,8 @@ import { GLOBAL } from '../../app/global';
 })
 export class HomePage {
 
+  user_email = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.email : '';
+
   report_detail:any;
 
   Lfilter = { order: 'id', page: 1, tab: 'letest', is_last: false };
@@ -39,7 +41,7 @@ export class HomePage {
     public navParams: NavParams) {
 
     // postlist
-    this.postlist(this.Lfilter);
+    this.changed('letest');
   } 
 
   changed(segment){
@@ -47,17 +49,28 @@ export class HomePage {
     this.Hdata = [];
     this.Tdata = [];
 
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    loading.present();
+
     if (segment=='letest'){
       this.Lfilter = { order: 'id', page: 1, tab: 'letest', is_last: false };
       this.postlist(this.Lfilter);
+      loading.dismiss();
     }
     else if (segment == 'hot') {
       this.Hfilter = { order: 'total_comment', page: 1, tab: 'hot', is_last: false };
       this.postlist(this.Hfilter);
+      loading.dismiss();
     }
     else if (segment == 'trading') {
       this.Tfilter = { order: 'like_count', page: 1, tab: 'trading', is_last: false };
       this.postlist(this.Tfilter);
+      loading.dismiss();
+    }
+    else{
+      loading.dismiss();
     }
   }
 
@@ -252,7 +265,7 @@ export class HomePage {
     });
 
     // Share via email
-    this.socialSharing.shareViaEmail('https://fuskk.com/' + post.tag_slug, post.title, [GLOBAL.USER.email]).then(() => {
+    this.socialSharing.shareViaEmail('https://fuskk.com/' + post.post_slug, post.title, [this.user_email]).then(() => {
       // Success!
       console.log('Success!');
     }).catch((e) => {

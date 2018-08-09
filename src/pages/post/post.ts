@@ -11,6 +11,8 @@ import { GLOBAL } from '../../app/global';
 })
 export class PostPage {
 
+  user_email = GLOBAL.IS_LOGGEDIN?GLOBAL.USER.email:'';
+  
   post: any;
   item: any;
   report_detail: any;
@@ -203,7 +205,7 @@ export class PostPage {
     });
 
     // Share via email
-    this.socialSharing.shareViaEmail('https://fuskk.com/' + post.tag_slug, post.title, [GLOBAL.USER.email]).then(() => {
+    this.socialSharing.shareViaEmail('https://fuskk.com/' + post.post_slug, post.title, [this.user_email]).then(() => {
       // Success!
       console.log('Success!');
     }).catch((e) => {
