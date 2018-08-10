@@ -64,9 +64,37 @@ export class PostPage {
       this.navCtrl.setRoot('HomePage');
     }
   }
+  replay_comment(cmt){
+    console.log(cmt);
+  }
 
-  replay_cumment(cmt){
-    console.log(cmt); 
+  replay_addsubcomment(cmt,subs_array){
+    console.log(cmt, subs_array);
+    if (this.is_login()) 
+    {
+      cmt.comment_text = 'test 777';
+      return new Promise((resolve) => {
+        this.posts.addsubcomment(cmt).subscribe((resp: any) => {
+          if (resp.status) {
+            subs_array.subs.unshift(resp.data);
+            subs_array.sub_comment_count =  subs_array.subs.length;
+          }
+          resolve();
+        }, (err) => {
+          cmt.is_more_comment = false;
+          console.log(err);
+          resolve();
+        });
+      });
+    }
+  }
+
+  focusCommentsInput(){
+    
+  }
+
+  gotoProfile(cmt_user_id) {
+    this.navCtrl.push('ProfilePage', { user_id: cmt_user_id});
   }
 
   loadmorecomment(post){

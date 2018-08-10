@@ -43,6 +43,17 @@ export class Posts {
     return this.api.post('commentlike', body).share();
   }
   
+  addsubcomment(cmt) {
+    let body = new FormData();
+    body.append('comment_id', cmt.parent_id);
+    body.append('post_id', cmt.post_id);
+    body.append('comment', cmt.comment_text);
+    body.append('user_id', this.user_id);
+    body.append('header', this.header);
+
+    return this.api.post('addsubcomment', body).share();
+  }
+  
   deletecomment(cmt) {
     let body = new FormData();
     body.append('id', cmt.id);

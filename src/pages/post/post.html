@@ -29,7 +29,7 @@
         </button>
       </ion-col>
       <ion-col>
-        <button ion-button color="light-dark" clear small icon-start>
+        <button ion-button color="light-dark" clear small icon-start (click)="focusCommentsInput()">
           <ion-icon name='text'></ion-icon>
            {{post.total_comment}} Comments
         </button>
@@ -57,7 +57,7 @@
               <img [src]="comment.userimage" onerror="this.src='assets/img/blur.jpg'" />
             </div>
             <div class="comm-title">
-              <h2>{{comment.username}}</h2>
+              <h2 (click)="gotoProfile(comment.user_id)">{{comment.username}}</h2>
               <span>{{comment.insert_date}}</span>
             </div>
 
@@ -79,8 +79,8 @@
               </li>
 
               <li>
-                <a href="javascript:void(0)">
-                  <ion-icon ios="ios-undo" md="md-undo" (click)="replay_cumment(comment)"></ion-icon> Replay
+                <a href="javascript:void(0)" (click)="replay_comment(comment)">
+                  <ion-icon ios="ios-undo" md="md-undo"></ion-icon> Replay
                 </a>
               </li>
               <li *ngIf="comment.sub_comment_count>0" (click)="loadsubcomment(comment)">
@@ -120,7 +120,7 @@
                 </li>
             
                 <li>
-                  <a href="javascript:void(0)">
+                  <a href="javascript:void(0)" (click)="replay_addsubcomment(subs,comment)">
                     <ion-icon ios="ios-undo" md="md-undo"></ion-icon> Replay
                   </a>
                 </li>
@@ -140,7 +140,7 @@
   </ion-list>
 </ion-content>
   <ion-footer class="comm-box">
-    <ion-input type="text" placeholder="Write comment..."></ion-input>
+    <ion-input type="text" placeholder="Write comment..." id="commenttext" #commenttext></ion-input>
     <ion-buttons end>
       <button ion-button icon-only>
         <ion-icon name="ios-send"></ion-icon>
