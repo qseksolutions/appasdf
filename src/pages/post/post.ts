@@ -4,6 +4,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { Posts } from '../../providers/posts/posts';
 import { GLOBAL } from '../../app/global';
 
+import * as $ from "jquery";
+
 @IonicPage()
 @Component({
   selector: 'page-post',
@@ -20,7 +22,12 @@ export class PostPage {
 
   check_is_report = false;
   is_more_comment = false;
-  
+
+  comment_text:string = "";
+  comment_data:any;
+
+  // new_comment: { comment_text: string, post_id: number } = { comment_text: "Test Comment", post_id:0};
+   
   constructor(
     public posts: Posts,
     private events: Events,
@@ -64,33 +71,81 @@ export class PostPage {
       this.navCtrl.setRoot('HomePage');
     }
   }
+
+
   replay_comment(cmt){
     console.log(cmt);
   }
-
-  replay_addsubcomment(cmt,subs_array){
-    console.log(cmt, subs_array);
-    if (this.is_login()) 
-    {
-      cmt.comment_text = 'test 777';
-      return new Promise((resolve) => {
-        this.posts.addsubcomment(cmt).subscribe((resp: any) => {
-          if (resp.status) {
-            subs_array.subs.unshift(resp.data);
-            subs_array.sub_comment_count =  subs_array.subs.length;
-          }
-          resolve();
-        }, (err) => {
-          cmt.is_more_comment = false;
-          console.log(err);
-          resolve();
-        });
-      });
+  
+  replay_addcomment(cmt) {
+    if (this.is_login()) {
+      // this.new_comment.post_id = cmt.post_id;
+      // this.new_comment.comment_text = '@' + cmt.user_slug + ' ';
+      $('input[name="comment_text"]').val('@' + cmt.user_slug + ' ').focus();
     }
   }
 
-  focusCommentsInput(){
+  replay_addsubcomment(cmt,subs_array){
+    if (this.is_login()) 
+    {
+      this.comment_data = subs_array
+      this.comment_data.details = cmt;
+      
+      this.comment_text = '@' + cmt.user_slug + ' ';
+      $('input[name="comment_text"]').val('@' + cmt.user_slug + ' ').focus();
+    }
+  }
+  
+
+  doComment(){
+    this.comment_data.details.comment_text = this.comment_text;
+    console.log(this.comment_data);
+    return new Promise((resolve) => {
+      this.posts.addsubcomment(this.comment_data.details).subscribe((resp: any) => {
+        if (resp.status) {
+          this.comment_data.subs.unshift(resp.data);
+          this.comment_data.sub_comment_count = this.comment_data.subs.length;
+          $('input[name="comment_text"]').val('').focus();
+        }
+        resolve();
+      }, (err) => {
+        console.log(err);
+        resolve();
+      });
+    });
     
+    
+
+    // this.posts.addsubcomment(cmt).subscribe((resp: any) => {
+    //   if (resp.status) {
+    //     cmt_array.subs.unshift(resp.data);
+    //     cmt_array.sub_comment_count = cmt_array.subs.length;
+    //   }
+    //   resolve();
+    // }, (err) => {
+    //   cmt.is_more_comment = false;
+    //   console.log(err);
+    //   resolve();
+    // });
+
+    // return new Promise((resolve) => {
+    //   this.posts.addcomment(this.new_comment).subscribe((resp: any) => {
+    //     console.log(resp);
+    //     if (resp.status) {
+    //       // cmt_array.comments.unshift(resp.data);
+    //     }
+    //     resolve();
+    //   }, (err) => {
+    //     console.log(err);
+    //     resolve();
+    //   });
+    // });
+  }
+
+  focusCommentsInput(){
+    setTimeout(() => {
+      $('input[name="comment_text"]').focus();
+    }, 1000);
   }
 
   gotoProfile(cmt_user_id) {
