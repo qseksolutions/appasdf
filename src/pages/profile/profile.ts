@@ -4,6 +4,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { Posts } from '../../providers/posts/posts';
 import { User } from '../../providers/user/user';
 import { GLOBAL } from '../../app/global';
+import { Posts } from '../../providers/posts/posts';
 
 @IonicPage()
 @Component({
@@ -37,6 +38,7 @@ export class ProfilePage {
   constructor(
     public posts: Posts,
     public user: User,
+    public posts: Posts,
     public events: Events,
     public toastCtrl: ToastController,
     public navCtrl: NavController,

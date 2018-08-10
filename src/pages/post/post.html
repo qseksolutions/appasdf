@@ -66,7 +66,7 @@
             </button>
           </div>
           <div class="comm-body">
-            <p *ngIf="comment.comment">{{comment.comment}}</p>  
+            <p *ngIf="comment.comment">{{comment.reply_slug?'@'+comment.reply_slug:''}} {{comment.comment}}</p>  
             <p *ngIf="comment.meme_comment">{{comment.meme_comment}}</p>  
             <img *ngIf="comment.image" [src]="comment.image" onerror="this.src='assets/img/blur.jpg'" />
           </div>
@@ -79,7 +79,7 @@
               </li>
 
               <li>
-                <a href="javascript:void(0)" (click)="replay_comment(comment)">
+                <a href="javascript:void(0)" (click)="replay_addcomment(comment)">
                   <ion-icon ios="ios-undo" md="md-undo"></ion-icon> Replay
                 </a>
               </li>
@@ -107,7 +107,7 @@
               </button>
             </div>
             <div class="comm-body">
-              <p *ngIf="subs.comment">{{subs.comment}}</p>
+              <p *ngIf="subs.comment">{{subs.reply_slug?'@'+subs.reply_slug:''}} {{subs.comment}}</p>
               <img *ngIf="subs.meme_comment" [src]="subs.meme_comment" onerror="this.src='assets/img/blur.jpg'" />
               <img *ngIf="subs.image" [src]="subs.image" onerror="this.src='assets/img/blur.jpg'" />
             </div>
@@ -139,11 +139,13 @@
     
   </ion-list>
 </ion-content>
-  <ion-footer class="comm-box">
-    <ion-input type="text" placeholder="Write comment..." id="commenttext" #commenttext></ion-input>
+<ion-footer class="comm-box">
+  <form #formCtrl="ngForm" (submit)="doComment(item.comments)">
+  <ion-input type="text" placeholder="Write comment..." required name="comment_text" [(ngModel)]="new_comment.comment_text"></ion-input>
     <ion-buttons end>
-      <button ion-button icon-only>
+      <button ion-button icon-only [disabled]="!formCtrl.form.valid">
         <ion-icon name="ios-send"></ion-icon>
       </button>
     </ion-buttons>
+  </form>
   </ion-footer>
