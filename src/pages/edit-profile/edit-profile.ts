@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
 import { IonicPage, NavController, ViewController } from 'ionic-angular';
+import { User } from '../../providers/user/user';
+import { GLOBAL } from '../../app/global';
 
 @IonicPage()
 @Component({
@@ -12,12 +14,20 @@ export class EditProfilePage {
   @ViewChild('fileInput') fileInput;
 
   isReadyToSave: boolean;
+  country = [];
+  userdata = [];
 
   item: any;
 
   form: FormGroup;
 
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera) {
+  constructor(
+    public user: User,
+    public navCtrl: NavController,
+    public viewCtrl: ViewController,
+    formBuilder: FormBuilder,
+    public camera: Camera
+  ) {
     this.form = formBuilder.group({
       profilePic: [''],
       name: ['', Validators.required],
@@ -29,8 +39,25 @@ export class EditProfilePage {
     });
   }
 
-  ionViewDidLoad() {
+  /* ionViewDidLoad() {
     this.viewCtrl.setBackButtonText('');
+  } */
+
+  ionViewWillEnter() {
+    this.user.getcountrylist().subscribe((resp: any) => {
+      if (resp.status) {
+        this.country = resp.data;
+      }
+    }, (err) => {
+      console.log(err);
+    });
+    this.user.getuserdata(GLOBAL.USER.id).subscribe((resp: any) => {
+      if (resp.status) {
+        this.userdata = resp.data;
+      }
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   getPicture() {
@@ -47,6 +74,10 @@ export class EditProfilePage {
     } else {
       this.fileInput.nativeElement.click();
     }
+  }
+
+  updateuser() {
+    console.log(this.userdata);
   }
 
   processWebImage(event) {
