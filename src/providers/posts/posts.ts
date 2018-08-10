@@ -45,7 +45,7 @@ export class Posts {
   
   addsubcomment(cmt) {
     let body = new FormData();
-    body.append('comment_id', cmt.parent_id);
+    body.append('comment_id', cmt.comment_id);
     body.append('post_id', cmt.post_id);
     body.append('comment', cmt.comment_text);
     body.append('user_id', this.user_id);
@@ -54,17 +54,6 @@ export class Posts {
     return this.api.post('addsubcomment', body).share();
   }
   
-  addparentsubcomment(cmt) {
-    let body = new FormData();
-    body.append('comment_id', cmt.id);
-    body.append('post_id', cmt.post_id);
-    body.append('comment', cmt.comment_text);
-    body.append('user_id', this.user_id);
-    body.append('header', this.header);
-
-    return this.api.post('addsubcomment', body).share();
-  }
-
   addcomment(cmt) {
     let body = new FormData();
     body.append('post_id', cmt.post_id);

@@ -23,10 +23,9 @@ export class PostPage {
   check_is_report = false;
   is_more_comment = false;
 
-  comment_text:string = "";
   comment_data:any;
 
-  // new_comment: { comment_text: string, post_id: number } = { comment_text: "Test Comment", post_id:0};
+  new_comment: { comment_text: string, comment_id: number, post_id: number, replay_type: number } = { comment_text: "", comment_id: 0, post_id: 0, replay_type: 0};
    
   constructor(
     public posts: Posts,
@@ -79,94 +78,99 @@ export class PostPage {
   
   replay_addcomment(cmt) {
     if (this.is_login()) {
-      cmt.is_replay_parent = true;
-      this.comment_data = cmt; 
-      this.comment_text = '@' + cmt.user_slug + ' ';
-      $('input[name="comment_text"]').val('@' + cmt.user_slug + ' ').focus();
+      console.log(cmt);
+
+      this.comment_data     = cmt; 
+      
+      this.new_comment.comment_text = '@' + cmt.user_slug + ' ';
+      
+      this.new_comment.comment_text     = this.new_comment.comment_text;
+      this.new_comment.comment_id       = cmt.id;
+      this.new_comment.post_id          = cmt.post_id;
+      this.new_comment.replay_type      = 1;
+      
+      $('input[name="comment_text"]').val(this.new_comment.comment_text).focus();
     }
   }
 
   replay_addsubcomment(cmt,subs_array){
     if (this.is_login()) 
     {
-      this.comment_data = subs_array
-      this.comment_data.details = cmt;
-      this.comment_data.is_replay_parent = false;
+      this.comment_data                   = subs_array
+      this.comment_data.details           = cmt;
       
-      this.comment_text = '@' + cmt.user_slug + ' ';
-      $('input[name="comment_text"]').val('@' + cmt.user_slug + ' ').focus();
+      this.new_comment.comment_text = '@' + cmt.user_slug + ' ';
+
+      this.new_comment.comment_text     = this.new_comment.comment_text;
+      this.new_comment.comment_id       = cmt.parent_id;
+      this.new_comment.post_id          = cmt.post_id;
+      this.new_comment.replay_type      = 2;
+      
+      $('input[name="comment_text"]').val(this.new_comment.comment_text).focus();
     }
   }
   
 
   doComment(){
-    if (this.comment_data.is_replay_parent){
-      this.comment_data.comment_text = this.comment_text;
-      console.log(this.comment_data);
-      return new Promise((resolve) => {
-        this.posts.addparentsubcomment(this.comment_data).subscribe((resp: any) => {
-          if (resp.status) {
-            if (this.comment_data.subs){
-              this.comment_data.subs.unshift(resp.data);
+    if (this.is_login()){
+      if (this.new_comment.replay_type==1){
+        return new Promise((resolve) => {
+          this.posts.addsubcomment(this.new_comment).subscribe((resp: any) => {
+            if (resp.status) {
+              if (this.comment_data.subs){
+                this.comment_data.subs.unshift(resp.data);
+              }
+
+              this.comment_data.sub_comment_count++;
+              
+              this.new_comment = { comment_text: "", comment_id: 0, post_id: 0, replay_type: 0 };
+              $('input[name="comment_text"]').focus();
             }
-
-            this.comment_data.sub_comment_count++;
-            this.comment_text = '';
-            $('input[name="comment_text"]').val('').focus();
-          }
-          resolve();
-        }, (err) => {
-          console.log(err);
-          resolve();
+            resolve();
+          }, (err) => {
+            console.log(err);
+            resolve();
+          });
         });
-      });
-    }
-    else{
-      console.log(this.comment_data);
+      }
+      else if (this.new_comment.replay_type == 2) {
+        return new Promise((resolve) => {
+          this.posts.addsubcomment(this.new_comment).subscribe((resp: any) => {
+            if (resp.status) {
+              this.comment_data.subs.unshift(resp.data);
+              this.comment_data.sub_comment_count = this.comment_data.subs.length;
 
-      this.comment_data.details.comment_text = this.comment_text;
-      return new Promise((resolve) => {
-        this.posts.addsubcomment(this.comment_data.details).subscribe((resp: any) => {
-          if (resp.status) {
-            this.comment_data.subs.unshift(resp.data);
-            this.comment_data.sub_comment_count = this.comment_data.subs.length;
-            this.comment_text = '';
-            $('input[name="comment_text"]').val('').focus();
-          }
-          resolve();
-        }, (err) => {
-          console.log(err);
-          resolve();
+              this.new_comment = { comment_text: "", comment_id: 0, post_id: 0, replay_type: 0 };
+              $('input[name="comment_text"]').focus();
+            }
+            resolve();
+          }, (err) => {
+            console.log(err);
+            resolve();
+          });
         });
-      });
+      }
+      else{
+        this.new_comment.post_id = this.item.id;
+        console.log(this.new_comment);
+        return new Promise((resolve) => {
+          this.posts.addcomment(this.new_comment).subscribe((resp: any) => {
+            if (resp.status) {
+              console.log(this.item.comments);
+              this.item.comments.unshift(resp.data);
+              this.post.total_comment++;
+
+              this.new_comment = { comment_text: "", comment_id: 0, post_id: 0, replay_type: 0 };
+              $('input[name="comment_text"]').focus();
+            }
+            resolve();
+          }, (err) => {
+            console.log(err);
+            resolve();
+          });
+        });
+      }
     }
-    
-    
-
-    // this.posts.addsubcomment(cmt).subscribe((resp: any) => {
-    //   if (resp.status) {
-    //     cmt_array.subs.unshift(resp.data);
-    //     cmt_array.sub_comment_count = cmt_array.subs.length;
-    //   }
-    //   resolve();
-    // }, (err) => {
-    //   cmt.is_more_comment = false;
-    //   console.log(err);
-    //   resolve();
-    // });
-
-    // return new Promise((resolve) => {
-    //   this.posts.addcomment(this.new_comment).subscribe((resp: any) => {
-    //     console.log(resp);
-    //     if (resp.status) {
-    //       // cmt_array.comments.unshift(resp.data);
-    //     }
-    //     resolve();
-    //   }, (err) => {
-    //     console.log(err);
-    //     resolve();
-    //   });
-    // });
   }
 
   focusCommentsInput(){
@@ -379,7 +383,7 @@ export class PostPage {
   report_or_delete(cmt,type) {
     if (this.is_login()) {
       this.comment_report_detail = cmt;
-      this.comment_report_detail.type = type;
+      this.comment_report_detail.cmt_type = type;
       if (cmt.user_id == GLOBAL.USER.id) {
 
         const actionSheet = this.actionSheetCtrl.create({
@@ -433,11 +437,11 @@ export class PostPage {
         
         this.posts.deletecomment(this.comment_report_detail).subscribe((resp: any) => {
           if (resp.status) {
-            if (this.comment_report_detail.type == "parent") {
+            if (this.comment_report_detail.cmt_type == "parent") {
               this.item.comments.splice(this.item.comments.indexOf(this.comment_report_detail), 1);
             }
             else {
-              this.comment_report_detail.type.splice(this.comment_report_detail.type.indexOf(this.comment_report_detail), 1);
+              this.comment_report_detail.cmt_type.splice(this.comment_report_detail.cmt_type.indexOf(this.comment_report_detail), 1);
             }
           }
           resolve();
