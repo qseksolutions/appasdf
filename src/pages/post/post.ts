@@ -14,6 +14,7 @@ import * as $ from "jquery";
 export class PostPage {
 
   user_email = GLOBAL.IS_LOGGEDIN?GLOBAL.USER.email:'';
+  user_id = GLOBAL.IS_LOGGEDIN?GLOBAL.USER.id:'';
   
   post: any;
   item: any;
@@ -138,7 +139,7 @@ export class PostPage {
           this.posts.addsubcomment(this.new_comment).subscribe((resp: any) => {
             if (resp.status) {
               this.comment_data.subs.unshift(resp.data);
-              this.comment_data.sub_comment_count = this.comment_data.subs.length;
+              this.comment_data.sub_comment_count++;
 
               this.new_comment = { comment_text: "", comment_id: 0, post_id: 0, replay_type: 0 };
               $('input[name="comment_text"]').focus();
@@ -170,6 +171,30 @@ export class PostPage {
           });
         });
       }
+    }
+  }
+
+  deletecomment() {
+    if (this.is_login()) {
+      return new Promise((resolve) => {
+
+        this.posts.deletecomment(this.comment_report_detail).subscribe((resp: any) => {
+          if (resp.status) {
+            if (this.comment_report_detail.cmt_type == "parent") {
+              this.item.comments.splice(this.item.comments.indexOf(this.comment_report_detail), 1);
+              this.post.total_comment--;
+            }
+            else {
+              this.comment_report_detail.cmt_type.subs.splice(this.comment_report_detail.cmt_type.subs.indexOf(this.comment_report_detail), 1);
+              this.comment_report_detail.cmt_type.sub_comment_count--;
+            }
+          }
+          resolve();
+        }, (err) => {
+          console.log(err);
+          resolve();
+        });
+      });
     }
   }
 
@@ -384,7 +409,7 @@ export class PostPage {
     if (this.is_login()) {
       this.comment_report_detail = cmt;
       this.comment_report_detail.cmt_type = type;
-      if (cmt.user_id == GLOBAL.USER.id) {
+      if (cmt.user_id == this.user_id) {
 
         const actionSheet = this.actionSheetCtrl.create({
           buttons: [
@@ -428,28 +453,6 @@ export class PostPage {
         });
         actionSheet.present();
       }
-    }
-  }
-
-  deletecomment(){
-    if (this.is_login()) {
-      return new Promise((resolve) => {
-        
-        this.posts.deletecomment(this.comment_report_detail).subscribe((resp: any) => {
-          if (resp.status) {
-            if (this.comment_report_detail.cmt_type == "parent") {
-              this.item.comments.splice(this.item.comments.indexOf(this.comment_report_detail), 1);
-            }
-            else {
-              this.comment_report_detail.cmt_type.splice(this.comment_report_detail.cmt_type.indexOf(this.comment_report_detail), 1);
-            }
-          }
-          resolve();
-        }, (err) => {
-          console.log(err);
-          resolve();
-        });
-      });
     }
   }
 
