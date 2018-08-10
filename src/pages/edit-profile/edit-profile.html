@@ -4,7 +4,7 @@
     <ion-title color="color">Edit Profile</ion-title>
     <!--   {{ 'ITEM_CREATE_TITLE' | translate }} -->
     <ion-buttons end>
-      <button ion-button (click)="done()" strong color="white">
+      <button ion-button (click)="updateuser()" strong color="white">
         <span >
           {{ 'SAVE_BUTTON' | translate }}
         </span>
@@ -16,55 +16,54 @@
 
 
 <ion-content>
-  <form *ngIf="form" [formGroup]="form" (ngSubmit)="createItem()">
+  <form *ngIf="userdata" #formCtrl="ngForm">
     <input type="file" #fileInput style="visibility: hidden; height: 0px ; display: none;" name="files[]" (change)="processWebImage($event)" />
     <div class="profile-image-wrapper" (click)="getPicture()">
-      <div class="profile-image-placeholder" *ngIf="!this.form.controls.profilePic.value">
+      <!-- <div class="profile-image-placeholder" *ngIf="!this.form.controls.profilePic.value">
         <ion-icon name="add"></ion-icon>
-      </div>
+      </div> -->
+      <img *ngIf="!this.form.controls.profilePic.value" class="profile-image-placeholder" src="{{userdata.image}}" onerror="this.src='assets/img/default-user-avatars.png'"/>
       <div class="profile-image" [style.backgroundImage]="getProfileImageStyle()" *ngIf="this.form.controls.profilePic.value"></div>
       <div class="chnage-note"> Change profile Photo</div>
     </div>
     <ion-list>
       <ion-item>
         <ion-label>Name</ion-label>
-        <ion-input type="text" value="praful"></ion-input>
+        <ion-input type="text" name="username" [(ngModel)]="userdata.username"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label>Username</ion-label>
-        <ion-input type="text" value="Praful Patel"></ion-input>
+        <ion-input type="text" name="user_slug" [(ngModel)]="userdata.user_slug"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label>Bio</ion-label>
-        <ion-input type="text" value="Dream keep me alive"></ion-input>
+        <ion-input type="text" name="about_me" [(ngModel)]="userdata.about_me"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label>Birth Date</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY" ></ion-datetime>
+        <ion-datetime displayFormat="MM/DD/YYYY" name="dob" [(ngModel)]="userdata.dob"></ion-datetime>
       </ion-item>
 
       <ion-item>
         <ion-label class="small-text">Email address</ion-label>
-        <ion-input type="email" value="prafulpatel@gmail.com"></ion-input>
+        <ion-input type="email" name="email" [(ngModel)]="userdata.email"></ion-input>
       </ion-item>
       
       <ion-item>
         <ion-label>Country</ion-label>
-        <ion-select>
-          <ion-option value="India" selected="true">India</ion-option>
-          <ion-option value="USA">USA</ion-option>
-          <ion-option value="UK">UK</ion-option>
+        <ion-select name="country_id" [(ngModel)]="userdata.country_id">
+          <ion-option *ngFor="let con of country" value="{{con.id}}">{{con.cname}}</ion-option>
         </ion-select>
       </ion-item>
 
       <ion-item>
         <ion-label>Gender</ion-label>
-        <ion-select>
+        <ion-select name="gender" [(ngModel)]="userdata.gender">
           <ion-option value="not spacified" >Not Spacified</ion-option>
-          <ion-option value="male" selected="true">Male</ion-option>
+          <ion-option value="male">Male</ion-option>
           <ion-option value="female">Female</ion-option>
         </ion-select>
       </ion-item>

@@ -81,6 +81,10 @@ export class User {
 
     return this.api.post('getuser', body).share();
   }
+  
+  getcountrylist() {
+    return this.api.get('country', { header: GLOBAL.API_HEADER }).share();
+  }
 
   /**
    * Log the user out, which forgets the session
