@@ -1,4 +1,5 @@
 {
+  "baseUrl": "src",
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "declaration": false,
