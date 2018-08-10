@@ -6,7 +6,14 @@ import { GLOBAL } from '../../app/global';
 @Injectable()
 export class User {
 
-  constructor(public api: Api) { }
+  user_id = '';
+  header = GLOBAL.API_HEADER;
+
+  constructor(public api: Api) {
+    if (GLOBAL.IS_LOGGEDIN) {
+      this.user_id = GLOBAL.USER.id;
+    }
+  }
 
 
   category() {
@@ -55,6 +62,24 @@ export class User {
     });
 
     return seq;
+  }
+
+  userpostlist(fdata, user_id) {
+    let body = new FormData();
+    body.append('order_by', fdata.order);
+    body.append('page', fdata.page);
+    body.append('user_id', user_id);
+    body.append('header', this.header);
+
+    return this.api.post('userprofile', body).share();
+  }
+
+  getuserdata(user_id) {
+    let body = new FormData();
+    body.append('user_id', user_id);
+    body.append('header', this.header);
+
+    return this.api.post('getuser', body).share();
   }
 
   /**
