@@ -18,8 +18,7 @@ export class CaregoryPage {
   Hfilter = { page: 1, cat_id: 0, tab: 1, is_last: false, order: 'total_comment' };
 
   tabs = 0;
-  is_active = "home";
-
+  
   Ldata = [];
   Hdata = [];
   category: any;
@@ -36,53 +35,52 @@ export class CaregoryPage {
     public navParams: NavParams) {
 
     this.category = this.navParams.get('category');
-    console.log(this.category);
     try {
       this.Lfilter.cat_id = this.category.id;
       this.Hfilter.cat_id = this.category.id;
     } catch (error) {
-      this.navCtrl.setRoot('HomePage');
+      this.gotoHome();
     }
-    this.changed(0);
+    
   }
-
+  
   changed(idx) {
+    
     this.slider.slideTo(idx);
-    this.Ldata = [];
-    this.Hdata = [];
-
-
-    let loading = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-    loading.present();
-
+    // this.Ldata = [];
+    // this.Hdata = [];
+    // console.log(idx);
+    // let loading = this.loadingCtrl.create({
+    //   content: 'Please wait...'
+    // });
+    // loading.present();
     if (idx == 0) {
-      this.Lfilter = { page: 1, cat_id: this.category.id, tab: idx, is_last: false, order: 'id' };
-      this.postlist(this.Lfilter);
-      loading.dismiss();
+      // this.Lfilter = { page: 1, cat_id: this.category.id, tab: idx, is_last: false, order: 'id' };
+      // this.categorypost(this.Lfilter);
+      // loading.dismiss();
     }
     else if (idx == 1) {
-      this.Hfilter = { page: 1, cat_id: this.category.id, tab: idx, is_last: false, order: 'total_comment' };
-      this.postlist(this.Hfilter);
-      loading.dismiss();
+      // this.Hfilter = { page: 1, cat_id: this.category.id, tab: idx, is_last: false, order: 'total_comment' };
+      // this.categorypost(this.Hfilter);
+      // loading.dismiss();
     }
     else {
-      loading.dismiss();
+      // loading.dismiss();
     }
+
   }
 
   changeTabs($event) {
     this.tabs = $event._snapIndex.toString();
   }
 
-  postlist(flt) {
-    this.posts.postlist(flt).subscribe((resp: any) => {
+  categorypost(flt) {
+    this.posts.categorypost(flt).subscribe((resp: any) => {
       if (resp.status) {
         if (flt.tab == 0) {
           this.Ldata = resp.data;
         }
-        else if (flt.tab == 4) {
+        else if (flt.tab == 1) {
           this.Hdata = resp.data;
         }
       }
@@ -93,7 +91,8 @@ export class CaregoryPage {
   }
 
   ionViewDidLoad() {
-    
+    this.categorypost(this.Lfilter);
+    this.categorypost(this.Hfilter);
   }
 
   addPost() {
@@ -224,12 +223,10 @@ export class CaregoryPage {
   }
 
   gotoHome() {
-    this.is_active = "home";
     this.navCtrl.setRoot('HomePage');
   }
 
   gotoProfile() {
-    this.is_active = "profile";
     this.navCtrl.push('ProfilePage');
   }
 

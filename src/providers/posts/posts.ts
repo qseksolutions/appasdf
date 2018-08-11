@@ -105,6 +105,17 @@ export class Posts {
 
     return this.api.post('singlepost', body).share();
   }
+  
+  categorypost(fdata) {
+    let body = new FormData();
+    body.append('order_by', fdata.order);
+    body.append('page', fdata.page);
+    body.append('cat_id', fdata.cat_id);
+    body.append('user_id', this.user_id);
+    body.append('header', this.header);
+
+    return this.api.post('postlist', body).share();
+  }
 
   loadmorecomment(post){
     let body = new FormData();

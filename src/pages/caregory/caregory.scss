@@ -1,4 +1,10 @@
 page-caregory {
+    ion-slide {
+        &.swiper-slide {
+            @include align-items(flex-start);
+            overflow: auto;
+        }
+    }
     .nav-bg {
         @include linear-gradient;
         .toolbar-background-ios {
@@ -7,10 +13,6 @@ page-caregory {
         .toolbar-background-md {
             @extend .toolbar-background-ios ;
         } 
-    }
-    .swiper-slide{
-        overflow-x: auto;
-        padding-top:300px; 
     }
     .content-md {
         background-color: $body-bg;
