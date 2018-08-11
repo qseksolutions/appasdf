@@ -36,9 +36,7 @@ export class LoginPage {
     this.user.login(this.account).subscribe((resp: any) => {
       loading.dismiss();
       if (resp.status) {
-        setTimeout(() => {
-          this.navCtrl.setRoot('HomePage');
-        }, 1000);
+        this.navCtrl.setRoot('HomePage');
 
         let toast = this.toastCtrl.create({
           message: resp.message,
