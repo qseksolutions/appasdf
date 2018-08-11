@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
-import { IonicPage, NavController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, ViewController, LoadingController, ToastController } from 'ionic-angular';
 import { User } from '../../providers/user/user';
 import { GLOBAL } from '../../app/global';
 
@@ -26,6 +26,8 @@ export class EditProfilePage {
     public navCtrl: NavController,
     public viewCtrl: ViewController,
     formBuilder: FormBuilder,
+    public loadingCtrl: LoadingController,
+    public toastCtrl: ToastController,
     public camera: Camera
   ) {
     this.form = formBuilder.group({
@@ -54,6 +56,7 @@ export class EditProfilePage {
     this.user.getuserdata(GLOBAL.USER.id).subscribe((resp: any) => {
       if (resp.status) {
         this.userdata = resp.data;
+        this.userdata['newimage'] = '';
       }
     }, (err) => {
       console.log(err);
@@ -77,18 +80,58 @@ export class EditProfilePage {
   }
 
   updateuser() {
-    console.log(this.userdata);
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    loading.present();
+    this.user.updateuser(this.userdata).subscribe((resp: any) => {
+      loading.dismiss();
+      if (resp.status) {
+        this.userdata = resp.data;
+        this.userdata['newimage'] = '';
+
+        let toast = this.toastCtrl.create({
+          message: resp.message,
+          duration: 3000,
+          cssClass: 'toast-success',
+          position: 'bottom'
+        });
+        toast.present();
+      }
+    }, (err) => {
+      loading.dismiss();
+      let toast = this.toastCtrl.create({
+        message: err.error.message,
+        duration: 3000,
+        cssClass: 'toast-error',
+        position: 'bottom'
+      });
+      toast.present();
+    });
   }
 
   processWebImage(event) {
-    let reader = new FileReader();
-    reader.onload = (readerEvent) => {
+    if (event.target.files[0] && (event.target.files[0].type == 'image/png' || event.target.files[0].type == 'image/jpg' || event.target.files[0].type == 'image/jpeg')){
+      this.userdata['newimage'] = event.srcElement.files[0];
+      let reader = new FileReader();
+      reader.onload = (readerEvent) => {
 
-      let imageData = (readerEvent.target as any).result;
-      this.form.patchValue({ 'profilePic': imageData });
-    };
-
-    reader.readAsDataURL(event.target.files[0]);
+        let imageData = (readerEvent.target as any).result;
+        this.form.patchValue({ 'profilePic': imageData });
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    } else if (event.target.files[0] && (event.target.files[0].type != 'image/png' || event.target.files[0].type != 'image/jpg' || event.target.files[0].type != 'image/jpeg')) {
+      let toast = this.toastCtrl.create({
+        message: 'Please select .jpg or .jpeg or .png image only',
+        duration: 3000,
+        cssClass: 'toast-error',
+        position: 'bottom'
+      });
+      toast.present();
+    }
+    else{
+      this.userdata['newimage'] = '';
+    }
   }
 
   getProfileImageStyle() {

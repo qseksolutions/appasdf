@@ -24,6 +24,13 @@
             </button>
         </ion-list>
     </ion-content>
-
+    <ion-footer>
+        <ion-list class="side-cat-list">
+            <button menuClose ion-item (click)="logout()">
+                <ion-icon name="log-out" class="cate-img"></ion-icon>
+                <span>Logout</span>
+            </button>
+        </ion-list>
+    </ion-footer>
 </ion-menu>
 <ion-nav #content [root]="rootPage"></ion-nav>

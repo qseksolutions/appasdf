@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 import { Settings } from '../../providers';
+import { GLOBAL } from '../../app/global';
 
 @IonicPage()
 @Component({
@@ -84,6 +85,13 @@ export class SettingsPage {
 
       this._buildForm();
     });
+  }
+
+  logout() {
+    GLOBAL.IS_LOGGEDIN = false;
+    GLOBAL.USER = null;
+    localStorage.removeItem('is_loggedin');
+    this.navCtrl.setRoot('LoginPage');
   }
 
   gotoEditProfils() {

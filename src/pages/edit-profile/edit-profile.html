@@ -22,8 +22,8 @@
       <!-- <div class="profile-image-placeholder" *ngIf="!this.form.controls.profilePic.value">
         <ion-icon name="add"></ion-icon>
       </div> -->
-      <img *ngIf="!this.form.controls.profilePic.value" class="profile-image-placeholder" src="{{userdata.image}}" onerror="this.src='assets/img/default-user-avatars.png'"/>
-      <div class="profile-image" [style.backgroundImage]="getProfileImageStyle()" *ngIf="this.form.controls.profilePic.value"></div>
+      <img *ngIf="this.userdata.newimage==''" class="profile-image-placeholder" src="{{userdata.image}}" onerror="this.src='assets/img/default-user-avatars.png'"/>
+      <div class="profile-image" [style.backgroundImage]="getProfileImageStyle()" *ngIf="this.userdata.newimage!=''"></div>
       <div class="chnage-note"> Change profile Photo</div>
     </div>
     <ion-list>
@@ -35,11 +35,6 @@
       <ion-item>
         <ion-label>Username</ion-label>
         <ion-input type="text" name="user_slug" [(ngModel)]="userdata.user_slug"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>Bio</ion-label>
-        <ion-input type="text" name="about_me" [(ngModel)]="userdata.about_me"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -66,6 +61,11 @@
           <ion-option value="male">Male</ion-option>
           <ion-option value="female">Female</ion-option>
         </ion-select>
+      </ion-item>
+
+      <ion-item class="textarea">
+        <ion-label>Bio</ion-label>
+        <ion-textarea type="text" name="about_me" color="dark" [(ngModel)]="userdata.about_me"></ion-textarea>
       </ion-item>
     </ion-list>
   </form>

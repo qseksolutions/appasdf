@@ -86,6 +86,32 @@ export class User {
     return this.api.get('country', { header: GLOBAL.API_HEADER }).share();
   }
 
+  updateuser(udata) {
+    let body = new FormData();
+    body.append('header', this.header);
+    body.append('user_id', this.user_id);
+    body.append('name', udata.username);
+    body.append('username', udata.user_slug);
+    body.append('email', udata.email);
+    body.append('gender', udata.gender);
+    body.append('dob', udata.dob);
+    body.append('country', udata.country_id);
+    body.append('about', udata.about_me);
+    body.append('userimage', udata.newimage);
+
+    return this.api.post('updateuser', body).share();
+  }
+  
+  changepassword(udata) {
+    let body = new FormData();
+    body.append('header', this.header);
+    body.append('user_id', this.user_id);
+    body.append('oldpassword', udata.oldpassword);
+    body.append('newpassword', udata.newpassword);
+
+    return this.api.post('changepassword', body).share();
+  }
+
   /**
    * Log the user out, which forgets the session
    */
