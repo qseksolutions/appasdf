@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, PopoverController, AlertController, NavParams, ActionSheetController, ModalController, LoadingController, ToastController, Events } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { Posts } from '../../providers/posts/posts';
 import { User } from '../../providers/user/user';
-import { GLOBAL } from '../../app/global';
 import { Posts } from '../../providers/posts/posts';
+import { GLOBAL } from '../../app/global';
 
 @IonicPage()
 @Component({
@@ -36,7 +35,6 @@ export class ProfilePage {
  userdata = [];
 
   constructor(
-    public posts: Posts,
     public user: User,
     public posts: Posts,
     public events: Events,
