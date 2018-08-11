@@ -22,9 +22,11 @@
       <!-- <div class="profile-image-placeholder" *ngIf="!this.form.controls.profilePic.value">
         <ion-icon name="add"></ion-icon>
       </div> -->
-      <img *ngIf="this.userdata.newimage==''" class="profile-image-placeholder" src="{{userdata.image}}" onerror="this.src='assets/img/default-user-avatars.png'"/>
-      <div class="profile-image" [style.backgroundImage]="getProfileImageStyle()" *ngIf="this.userdata.newimage!=''"></div>
-      <div class="chnage-note"> Change profile Photo</div>
+      <img *ngIf="userdata.newimage==''" class="profile-image-placeholder" src="{{userdata.image}}" onerror="this.src='assets/img/default-user-avatars.png'"/>
+      <img *ngIf="userdata.newimage!=''" class="profile-image-placeholder" src="{{userdata.userimage}}" onerror="this.src='assets/img/default-user-avatars.png'" />
+      <input type="file" id="userimage" name="userimage" style="display: none" (change)="processWebImage($event)"/>
+      <!-- <div class="profile-image" [style.backgroundImage]="getProfileImageStyle()" *ngIf="this.userdata.newimage!=''"></div> -->
+      <label for="userimage"><div class="chnage-note"> Change profile Photo</div></label>
     </div>
     <ion-list>
       <ion-item>

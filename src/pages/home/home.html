@@ -42,7 +42,7 @@
             <img *ngIf="item1.type=='image'" [src]="item1.media_thumb" [hidden]="item1.loaded" onerror="this.src='assets/img/blur.jpg'"
                 (click)="post(item1)" [alt]="item1.title">
 
-            <video *ngIf="item1.type=='video'" controls muted [poster]="item1.media_thumb">
+            <video *ngIf="item1.type=='video'" controls muted class="visible-video" [poster]="item1.media_thumb">
                 <source [src]="item1.media" type="video/mp4">
             </video>
 
