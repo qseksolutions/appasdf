@@ -16,8 +16,8 @@ export class CaregoryPage {
 
   Lfilter = { page: 1, cat_id: 0, tab: 0, is_last: false, order: 'id' };
   Hfilter = { page: 1, cat_id: 0, tab: 1, is_last: false, order: 'total_comment' };
-
-  tabs = 0;
+  
+  tabs = "0";
   
   Ldata = [];
   Hdata = [];
@@ -48,11 +48,16 @@ export class CaregoryPage {
     this.categorypost(this.Lfilter);
     this.categorypost(this.Hfilter);
   }
-  doRefresh($event){
-    if (this.tabs == 0) {
+  doRefresh(refresher){
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
+    if (this.tabs == "0") {
+      this.Lfilter.page = 1;
       this.categorypost(this.Lfilter);
     }
-    else if (this.tabs == 1) {
+    else if (this.tabs == "1") {
+      this.Hfilter.page = 1;
       this.categorypost(this.Hfilter);
     }
   }
@@ -66,23 +71,23 @@ export class CaregoryPage {
     return new Promise((resolve) => {
 
       let load_tab_data;
-      if (this.tabs == 0) {
+      if (this.tabs == "0") {
         this.Lfilter.page++;
         load_tab_data = this.Lfilter;
       }
-      else if (this.tabs == 1) {
+      else if (this.tabs == "1") {
         this.Hfilter.page++;
         load_tab_data = this.Hfilter;
       }
       if (load_tab_data) {
         this.posts.postlist(load_tab_data).subscribe((resp: any) => {
           if (resp.status) {
-            if (this.tabs == 0) {
+            if (this.tabs == "0") {
               for (var i = 0; i < resp.data.length; i++) {
                 this.Ldata.push(resp.data[i]);
               }
             }
-            else if (this.tabs == 1) {
+            else if (this.tabs == "1") {
               for (var j = 0; j < resp.data.length; j++) {
                 this.Hdata.push(resp.data[j]);
               }
