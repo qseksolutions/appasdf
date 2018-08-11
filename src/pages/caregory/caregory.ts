@@ -43,31 +43,61 @@ export class CaregoryPage {
     }
     
   }
-  
-  changed(idx) {
-    
-    this.slider.slideTo(idx);
-    // this.Ldata = [];
-    // this.Hdata = [];
-    // console.log(idx);
-    // let loading = this.loadingCtrl.create({
-    //   content: 'Please wait...'
-    // });
-    // loading.present();
-    if (idx == 0) {
-      // this.Lfilter = { page: 1, cat_id: this.category.id, tab: idx, is_last: false, order: 'id' };
-      // this.categorypost(this.Lfilter);
-      // loading.dismiss();
-    }
-    else if (idx == 1) {
-      // this.Hfilter = { page: 1, cat_id: this.category.id, tab: idx, is_last: false, order: 'total_comment' };
-      // this.categorypost(this.Hfilter);
-      // loading.dismiss();
-    }
-    else {
-      // loading.dismiss();
-    }
 
+  ionViewDidLoad() {
+    this.categorypost(this.Lfilter);
+    this.categorypost(this.Hfilter);
+  }
+  doRefresh($event){
+    if (this.tabs == 0) {
+      this.categorypost(this.Lfilter);
+    }
+    else if (this.tabs == 1) {
+      this.categorypost(this.Hfilter);
+    }
+  }
+
+  changed(idx) {
+    this.slider.slideTo(idx);
+  }
+
+  doInfinite(): Promise<any> {
+    
+    return new Promise((resolve) => {
+
+      let load_tab_data;
+      if (this.tabs == 0) {
+        this.Lfilter.page++;
+        load_tab_data = this.Lfilter;
+      }
+      else if (this.tabs == 1) {
+        this.Hfilter.page++;
+        load_tab_data = this.Hfilter;
+      }
+      if (load_tab_data) {
+        this.posts.postlist(load_tab_data).subscribe((resp: any) => {
+          if (resp.status) {
+            if (this.tabs == 0) {
+              for (var i = 0; i < resp.data.length; i++) {
+                this.Ldata.push(resp.data[i]);
+              }
+            }
+            else if (this.tabs == 1) {
+              for (var j = 0; j < resp.data.length; j++) {
+                this.Hdata.push(resp.data[j]);
+              }
+            }
+          }
+          resolve();
+        }, (err) => {
+          resolve();
+          console.log(err);
+        });
+      }
+      else {
+        resolve();
+      }
+    });
   }
 
   changeTabs($event) {
@@ -90,10 +120,7 @@ export class CaregoryPage {
     });
   }
 
-  ionViewDidLoad() {
-    this.categorypost(this.Lfilter);
-    this.categorypost(this.Hfilter);
-  }
+  
 
   addPost() {
     const actionSheet = this.actionSheetCtrl.create({
