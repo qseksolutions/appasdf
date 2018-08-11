@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, PopoverController, AlertController, NavParams, ActionSheetController, ModalController, Slides, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, PopoverController, AlertController, NavParams, ActionSheetController, ModalController, Slides, LoadingController, Events, ToastController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Posts } from '../../providers/posts/posts';
+import { GLOBAL } from '../../app/global';
 
 @IonicPage()
 @Component({
@@ -12,6 +13,9 @@ export class CaregoryPage {
 
   @ViewChild('slider') slider: Slides;
 
+  user_email = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.email : '';
+
+  report_detail: any;
 
 
   Lfilter = { page: 1, cat_id: 0, tab: 0, is_last: false, order: 'id' };
@@ -25,6 +29,8 @@ export class CaregoryPage {
 
   constructor(
     public posts: Posts,
+    public events: Events,
+    public toastCtrl: ToastController,
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
@@ -161,80 +167,73 @@ export class CaregoryPage {
     actionSheet.present();
   }
 
-  post(item) {
-    this.navCtrl.push('PostPage', { item: item });
+  post(post) {
+    this.navCtrl.push('PostPage', { post: post });
   }
 
-  report() {
-    let alert = this.alertCtrl.create({
-      title: 'Report',
-      inputs: [
-        {
-          label: 'Spam',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Hatred and bullying',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Self-harm',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Violent, gory and harmful content',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Child porn',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Illegal activities (e.g drug uses)',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Deceptive content',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'Copyright and trademark infringement',
-          name: 'report',
-          type: 'radio',
-        },
-        {
-          label: 'I just don\'t like it',
-          name: 'report',
-          type: 'radio',
-        },
-      ],
-      buttons: [
-        {
-          text: 'Ok',
-          handler: data => {
-            console.log('Ok');
+  postlike(post): Promise<any> {
+    if (GLOBAL.IS_LOGGEDIN) {
+      return new Promise((resolve) => {
+        this.posts.postlike(post.id).subscribe((resp: any) => {
+          if (resp.status) {
+            post.is_like = resp.like;
+            post.like_count = resp.like_count;
           }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: data => {
-            console.log('Cancel clicked');
+          resolve();
+        }, (err) => {
+          // Unable to log in
+          console.log(err);
+          resolve();
+        });
+      });
+    }
+    else {
+      let toast = this.toastCtrl.create({
+        message: 'Please Login First',
+        duration: 3000,
+        cssClass: 'toast-error',
+        position: 'bottom'
+      });
+      toast.present();
+    }
+  }
+
+  postreport(post) {
+    if (this.is_login()) {
+      this.report_detail = post;
+      const actionSheet = this.actionSheetCtrl.create({
+        buttons: [
+          {
+            text: 'Report Post',
+            role: 'Report',
+            handler: () => {
+              this.reportModal();
+            }
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
           }
-        },
-      ]
+        ]
+      });
+      actionSheet.present();
+    }
+  }
+
+  reportModal() {
+    let model = this.modalCtrl.create('ReportModalPage', { rpost: this.report_detail });
+    model.present();
+    model.onDidDismiss((is_report) => {
+      if (is_report) {
+        this.events.publish('is_repost', this.report_detail);
+      }
     });
-    alert.present();
   }
 
-  share() {
+  share(post) {
     // Check if sharing via email is supported
     this.socialSharing.canShareViaEmail().then(() => {
       // Sharing via email is possible
@@ -245,7 +244,7 @@ export class CaregoryPage {
     });
 
     // Share via email
-    this.socialSharing.shareViaEmail('Body', 'Subject', ['recipient@example.org']).then(() => {
+    this.socialSharing.shareViaEmail('https://fuskk.com/' + post.post_slug, post.title, [this.user_email]).then(() => {
       // Success!
       console.log('Success!');
     }).catch((e) => {
@@ -255,11 +254,21 @@ export class CaregoryPage {
   }
 
   gotoHome() {
+
     this.navCtrl.setRoot('HomePage');
   }
 
   gotoProfile() {
+
     this.navCtrl.push('ProfilePage');
+  }
+
+  gotoNotification() {
+    this.navCtrl.push('NotificationPage');
+  }
+
+  gotoSearch() {
+    this.navCtrl.push('SearchPage');
   }
 
   addImagePost() {
@@ -276,6 +285,22 @@ export class CaregoryPage {
   addImageFromGalleryPost() {
     const galler_modal = this.modalCtrl.create('ModalAddImageFromGalleryPage');
     galler_modal.present();
+  }
+
+  is_login() {
+    if (GLOBAL.IS_LOGGEDIN) {
+      return true;
+    }
+    else {
+      let toast = this.toastCtrl.create({
+        message: 'Please Login First',
+        duration: 3000,
+        cssClass: 'toast-error',
+        position: 'bottom'
+      });
+      toast.present();
+      return false;
+    }
   }
 
 }
