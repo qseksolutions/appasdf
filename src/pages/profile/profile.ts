@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, PopoverController, AlertController, NavParams, ActionSheetController, ModalController, LoadingController, ToastController, Events } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { User } from '../../providers/user/user';
+import { Posts } from '../../providers/posts/posts';
 import { GLOBAL } from '../../app/global';
 
 @IonicPage()
@@ -34,6 +35,7 @@ export class ProfilePage {
  userdata = [];
 
   constructor(
+    public posts: Posts,
     public user: User,
     public events: Events,
     public toastCtrl: ToastController,
