@@ -1,9 +1,22 @@
 page-caregory {
-    ion-slide {
-        &.swiper-slide {
-            @include align-items(flex-start);
-            overflow: auto;
-        }
+    video{
+        width: 100%;
+        // max-height: 370px;
+        max-height: -webkit-fill-available;
+    }
+    // ion-slide {
+    //     &.swiper-slide {
+    //         @include align-items(flex-start);
+    //         overflow: auto;
+    //     }
+    // }
+    .slide-zoom {
+        height: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+    .swiper-wrapper {
+        height: 100%;
     }
     .nav-bg {
         @include linear-gradient;
@@ -14,6 +27,7 @@ page-caregory {
             @extend .toolbar-background-ios ;
         } 
     }
+    
     .content-md {
         background-color: $body-bg;
     }
@@ -69,7 +83,7 @@ page-caregory {
     .segment-md {
          .segment-button {
             height: 4.2rem;
-            color: #ffffff;
+            color: $white;
             font-size: 14px;
             border-radius: 0px;
             @include flexbox();
@@ -116,7 +130,6 @@ page-caregory {
             ion-buttons {
                 height: 4.2rem;
                 border: none;
-                opacity: 0.3;
                 @include flexbox();
                 @include align-items(center);
                 @include justify-content(center);
@@ -136,9 +149,13 @@ page-caregory {
                     ion-icon {
                         line-height: 18px;
                     }
-                }
-            }
-            
+                }   
+            }   
         } 
+    }
+    .action-sheet-button {
+        .button-inner {
+            @include justify-content(flex-start);
+        }
     }
 }
