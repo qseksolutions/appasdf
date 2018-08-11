@@ -2,6 +2,7 @@ import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 import { Api } from '../api/api';
 import { GLOBAL } from '../../app/global';
+import { Events } from 'ionic-angular';
 
 @Injectable()
 export class User {
@@ -9,7 +10,7 @@ export class User {
   user_id = '';
   header = GLOBAL.API_HEADER;
 
-  constructor(public api: Api) {
+  constructor(public api: Api, public events: Events) {
     if (GLOBAL.IS_LOGGEDIN) {
       this.user_id = GLOBAL.USER.id;
     }
@@ -123,6 +124,7 @@ export class User {
    * Process a login/signup response to store user data
    */
   _loggedIn(resp) {
+    this.events.publish('user:loggedin', resp.data);
     localStorage.setItem('is_loggedin', JSON.stringify(resp.data));
   }
 }

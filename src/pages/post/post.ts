@@ -125,7 +125,7 @@ export class PostPage {
               this.comment_data.sub_comment_count++;
               
               this.new_comment = { comment_text: "", comment_id: 0, post_id: 0, replay_type: 0 };
-              $('input[name="comment_text"]').focus();
+              
             }
             resolve();
           }, (err) => {
@@ -138,11 +138,11 @@ export class PostPage {
         return new Promise((resolve) => {
           this.posts.addsubcomment(this.new_comment).subscribe((resp: any) => {
             if (resp.status) {
-              this.comment_data.subs.unshift(resp.data);
               this.comment_data.sub_comment_count++;
+              this.comment_data.subs.unshift(resp.data);
 
               this.new_comment = { comment_text: "", comment_id: 0, post_id: 0, replay_type: 0 };
-              $('input[name="comment_text"]').focus();
+              
             }
             resolve();
           }, (err) => {
@@ -162,7 +162,7 @@ export class PostPage {
               this.post.total_comment++;
 
               this.new_comment = { comment_text: "", comment_id: 0, post_id: 0, replay_type: 0 };
-              $('input[name="comment_text"]').focus();
+              
             }
             resolve();
           }, (err) => {
