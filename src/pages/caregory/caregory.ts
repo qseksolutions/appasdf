@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, PopoverController, AlertController, NavParams, ActionSheetController, ModalController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, PopoverController, AlertController, NavParams, ActionSheetController, ModalController, Slides, LoadingController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { Posts } from '../../providers/posts/posts';
 
 @IonicPage()
 @Component({
@@ -9,51 +10,90 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 })
 export class CaregoryPage {
 
+  @ViewChild('slider') slider: Slides;
 
-  cardItems: any[];
-  tabs = "letest";
+
+
+  Lfilter = { page: 1, cat_id: 0, tab: 0, is_last: false, order: 'id' };
+  Hfilter = { page: 1, cat_id: 0, tab: 1, is_last: false, order: 'total_comment' };
+
+  tabs = 0;
   is_active = "home";
+
+  Ldata = [];
+  Hdata = [];
+  category: any;
+
   constructor(
+    public posts: Posts,
     public navCtrl: NavController,
+    public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
     public actionSheetCtrl: ActionSheetController,
     public modalCtrl: ModalController,
     public alertCtrl: AlertController,
     private socialSharing: SocialSharing,
     public navParams: NavParams) {
-    this.cardItems = [
-      {
-        user: {
-          avatar: 'assets/img/marty-avatar.png',
-          name: 'Marty McFly'
-        },
-        date: 'November 5, 1955',
-        image: 'assets/img/advance-card-bttf.png',
-        content: 'Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.',
-      },
-      {
-        user: {
-          avatar: 'assets/img/sarah-avatar.png.jpeg',
-          name: 'Sarah Connor'
-        },
-        date: 'May 12, 1984',
-        image: 'assets/img/advance-card-tmntr.jpg',
-        content: 'I face the unknown future, with a sense of hope. Because if a machine, a Terminator, can learn the value of human life, maybe we can too.'
-      },
-      {
-        user: {
-          avatar: 'assets/img/ian-avatar.png',
-          name: 'Dr. Ian Malcolm'
-        },
-        date: 'June 28, 1990',
-        image: 'assets/img/advance-card-jp.jpg',
-        content: 'Your scientists were so preoccupied with whether or not they could, that they didn\'t stop to think if they should.'
+
+    this.category = this.navParams.get('category');
+    console.log(this.category);
+    try {
+      this.Lfilter.cat_id = this.category.id;
+      this.Hfilter.cat_id = this.category.id;
+    } catch (error) {
+      this.navCtrl.setRoot('HomePage');
+    }
+    this.changed(0);
+  }
+
+  changed(idx) {
+    this.slider.slideTo(idx);
+    this.Ldata = [];
+    this.Hdata = [];
+
+
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    loading.present();
+
+    if (idx == 0) {
+      this.Lfilter = { page: 1, cat_id: this.category.id, tab: idx, is_last: false, order: 'id' };
+      this.postlist(this.Lfilter);
+      loading.dismiss();
+    }
+    else if (idx == 1) {
+      this.Hfilter = { page: 1, cat_id: this.category.id, tab: idx, is_last: false, order: 'total_comment' };
+      this.postlist(this.Hfilter);
+      loading.dismiss();
+    }
+    else {
+      loading.dismiss();
+    }
+  }
+
+  changeTabs($event) {
+    this.tabs = $event._snapIndex.toString();
+  }
+
+  postlist(flt) {
+    this.posts.postlist(flt).subscribe((resp: any) => {
+      if (resp.status) {
+        if (flt.tab == 0) {
+          this.Ldata = resp.data;
+        }
+        else if (flt.tab == 4) {
+          this.Hdata = resp.data;
+        }
       }
-    ];
+    }, (err) => {
+      // Unable to log in
+      console.log(err);
+    });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LetestPage');
+    
   }
 
   addPost() {

@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { Config, Nav, Platform, MenuController } from 'ionic-angular';
+import { Config, Nav, Platform, MenuController, Events } from 'ionic-angular';
 
 import { FirstRunPage } from '../pages';
 import { Settings, User } from '../providers';
@@ -16,21 +16,11 @@ export class MyApp {
 
   @ViewChild(Nav) nav: Nav;
 
-  pages: any[] = [
-    { title: 'Funny', image: 'assets/img/category/funny.svg', component: '' },
-    { title: 'Sports', image: 'assets/img/category/sports.svg', component: '' },
-    { title: 'Animals', image: 'assets/img/category/animals.svg', component: '' },
-    { title: 'WTF', image: 'assets/img/category/wtf.png', component: '' },
-    { title: 'Politics', image: 'assets/img/category/politics.svg', component: '' },
-    { title: 'Awesome', image: 'assets/img/category/awesome.png', component: '' },
-    { title: 'Country', image: 'assets/img/category/country.svg', component: '' },
-    { title: 'Girl', image: 'assets/img/category/girl.svg', component: '' },
-    { title: 'Bollywood', image: 'assets/img/category/bollywood.png', component: '' },
-    { title: 'Hollywood', image: 'assets/img/category/hollywood.svg', component: '' },
-    { title: 'GIF', image: 'assets/img/category/gif.svg', component: '' }
-  ]
+  pages: any[] = [];
+  _user: any;
 
   constructor(
+    public events: Events,
     public user: User,
     private translate: TranslateService,
     platform: Platform,
@@ -40,6 +30,17 @@ export class MyApp {
     private splashScreen: SplashScreen,
     private menuCtrl: MenuController
   ) {
+
+    if (GLOBAL.IS_LOGGEDIN) {
+      this.rootPage = 'HomePage';
+    }
+    
+    this._user = GLOBAL.USER;
+    this.events.subscribe('user:loggedin', (user) => {
+      GLOBAL.IS_LOGGEDIN = true;
+      GLOBAL.USER = user;
+      this._user = user;
+    });
 
     this.user.category().subscribe((resp: any) => {
       if (resp.status) {
@@ -86,7 +87,7 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    this.nav.setRoot('CaregoryPage', { category:page});
   }
   openHome() {
       this.nav.setRoot('HomePage');

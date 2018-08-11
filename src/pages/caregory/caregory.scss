@@ -8,6 +8,10 @@ page-caregory {
             @extend .toolbar-background-ios ;
         } 
     }
+    .swiper-slide{
+        overflow-x: auto;
+        padding-top:300px; 
+    }
     .content-md {
         background-color: $body-bg;
     }
