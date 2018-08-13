@@ -14,8 +14,15 @@ import { IonicPage, NavController, NavParams, ModalController, ViewController} f
   templateUrl: 'modals-modal-add-tag.html',
 })
 export class ModalsModalAddTagPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController  , public  viewCtrl: ViewController,) {
+  post = [];
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public modalCtrl: ModalController, 
+    public  viewCtrl: ViewController,
+  ) {
+    this.post = navParams.get('post');
+    console.log(this.post);
   }
 
   ionViewDidLoad() {
@@ -27,7 +34,7 @@ export class ModalsModalAddTagPage {
   }
 
   goCatelist() {
-    const image_modal = this.modalCtrl.create('ModalsModalAddCategoryPage');
+    const image_modal = this.modalCtrl.create('ModalsModalAddCategoryPage', { post: this.post });
     image_modal.present();
   }
 

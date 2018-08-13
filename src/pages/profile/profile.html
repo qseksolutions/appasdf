@@ -35,7 +35,7 @@
         <ion-item (click)="gotoPtabs('comments')">Comments</ion-item>
     </ion-list> -->
 
-    <ion-segment [(ngModel)]="ptabs">
+    <ion-segment [(ngModel)]="ptabs" (ionChange)="changed(ptabs)">
         <ion-segment-button value="overview">
             <ion-icon name="apps"></ion-icon>
         </ion-segment-button>

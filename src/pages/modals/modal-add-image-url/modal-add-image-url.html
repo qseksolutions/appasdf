@@ -8,7 +8,7 @@
       </button>
     </ion-buttons>
     <ion-buttons end>
-      <button ion-button (click)="addPosttags()" [disabled]="!isReadyToSave" color="white">
+      <button ion-button (click)="addPosttags()" color="white">
         <span>NEXT</span>
       </button>
     </ion-buttons>
@@ -23,12 +23,14 @@
   
     <h5>Paste your URL! We take JPG , PNG and GIF </h5>
   </div>
-  <form *ngIf="form" [formGroup]="form" (ngSubmit)="createItem()">
-    <ion-list>
-      <ion-item class="add-title">
-        <ion-label stacked>Title</ion-label>
-        <ion-input  type="text" formControlName="name" placeholder="Paste image URL"></ion-input>
-      </ion-item>
-    </ion-list>
-  </form>
+  <ion-list>
+    <ion-item class="add-title">
+      <ion-label stacked>Title</ion-label>
+      <ion-input  type="text" name="title" [(ngModel)]="post.title" placeholder="Title"></ion-input>
+    </ion-item>
+    <ion-item class="add-title">
+      <ion-label stacked>Paste URL</ion-label>
+      <ion-input  type="text" name="image_url" [(ngModel)]="post.image_url" placeholder="Paste URL here"></ion-input>
+    </ion-item>
+  </ion-list>
 </ion-content>

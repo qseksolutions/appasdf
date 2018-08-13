@@ -8,7 +8,7 @@
       </button>
     </ion-buttons>
     <ion-buttons end>
-      <button ion-button (click)="addPosttags()" [disabled]="!isReadyToSave" color="white">
+      <button ion-button (click)="addPosttags()" color="white">
         <span>NEXT</span>
       </button>
     </ion-buttons>
@@ -18,18 +18,21 @@
 
 
 <ion-content>
-  <div class="video-heading">
-    <img src="assets/img/upload-video.svg" />
-
-    <h5>Paste your URL! We take Mp4 and YouTube</h5>
-  </div>
-
-  <form *ngIf="form" [formGroup]="form" (ngSubmit)="createItem()">
-    <ion-list>
-      <ion-item class="add-title">
-        <ion-label stacked>Title</ion-label>
-        <ion-input type="text" formControlName="name" placeholder="Paste video URL"></ion-input>
-      </ion-item>
-    </ion-list>
-  </form>
+  <label for="videopost">
+    <div class="video-heading" *ngIf="post.dis_video==''">
+      <img src="assets/img/upload-video.svg" />
+      <h5>Click here to select your post video</h5>
+    </div>
+  </label>
+  <label for="videopost" *ngIf="post.dis_video!=''">
+    <div class="video-heading" id="embedvideo" [innerHTML]="post.dis_video">
+    </div>
+  </label>
+  <input type="file" name="videopost" id="videopost" style="display: none;" (change)="processWebImage($event)"/>
+  <ion-list>
+    <ion-item class="add-title">
+      <ion-label stacked>Title</ion-label>
+      <ion-input type="text" name="title" [(ngModel)]="post.title" placeholder="Title"></ion-input>
+    </ion-item>
+  </ion-list>
 </ion-content>

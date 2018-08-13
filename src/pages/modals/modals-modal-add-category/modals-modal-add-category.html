@@ -18,57 +18,10 @@
 
 
 <ion-content padding>
-  <ion-list radio-group>
-    <ion-item>
-      <ion-label class="cate-list"><img class="" src="assets/img/category/funny.svg" /> Funny</ion-label>
-      <ion-radio checked="true" value="Funny"></ion-radio>
-    </ion-item>
-  
-    <ion-item>
-      <ion-label class="cate-list"><img class="" src="assets/img/category/sports.svg" /> Sports</ion-label>
-      <ion-radio value="Sports"></ion-radio>
-    </ion-item>
-  
-    <ion-item>
-      <ion-label class="cate-list"><img class="" src="assets/img/category/animals.svg" /> Animals</ion-label>
-      <ion-radio value="Animals"></ion-radio>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="cate-list"><img class="" src="assets/img/category/wtf.png" /> WTF</ion-label>
-      <ion-radio value="WTF"></ion-radio>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="cate-list"><img class="" src="assets/img/category/politics.svg" /> Politics</ion-label>
-      <ion-radio value="Politics"></ion-radio>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="cate-list"><img class="" src="assets/img/category/awesome.png" /> Awesome</ion-label>
-      <ion-radio value="Awesome"></ion-radio>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="cate-list"><img class="" src="assets/img/category/country.svg" /> Country</ion-label>
-      <ion-radio value="Country"></ion-radio>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="cate-list"><img class="" src="assets/img/category/girl.svg" /> Girl</ion-label>
-      <ion-radio value="Girl"></ion-radio>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="cate-list">
-        <img class="" src="assets/img/category/bollywood.png" /> Bollywood</ion-label>
-      <ion-radio value="Bollywood"></ion-radio>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="cate-list">
-        <img class="" src="assets/img/category/hollywood.svg" /> Hollywood</ion-label>
-      <ion-radio value="Hollywood"></ion-radio>
+  <ion-list radio-group [(ngModel)]="post.category">
+    <ion-item *ngFor="let cat of category">
+      <ion-label class="cate-list"><img class="" src="{{cat.image}}" /> {{cat.category_name}}</ion-label>
+      <ion-radio checked="{{cat.id=='1'?'true':'false'}}" value="{{cat.id}}"></ion-radio>
     </ion-item>
 
   </ion-list>

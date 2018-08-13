@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
-import { IonicPage, NavController, ViewController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, ViewController, ModalController, LoadingController, ToastController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -15,18 +14,16 @@ export class ModalAddImageFromGalleryPage {
 
   item: any;
 
-  form: FormGroup;
+  post: { dis_image: string, image: string, video: string, dis_video: string, image_url: string, title: string, category: number, tag1: string, tag2: string, tag3: string } = { dis_image: '', image: '', video: '', dis_video: '', image_url: '', title: '', category: 1, tag1: '', tag2: '', tag3: '' };
 
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera, public modalCtrl: ModalController) {
-    this.form = formBuilder.group({
-      profilePic: [''],
-      name: ['', Validators.required],
-    });
-
-    // Watch the form for changes, and
-    this.form.valueChanges.subscribe((v) => {
-      this.isReadyToSave = this.form.valid;
-    });
+  constructor(
+    public navCtrl: NavController, 
+    public viewCtrl: ViewController, 
+    public camera: Camera, 
+    public modalCtrl: ModalController,
+    public loadingCtrl: LoadingController,
+    public toastCtrl: ToastController,
+  ) {
   }
 
   ionViewDidLoad() {
@@ -34,35 +31,38 @@ export class ModalAddImageFromGalleryPage {
   }
 
   getPicture() {
-    if (Camera['installed']()) {
-      this.camera.getPicture({
-        destinationType: this.camera.DestinationType.DATA_URL,
-        targetWidth: 96,
-        targetHeight: 96
-      }).then((data) => {
-        this.form.patchValue({ 'profilePic': 'data:image/jpg;base64,' + data });
-      }, (err) => {
-        alert('Unable to take photo');
-      })
-    } else {
-      this.fileInput.nativeElement.click();
-    }
+    
   }
 
   processWebImage(event) {
-    let reader = new FileReader();
-    reader.onload = (readerEvent) => {
+    if (event.target.files[0] && (event.target.files[0].type == 'image/png' || event.target.files[0].type == 'image/jpg' || event.target.files[0].type == 'image/jpeg')) {
+      this.post.image = event.srcElement.files[0];
+      let reader = new FileReader();
+      reader.onload = (readerEvent) => {
 
-      let imageData = (readerEvent.target as any).result;
-      this.form.patchValue({ 'profilePic': imageData });
-    };
-
-    reader.readAsDataURL(event.target.files[0]);
+        let imageData = (readerEvent.target as any).result;
+        this.post.dis_image = imageData;
+        // this.form.patchValue({ 'profilePic': imageData });
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    } else if (event.target.files[0] && (event.target.files[0].type != 'image/png' || event.target.files[0].type != 'image/jpg' || event.target.files[0].type != 'image/jpeg')) {
+      let toast = this.toastCtrl.create({
+        message: 'Please select .jpg or .jpeg or .png image only',
+        duration: 3000,
+        cssClass: 'toast-error',
+        position: 'bottom'
+      });
+      toast.present();
+    }
+    else {
+      this.post.dis_image = '';
+      this.post.image = '';
+    }
   }
 
-  getProfileImageStyle() {
+  /* getProfileImageStyle() {
     return 'url(' + this.form.controls['profilePic'].value + ')'
-  }
+  } */
 
   /**
    * The user cancelled, so we dismiss without sending data back.
@@ -72,16 +72,33 @@ export class ModalAddImageFromGalleryPage {
   }
 
   addPosttags() {
-    const image_modal = this.modalCtrl.create('ModalsModalAddTagPage');
-    image_modal.present();
+    console.log(this.post);
+    if (this.post.title == '') {
+      let toast = this.toastCtrl.create({
+        message: 'Please enter post title',
+        duration: 3000,
+        cssClass: 'toast-error',
+        position: 'bottom'
+      });
+      toast.present();
+    }
+    else if (this.post.dis_image == '') {
+      let toast = this.toastCtrl.create({
+        message: 'Please select image from gallery',
+        duration: 3000,
+        cssClass: 'toast-error',
+        position: 'bottom'
+      });
+      toast.present();
+    }
+    else {
+      const image_modal = this.modalCtrl.create('ModalsModalAddTagPage', { post: this.post });
+      image_modal.present();
+    }
   }
 
   /**
    * The user is done and wants to create the item, so return it
    * back to the presenter.
    */
-  done() {
-    if (!this.form.valid) { return; }
-    this.viewCtrl.dismiss(this.form.value);
-  }
 }

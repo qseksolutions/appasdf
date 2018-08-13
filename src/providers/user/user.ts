@@ -86,6 +86,10 @@ export class User {
   getcountrylist() {
     return this.api.get('country', { header: GLOBAL.API_HEADER }).share();
   }
+  
+  getcategorylist() {
+    return this.api.get('category', { header: GLOBAL.API_HEADER }).share();
+  }
 
   updateuser(udata) {
     let body = new FormData();
@@ -111,6 +115,34 @@ export class User {
     body.append('newpassword', udata.newpassword);
 
     return this.api.post('changepassword', body).share();
+  }
+
+  addpost(post) {
+    let body = new FormData();
+    body.append('header', this.header);
+    body.append('user_id', this.user_id);
+    body.append('title', post.title);
+    body.append('category', post.category);
+    if (post.tag1 != '' && post.tag2 != '' && post.tag3 != '') {
+      body.append('tags', post.tag1 + ',' + post.tag2 + ',' + post.tag3);
+    }
+    else if (post.tag1 != '' && post.tag2 != '') {
+      body.append('tags', post.tag1 + ',' + post.tag2);
+    }
+    else if (post.tag1 != '') {
+      body.append('tags', post.tag1);
+    }
+    if (post.image != '') {
+      body.append('image_post', post.image);
+    }
+    if (post.image_url != '') {
+      body.append('imageurl', post.image_url);
+    }
+    if (post.video != '') {
+      body.append('video_post', post.video);
+    }
+
+    return this.api.post('uploadpost', body).share();
   }
 
   /**

@@ -5,9 +5,9 @@
         <ion-list class="side-profile"  >
             <ion-item menuClose (click)="openProfile()">
                 <ion-avatar item-start>
-                    <img src="assets/img/ian-avatar.png">
+                    <img src="{{_user.image}}">
                 </ion-avatar>
-                <h2>Praful Patel</h2>
+                <h2>{{_user.username}}</h2>
             </ion-item>
             
         </ion-list>

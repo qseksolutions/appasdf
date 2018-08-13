@@ -1,7 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Camera } from '@ionic-native/camera';
-import { IonicPage, NavController, ViewController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, ViewController, ModalController, LoadingController, ToastController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -15,17 +13,15 @@ export class ModalAddImageUrlPage {
 
   item: any;
 
-  form: FormGroup;
+  post: { dis_image: string, image: string, video: string, dis_video: string, image_url: string, title: string, category: number, tag1: string, tag2: string, tag3: string } = { dis_image: '', image: '', video: '', dis_video: '', image_url: '', title: '', category: 1, tag1: '', tag2: '', tag3: '' };
 
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera, public modalCtrl: ModalController) {
-    this.form = formBuilder.group({
-      name: ['', Validators.required],
-    });
-
-    // Watch the form for changes, and
-    this.form.valueChanges.subscribe((v) => {
-      this.isReadyToSave = this.form.valid;
-    });
+  constructor(
+    public navCtrl: NavController, 
+    public viewCtrl: ViewController, 
+    public modalCtrl: ModalController,
+    public loadingCtrl: LoadingController,
+    public toastCtrl: ToastController,
+  ) {
   }
 
   ionViewDidLoad() {
@@ -37,12 +33,27 @@ export class ModalAddImageUrlPage {
   }
 
   addPosttags() {
-    const image_modal = this.modalCtrl.create('ModalsModalAddTagPage');
-    image_modal.present();
-  }
-
-  done() {
-    if (!this.form.valid) { return; }
-    this.viewCtrl.dismiss(this.form.value);
+    if (this.post.title == '') {
+      let toast = this.toastCtrl.create({
+        message: "Please enter your post title",
+        duration: 3000,
+        cssClass: 'toast-success',
+        position: 'bottom'
+      });
+      toast.present();
+    }
+    else if (this.post.image_url == '') {
+      let toast = this.toastCtrl.create({
+        message: "Please paste your image url",
+        duration: 3000,
+        cssClass: 'toast-success',
+        position: 'bottom'
+      });
+      toast.present();
+    }
+    else {
+      const image_modal = this.modalCtrl.create('ModalsModalAddTagPage', { post: this.post });
+      image_modal.present();
+    }
   }
 }

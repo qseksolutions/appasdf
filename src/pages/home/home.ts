@@ -26,6 +26,7 @@ export class HomePage {
   Tdata = [];
 
   tabs = "letest";
+  tab = "0";
   
   constructor(
     public posts: Posts,
@@ -43,6 +44,24 @@ export class HomePage {
     // postlist
     this.changed('letest');
   } 
+
+  doRefresh(refresher) {
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
+    if (this.tabs == "letest") {
+      this.Lfilter.page = 1;
+      this.postlist(this.Lfilter);
+    }
+    else if (this.tabs == "hot") {
+      this.Hfilter.page = 1;
+      this.postlist(this.Hfilter);
+    }
+    else if (this.tabs == "trading") {
+      this.Hfilter.page = 1;
+      this.postlist(this.Tfilter);
+    }
+  }
 
   changed(segment){
     this.Ldata = [];
@@ -178,7 +197,7 @@ export class HomePage {
       buttons: [
         {
           icon: 'images',
-          text: 'Choose From Gallery',
+          text: 'Choose Image Gallery',
           role: 'gallery',
           handler: () => {
             this.addImageFromGalleryPost();
@@ -194,7 +213,7 @@ export class HomePage {
           }
         }, {
           icon: 'videocam',
-          text: 'Paste Video URL',
+          text: 'Choose Video Gallery',
           role: 'video',
           handler: () => {
             this.addVideoPost();

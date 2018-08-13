@@ -20,11 +20,12 @@
 <ion-content >
   <div class="taged-post">
     <div class="taged-img">
-      <img src="assets/img/queen-live.png" />
+      <img *ngIf="post.dis_video==''" src="{{post.dis_image!=''?post.dis_image:post.image_url}}" />
+      <!-- <embed *ngIf="post.dis_video!=''" src="{{post.dis_video}}" /> -->
     </div>
 
     <div class="taged-title">
-      <h4>The name of brand</h4>
+      <h4>{{post.title}}</h4>
     </div>
   </div>
 
@@ -35,21 +36,21 @@
         <ion-label>
           <ion-icon name="pricetag"></ion-icon>
         </ion-label> 
-        <ion-input type="text" placeholder="Tag 1"></ion-input>
+        <ion-input type="text" name="tag1" [(ngModel)]="post.tag1" placeholder="Tag 1"></ion-input>
       </ion-item>
 
       <ion-item class="add-title">
         <ion-label>
           <ion-icon name="pricetag"></ion-icon>
         </ion-label> 
-        <ion-input type="text" placeholder="Tag 1"></ion-input>
+        <ion-input type="text" name="tag2" [(ngModel)]="post.tag2" placeholder="Tag 2"></ion-input>
       </ion-item>
 
       <ion-item class="add-title">
         <ion-label>
           <ion-icon name="pricetag"></ion-icon>
         </ion-label> 
-        <ion-input type="text" placeholder="Tag 1"></ion-input>
+        <ion-input type="text" name="tag3" [(ngModel)]="post.tag3" placeholder="Tag 3"></ion-input>
       </ion-item>
     </ion-list>
   </div>
