@@ -25,7 +25,11 @@
     </div>
   </label>
   <label for="videopost" *ngIf="post.dis_video!=''">
-    <div class="video-heading" id="embedvideo" [innerHTML]="post.dis_video">
+    <div class="video-heading" id="embedvideo" style="padding-bottom:0;">
+      <video id="uploadvideo" controls autoplay></video>
+    </div>
+    <div class="video-heading" style="padding:10px 0;">
+      <h5>Click here to change your post video</h5>
     </div>
   </label>
   <input type="file" name="videopost" id="videopost" style="display: none;" (change)="processWebImage($event)"/>

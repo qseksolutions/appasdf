@@ -24,6 +24,11 @@ page-modals-modal-add-tag {
             @include box-shadow(0px, 0px, 10px, rgba(0,0,0,0.12));
             border-radius: 10px;
         }
+        video  {
+            max-width: 100%;
+            @include box-shadow(0px, 0px, 10px, rgba(0,0,0,0.12));
+            border-radius: 10px;
+        }
     }
 
     .taged-title {

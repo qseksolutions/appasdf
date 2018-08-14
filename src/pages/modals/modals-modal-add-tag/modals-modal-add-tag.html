@@ -21,7 +21,7 @@
   <div class="taged-post">
     <div class="taged-img">
       <img *ngIf="post.dis_video==''" src="{{post.dis_image!=''?post.dis_image:post.image_url}}" />
-      <!-- <embed *ngIf="post.dis_video!=''" src="{{post.dis_video}}" /> -->
+      <!-- <video id="uploadvideo" controls autoplay *ngIf="post.dis_video!=''" src="{{post.dis_video}}"></video> -->
     </div>
 
     <div class="taged-title">

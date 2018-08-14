@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { Settings } from '../../providers';
 import { GLOBAL } from '../../app/global';
@@ -35,7 +36,9 @@ export class SettingsPage {
     public formBuilder: FormBuilder,
     public navParams: NavParams,
     public viewCtrl: ViewController,
-    public translate: TranslateService) {
+    public translate: TranslateService,
+    private iab: InAppBrowser
+  ) {
   }
 
   _buildForm() {
@@ -102,5 +105,15 @@ export class SettingsPage {
   }
   ngOnChanges() {
     console.log('Ng All Changes');
+  }
+  privacypolicy() {
+    let browser = this.iab.create('http://fuskk.com/privacy/');
+    // browser.executeScript(...);
+    // browser.insertCSS(...);
+    /* browser.on('loadstop').subscribe(event => {
+      browser.insertCSS({ code: "body{color: red;" });
+    }); */
+
+    browser.close();
   }
 }

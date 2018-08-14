@@ -63,28 +63,40 @@ export class ModalAddVideoUrlPage {
   }
 
   processWebImage(event) {
-    if (event.target.files[0] && (event.target.files[0].type == 'video/mp4' || event.target.files[0].type == 'video/webm' || event.target.files[0].type == 'video/ogg')) {
-      let loading = this.loadingCtrl.create({
-        content: 'Please wait...'
-      });
-      loading.present();
-      this.post.video = event.srcElement.files[0];
-      let reader = new FileReader();
-      reader.onload = (readerEvent) => {
-
-        let videoData = (readerEvent.target as any).result;
-        this.post.dis_video = videoData;
-        // console.log('<embed src="' + videoData + '" />');
+    console.log(event);
+    if (event.target.files[0] && (event.target.files[0].type == 'video/mp4' || event.target.files[0].type == 'video/webm')) {
+      let _size = event.target.files[0].size;
+      let fSExt = new Array('Bytes', 'KB', 'MB', 'GB'),
+        i = 0; while (_size > 900) { _size /= 1024; i++; }
+      let exactSize = (Math.round(_size * 100) / 100) + ' ' + fSExt[i];
+      let vid = exactSize.split(' ');
+      if (vid[1] == 'MB' && parseFloat(vid[0]) >= 5) {
+        let toast = this.toastCtrl.create({
+          message: 'Max video upload size is 2 MB',
+          duration: 3000,
+          cssClass: 'toast-error',
+          position: 'bottom'
+        });
+        toast.present();
+      }
+      else {
+        let loading = this.loadingCtrl.create({
+          content: 'Please wait...'
+        });
+        loading.present();
+        let file = event.target.files[0];
+        var fileURL = URL.createObjectURL(file)
+        this.post.dis_video = fileURL;
+        this.post.video = event.srcElement.files[0];
         setTimeout(() => {
-          $('#embedvideo').html('<embed src="' + videoData + '" />');
+          $('#uploadvideo').attr('src', fileURL);
           loading.dismiss();
-        }, 1000);
-        // this.form.patchValue({ 'profilePic': imageData });
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    } else if (event.target.files[0] && (event.target.files[0].type != 'video/mp4' || event.target.files[0].type != 'video/webm' || event.target.files[0].type != 'video/ogg')) {
+        }, 2000);
+      }      
+    } 
+    else if (event.target.files[0] && (event.target.files[0].type != 'video/mp4' || event.target.files[0].type != 'video/webm')) {
       let toast = this.toastCtrl.create({
-        message: 'Please select .mp4 or .webm or .ogg image only',
+        message: 'Please select .mp4 or .webm video only',
         duration: 3000,
         cssClass: 'toast-error',
         position: 'bottom'

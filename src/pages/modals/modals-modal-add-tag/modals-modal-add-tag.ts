@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, ViewController} from 'ionic-angular';
 
+// import * as $ from "jquery";
 /**
  * Generated class for the ModalsModalAddTagPage page.
  *
@@ -14,7 +15,8 @@ import { IonicPage, NavController, NavParams, ModalController, ViewController} f
   templateUrl: 'modals-modal-add-tag.html',
 })
 export class ModalsModalAddTagPage {
-  post = [];
+  dis_vid: any;
+  post: { dis_image: string, image: string, video: string, dis_video: string, image_url: string, title: string, category: number, tag1: string, tag2: string, tag3: string } = { dis_image: '', image: '', video: '', dis_video: '', image_url: '', title: '', category: 1, tag1: '', tag2: '', tag3: '' };
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
