@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, LoadingController } from 'ionic-angular';
 
 import { User } from '../../providers';
 // import { MainPage } from '../';
@@ -21,34 +21,46 @@ export class SignupPage {
   };
 
   // Our translated text strings
-  private signupErrorString: string;
+  // private signupErrorString: string;
 
   constructor(public navCtrl: NavController,
     public user: User,
+    public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public translateService: TranslateService) {
 
     this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
-      this.signupErrorString = value;
+      // this.signupErrorString = value;
     })
   }
 
   doSignup() {
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    loading.present();
+    console.log(this.account);
+    this.user.signup(this.account).subscribe((resp: any) => {
+      loading.dismiss();
+      if (resp.status) {
+        this.navCtrl.setRoot('LoginPage');
 
-    // this.navCtrl.push('CardsPage');
-    
-    // Attempt to login in through our User service
-    this.user.signup(this.account).subscribe((resp) => {
-      this.navCtrl.setRoot('CardsPage');
+        let toast = this.toastCtrl.create({
+          message: resp.message,
+          duration: 3000,
+          cssClass: 'toast-success',
+          position: 'bottom'
+        });
+        toast.present();
+      }
     }, (err) => {
-
-      this.navCtrl.setRoot('CardsPage');
-
-      // Unable to sign up
+      // Unable to log in
+      loading.dismiss();
       let toast = this.toastCtrl.create({
-        message: this.signupErrorString,
+        message: err.error.message,
         duration: 3000,
-        position: 'top'
+        cssClass: 'toast-error',
+        position: 'bottom'
       });
       toast.present();
     });

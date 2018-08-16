@@ -90,4 +90,8 @@ export class LoginPage {
   goSignup() {
     this.navCtrl.setRoot('SignupPage');
   }
+  
+  skip() {
+    this.navCtrl.setRoot('HomePage');
+  }
 }

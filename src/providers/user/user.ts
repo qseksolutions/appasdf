@@ -50,19 +50,13 @@ export class User {
    * Send a POST request to our signup endpoint with the data
    * the user entered on the form.
    */
-  signup(accountInfo: any) {
-    let seq = this.api.post('signup', accountInfo).share();
+  signup(accountInfo) {
+    let body = new FormData();
+    body.append('header', this.header);
+    body.append('email', accountInfo.email);
+    body.append('password', accountInfo.password);
 
-    seq.subscribe((res: any) => {
-      // If the API returned a successful response, mark the user as logged in
-      if (res.status == 'success') {
-        this._loggedIn(res);
-      }
-    }, err => {
-      console.error('ERROR', err);
-    });
-
-    return seq;
+    return this.api.post('register', body).share();
   }
 
   userpostlist(fdata, user_id) {

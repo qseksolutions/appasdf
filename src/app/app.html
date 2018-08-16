@@ -2,7 +2,7 @@
     
 
     <ion-content>
-        <ion-list class="side-profile"  >
+        <ion-list class="side-profile" *ngIf="_user">
             <ion-item menuClose (click)="openProfile()">
                 <ion-avatar item-start>
                     <img src="{{_user.image}}">
@@ -24,11 +24,19 @@
             </button>
         </ion-list>
     </ion-content>
-    <ion-footer>
+    <ion-footer *ngIf="_user">
         <ion-list class="side-cat-list">
             <button menuClose ion-item (click)="logout()">
                 <ion-icon name="log-out" class="cate-img"></ion-icon>
                 <span>Logout</span>
+            </button>
+        </ion-list>
+    </ion-footer>
+    <ion-footer *ngIf="!_user">
+        <ion-list class="side-cat-list">
+            <button menuClose ion-item (click)="login()">
+                <ion-icon name="log-in" class="cate-img"></ion-icon>
+                <span>Login</span>
             </button>
         </ion-list>
     </ion-footer>

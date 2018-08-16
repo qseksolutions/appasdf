@@ -19,8 +19,8 @@
 
 <ion-content >
   <div class="taged-post">
-    <div class="taged-img">
-      <img *ngIf="post.dis_video==''" src="{{post.dis_image!=''?post.dis_image:post.image_url}}" />
+    <div class="taged-img" *ngIf="post.dis_video==''">
+      <img src="{{post.dis_image!=''?post.dis_image:post.image_url}}" />
       <!-- <video id="uploadvideo" controls autoplay *ngIf="post.dis_video!=''" src="{{post.dis_video}}"></video> -->
     </div>
 
