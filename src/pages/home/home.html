@@ -94,7 +94,7 @@
             <img *ngIf="item2.type=='image'" [src]="item2.media_thumb" [hidden]="item2.loaded" onerror="this.src='assets/img/blur.jpg'"
                 (click)="post(item2)" [alt]="item2.title">
             
-            <video *ngIf="item2.type=='video'" controls muted [poster]="item2.media_thumb">
+            <video *ngIf="item2.type=='video'" class="visible-video" controls muted [poster]="item2.media_thumb">
                 <source [src]="item2.media" type="video/mp4">
             </video>
             
@@ -143,7 +143,7 @@
             <img *ngIf="item3.type=='image'" [src]="item3.media_thumb" [hidden]="item3.loaded" onerror="this.src='assets/img/blur.jpg'"
                 (click)="post(item3)" [alt]="item3.title">
             
-            <video *ngIf="item3.type=='video'" controls muted [poster]="item3.media_thumb">
+            <video *ngIf="item3.type=='video'" class="visible-video" controls muted [poster]="item3.media_thumb">
                 <source [src]="item3.media" type="video/mp4">
             </video>
             

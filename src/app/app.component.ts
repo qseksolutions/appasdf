@@ -17,7 +17,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   pages: any[] = [];
-  _user: any;
+  _user: any[] = [];
 
   constructor(
     public events: Events,
@@ -30,7 +30,6 @@ export class MyApp {
     private splashScreen: SplashScreen,
     private menuCtrl: MenuController
   ) {
-
     if (GLOBAL.IS_LOGGEDIN) {
       this.rootPage = 'HomePage';
     }
@@ -94,6 +93,9 @@ export class MyApp {
   }
   openProfile() {
     this.nav.push('ProfilePage');
+  }
+  login() {
+    this.nav.push('LoginPage');
   }
 
   logout() {

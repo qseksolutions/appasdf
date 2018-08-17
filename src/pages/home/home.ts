@@ -171,8 +171,8 @@ export class HomePage {
         this.Tdata.splice(this.Tdata.indexOf(is_repost), 1);
       }
     });
-    $(document).on('scroll', '.scroll-content', function (e) {
-      console.log('call');
+    $('.scroll-content').scroll(function (e) {
+      // console.log('call');
       var offsetRange = $('.scroll-content').height() / 3,
         offsetTop = $('.scroll-content').scrollTop() + offsetRange + $("ion-header").outerHeight(true),
         offsetBottom = offsetTop + offsetRange + 100;
