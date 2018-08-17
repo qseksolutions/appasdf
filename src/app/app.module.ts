@@ -16,6 +16,8 @@ import { MyApp } from './app.component';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Posts } from '../providers/posts/posts';
+import { NetworkProvider } from '../providers/network/network';
+import { Network } from '@ionic-native/network';
 
 
 // The translate loader needs to know where to load i18n files
@@ -73,6 +75,8 @@ export function provideSettings(storage: Storage) {
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     SocialSharing,
     Posts,
+    NetworkProvider,
+    Network,
   ]
 })
 export class AppModule { }

@@ -193,8 +193,11 @@
             </button>
         </ion-buttons>
         <ion-buttons right>
-            <button ion-button icon-only clear color="dark" (click)="gotoProfile()">
+            <button *ngIf="login" ion-button icon-only clear color="dark" (click)="gotoProfile()">
                 <ion-icon name="contact"></ion-icon>
+            </button>
+            <button *ngIf="!login" ion-button icon-only clear color="dark" (click)="gotoLogin()">
+                <ion-icon name="log-in"></ion-icon>
             </button>
         </ion-buttons>
     </ion-toolbar>

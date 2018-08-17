@@ -3,6 +3,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { Config, Nav, Platform, MenuController, Events } from 'ionic-angular';
+import { NetworkProvider } from '../providers/network/network';
 
 import { FirstRunPage } from '../pages';
 import { Settings, User } from '../providers';
@@ -23,6 +24,7 @@ export class MyApp {
     public events: Events,
     public user: User,
     private translate: TranslateService,
+    private networkprovider: NetworkProvider,
     platform: Platform,
     settings: Settings,
     private config: Config,
@@ -53,6 +55,11 @@ export class MyApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      try {
+        this.networkprovider.initializeNetworkEvents();
+      } catch (error) {
+        console.log(error);
+      }
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
