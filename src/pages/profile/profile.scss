@@ -10,6 +10,9 @@ page-profile {
   }
   .bar-button-default-ios {
     color: $white;
+    .back-button-text {
+      display: none;
+    }
   }
   .content-md {
       background-color: $body-bg;

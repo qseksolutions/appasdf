@@ -46,7 +46,7 @@ export class ProfilePage {
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     private socialSharing: SocialSharing,
-    public navParams: NavParams
+    public navParams: NavParams,
   ) {
     this.cuser = this.navParams.get('user_id');
     if (this.cuser == undefined || this.cuser == '') {
@@ -91,6 +91,9 @@ export class ProfilePage {
       loading.dismiss();
     }
   }
+  // ionViewDidLoad() {
+  //   this.viewCtrl.setBackButtonText('');
+  // }
 
   ionViewWillEnter() {
     this.user.getuserdata(this.cuser).subscribe((resp: any) => {

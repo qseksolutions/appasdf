@@ -41,9 +41,9 @@ export class EditProfilePage {
     });
   }
 
-  /* ionViewDidLoad() {
-    this.viewCtrl.setBackButtonText('');
-  } */
+  // ionViewDidLoad() {
+  //   this.viewCtrl.setBackButtonText('');
+  // }
 
   ionViewWillEnter() {
     this.user.getcountrylist().subscribe((resp: any) => {

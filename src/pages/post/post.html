@@ -139,8 +139,8 @@
     
   </ion-list>
 </ion-content>
-<ion-footer class="comm-box">
-  <form #formCtrl="ngForm" (submit)="doComment(item.comments)">
+<ion-footer>
+  <form class="comm-box" #formCtrl="ngForm" (submit)="doComment(item.comments)">
   <ion-input type="text" placeholder="Write comment..." required name="comment_text" [(ngModel)]="new_comment.comment_text"></ion-input>
     <ion-buttons end>
       <button ion-button icon-only [disabled]="!formCtrl.form.valid">
