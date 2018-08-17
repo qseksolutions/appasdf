@@ -32,7 +32,7 @@ export class NetworkProvider {
 
     this.alert = this.alertCtrl.create({
       title: 'Disconnected',
-      message: 'Please connect your device to internet',
+      message: 'Please check your internet connection',
       buttons: [
         {
           text: 'Close',

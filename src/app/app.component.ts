@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { Config, Nav, Platform, MenuController, Events } from 'ionic-angular';
 import { NetworkProvider } from '../providers/network/network';
+import { OneSignal } from '@ionic-native/onesignal';
 
 import { FirstRunPage } from '../pages';
 import { Settings, User } from '../providers';
@@ -30,14 +31,12 @@ export class MyApp {
     private config: Config,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private oneSignal: OneSignal
   ) {
     if (GLOBAL.IS_LOGGEDIN) {
-      console.log('IF');
       this.rootPage = 'HomePage';
     }
-    console.log(GLOBAL.IS_LOGGEDIN);
-    console.log(GLOBAL.USER);
     this._user = GLOBAL.USER;
     this.events.subscribe('user:loggedin', (user) => {
       GLOBAL.IS_LOGGEDIN = true;
@@ -59,6 +58,19 @@ export class MyApp {
         this.networkprovider.initializeNetworkEvents();
       } catch (error) {
         console.log(error);
+      }
+      try {
+        this.oneSignal.startInit(GLOBAL.ONESIGNAL_APPID, GLOBAL.SENDER_ID);
+        this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+        this.oneSignal.handleNotificationReceived().subscribe(() => {
+          // do something when notification is received
+        });
+        this.oneSignal.handleNotificationOpened().subscribe(() => {
+          // do something when a notification is opened
+        });
+        this.oneSignal.endInit();
+      } catch (error) {
+        console.log('not supperted device or platform');
       }
       this.statusBar.styleDefault();
       this.splashScreen.hide();
