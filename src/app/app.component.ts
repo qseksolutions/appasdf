@@ -31,16 +31,18 @@ export class MyApp {
     private menuCtrl: MenuController
   ) {
     if (GLOBAL.IS_LOGGEDIN) {
+      console.log('IF');
       this.rootPage = 'HomePage';
     }
-    
+    console.log(GLOBAL.IS_LOGGEDIN);
+    console.log(GLOBAL.USER);
     this._user = GLOBAL.USER;
     this.events.subscribe('user:loggedin', (user) => {
       GLOBAL.IS_LOGGEDIN = true;
       GLOBAL.USER = user;
       this._user = user;
     });
-
+    console.log(this._user)
     this.user.category().subscribe((resp: any) => {
       if (resp.status) {
         this.pages = resp.data;
@@ -89,7 +91,7 @@ export class MyApp {
     this.nav.setRoot('CaregoryPage', { category:page});
   }
   openHome() {
-      this.nav.setRoot('HomePage');
+    this.nav.setRoot('HomePage');
   }
   openProfile() {
     this.nav.push('ProfilePage');
@@ -101,6 +103,7 @@ export class MyApp {
   logout() {
     GLOBAL.IS_LOGGEDIN = false;
     GLOBAL.USER = null;
+    this._user = null;
     localStorage.removeItem('is_loggedin');
     this.nav.setRoot('LoginPage');
     this.menuCtrl.close();
