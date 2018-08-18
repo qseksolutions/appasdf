@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-navbar class="nav-bg">
-    <ion-title>Post</ion-title>
+  <ion-navbar class="nav-bg" *ngIf="post">
+    <ion-title>{{post.title}}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>

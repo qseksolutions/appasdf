@@ -186,7 +186,12 @@
             </button>
         </ion-buttons>
         <ion-buttons class="add-btn">
-            <button ion-button icon-only clear color="dark" (click)="addPost()">
+            <button *ngIf="login" ion-button icon-only clear color="dark" (click)="addPost()">
+                <ion-icon>
+                    <img src="assets/img/add.svg" />
+                </ion-icon>
+            </button>
+            <button *ngIf="!login" ion-button icon-only clear color="dark" (click)="gotoLogin()">
                 <ion-icon>
                     <img src="assets/img/add.svg" />
                 </ion-icon>

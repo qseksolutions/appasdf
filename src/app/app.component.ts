@@ -7,6 +7,7 @@ import { NetworkProvider } from '../providers/network/network';
 import { OneSignal } from '@ionic-native/onesignal';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
+
 import { FirstRunPage } from '../pages';
 import { Settings, User } from '../providers';
 import { GLOBAL } from './global';
@@ -54,10 +55,12 @@ export class MyApp {
     });
 
     platform.ready().then(() => {
-
+      this.statusBar.backgroundColorByHexString('#408bfc');
+      // this.statusBar.styleBlackOpaque()
+      this.statusBar.styleBlackTranslucent()
       this.uniqueDeviceID.get()
         .then((uuid: any) => alert(uuid))
-        .catch((error: any) => alert(error));
+        .catch((error: any) => console.log(error));
         
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -76,10 +79,14 @@ export class MyApp {
           // do something when a notification is opened
         });
         this.oneSignal.endInit();
+        this.oneSignal.getIds().then(identity => {
+          alert(identity.pushToken + ' its PUSHTOKEN'); 
+          alert(identity.userId + 'its USERID');
+        });
       } catch (error) {
         console.log('not supperted device or platform');
       }
-      this.statusBar.styleDefault();
+      // this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
     this.initTranslate();
