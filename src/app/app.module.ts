@@ -19,6 +19,7 @@ import { Posts } from '../providers/posts/posts';
 import { NetworkProvider } from '../providers/network/network';
 import { Network } from '@ionic-native/network';
 import { OneSignal } from '@ionic-native/onesignal';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 
 // The translate loader needs to know where to load i18n files
@@ -78,7 +79,8 @@ export function provideSettings(storage: Storage) {
     Posts,
     NetworkProvider,
     Network,
-    OneSignal
+    OneSignal,
+    UniqueDeviceID
   ]
 })
 export class AppModule { }
