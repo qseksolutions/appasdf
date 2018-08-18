@@ -58,6 +58,7 @@ export class MyApp {
       this.uniqueDeviceID.get()
         .then((uuid: any) => alert(uuid))
         .catch((error: any) => alert(error));
+        
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       try {
