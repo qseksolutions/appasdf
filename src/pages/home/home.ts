@@ -16,6 +16,7 @@ export class HomePage {
   user_email = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.email : '';
 
   report_detail:any;
+  login: boolean = false;
 
   Lfilter = { order: 'id', page: 1, tab: 'letest', is_last: false };
   Hfilter = { order: 'total_comment', page: 1, tab: 'hot', is_last: false };
@@ -42,6 +43,9 @@ export class HomePage {
     public navParams: NavParams) {
 
     // postlist
+    if (GLOBAL.IS_LOGGEDIN) {
+      this.login = true;
+    }
     this.changed('letest');
   } 
 
@@ -172,7 +176,7 @@ export class HomePage {
       }
     });
     $('.scroll-content').scroll(function (e) {
-      // console.log('call');
+      // console.log('call');gotoProfile
       var offsetRange = $('.scroll-content').height() / 3,
         offsetTop = $('.scroll-content').scrollTop() + offsetRange + $("ion-header").outerHeight(true),
         offsetBottom = offsetTop + offsetRange + 100;
@@ -317,8 +321,10 @@ export class HomePage {
   }
 
   gotoProfile() {
-    
     this.navCtrl.push('ProfilePage');
+  }
+  gotoLogin() {
+    this.navCtrl.push('LoginPage');
   }
 
   gotoNotification() {

@@ -3,6 +3,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { Config, Nav, Platform, MenuController, Events } from 'ionic-angular';
+import { NetworkProvider } from '../providers/network/network';
+import { OneSignal } from '@ionic-native/onesignal';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 import { FirstRunPage } from '../pages';
 import { Settings, User } from '../providers';
@@ -23,24 +26,26 @@ export class MyApp {
     public events: Events,
     public user: User,
     private translate: TranslateService,
+    private networkprovider: NetworkProvider,
     platform: Platform,
     settings: Settings,
     private config: Config,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private oneSignal: OneSignal,
+    private uniqueDeviceID: UniqueDeviceID
   ) {
     if (GLOBAL.IS_LOGGEDIN) {
       this.rootPage = 'HomePage';
     }
-    
     this._user = GLOBAL.USER;
     this.events.subscribe('user:loggedin', (user) => {
       GLOBAL.IS_LOGGEDIN = true;
       GLOBAL.USER = user;
       this._user = user;
     });
-
+    console.log(this._user)
     this.user.category().subscribe((resp: any) => {
       if (resp.status) {
         this.pages = resp.data;
@@ -49,8 +54,31 @@ export class MyApp {
     });
 
     platform.ready().then(() => {
+
+      this.uniqueDeviceID.get()
+        .then((uuid: any) => alert(uuid))
+        .catch((error: any) => alert(error));
+        
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      try {
+        this.networkprovider.initializeNetworkEvents();
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        this.oneSignal.startInit(GLOBAL.ONESIGNAL_APPID, GLOBAL.SENDER_ID);
+        this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+        this.oneSignal.handleNotificationReceived().subscribe(() => {
+          // do something when notification is received
+        });
+        this.oneSignal.handleNotificationOpened().subscribe(() => {
+          // do something when a notification is opened
+        });
+        this.oneSignal.endInit();
+      } catch (error) {
+        console.log('not supperted device or platform');
+      }
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
@@ -89,7 +117,7 @@ export class MyApp {
     this.nav.setRoot('CaregoryPage', { category:page});
   }
   openHome() {
-      this.nav.setRoot('HomePage');
+    this.nav.setRoot('HomePage');
   }
   openProfile() {
     this.nav.push('ProfilePage');
@@ -101,6 +129,7 @@ export class MyApp {
   logout() {
     GLOBAL.IS_LOGGEDIN = false;
     GLOBAL.USER = null;
+    this._user = null;
     localStorage.removeItem('is_loggedin');
     this.nav.setRoot('LoginPage');
     this.menuCtrl.close();
