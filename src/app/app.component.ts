@@ -5,7 +5,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { Config, Nav, Platform, MenuController, Events } from 'ionic-angular';
 import { NetworkProvider } from '../providers/network/network';
 import { OneSignal } from '@ionic-native/onesignal';
-import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 import { FirstRunPage } from '../pages';
 import { Settings, User } from '../providers';
@@ -33,8 +32,7 @@ export class MyApp {
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
     private menuCtrl: MenuController,
-    private oneSignal: OneSignal,
-    private uniqueDeviceID: UniqueDeviceID
+    private oneSignal: OneSignal
   ) {
     if (GLOBAL.IS_LOGGEDIN) {
       this.rootPage = 'HomePage';
@@ -54,11 +52,14 @@ export class MyApp {
     });
 
     platform.ready().then(() => {
+<<<<<<< HEAD
 
       this.uniqueDeviceID.get()
         .then((uuid: any) => alert(uuid))
         .catch((error: any) => alert(error));
         
+=======
+>>>>>>> 8ba0949c97ca3abb608e7e4b3ebb4c0425666347
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       try {
@@ -68,12 +69,12 @@ export class MyApp {
       }
       try {
         this.oneSignal.startInit(GLOBAL.ONESIGNAL_APPID, GLOBAL.SENDER_ID);
-        // this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+        this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
         this.oneSignal.handleNotificationReceived().subscribe(() => {
           // do something when notification is received
         });
         this.oneSignal.handleNotificationOpened().subscribe(() => {
-          this.nav.setRoot('HomePage');
+          // do something when a notification is opened
         });
         this.oneSignal.endInit();
       } catch (error) {
