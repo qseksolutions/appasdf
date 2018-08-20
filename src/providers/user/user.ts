@@ -101,6 +101,17 @@ export class User {
     return this.api.post('updateuser', body).share();
   }
   
+  updatedevicetoken(token) {
+    if (this.user_id != '' && this.user_id != null) {
+      let body = new FormData();
+      body.append('header', this.header);
+      body.append('user_id', this.user_id);
+      body.append('devicetoken', token);
+  
+      return this.api.post('updatedevicetoken', body).share();
+    }
+  }
+  
   changepassword(udata) {
     let body = new FormData();
     body.append('header', this.header);

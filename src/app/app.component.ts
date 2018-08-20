@@ -71,10 +71,14 @@ export class MyApp {
       }
       try {
         this.oneSignal.startInit(GLOBAL.ONESIGNAL_APPID, GLOBAL.SENDER_ID);
-        this.oneSignal.inFocusDisplaying(0);
+        this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
         this.oneSignal.getIds().then(identity => {
           localStorage.setItem('pushtoken', identity.pushToken);
           localStorage.setItem('devicetoken', identity.userId);
+          this.user.login(identity.userId).subscribe((resp: any) => {
+            if (resp.status) {
+            }
+          });
         }).catch((e) => {
           console.log("Error :" + e);
         })
