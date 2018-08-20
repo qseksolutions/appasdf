@@ -55,7 +55,7 @@ export class MyApp {
     });
 
     platform.ready().then(() => {
-      this.statusBar.backgroundColorByHexString('#408bfc');
+      this.statusBar.backgroundColorByHexString('#0366fc');
       // this.statusBar.styleBlackOpaque()
       this.statusBar.styleBlackTranslucent()
       this.uniqueDeviceID.get()
@@ -71,18 +71,20 @@ export class MyApp {
       }
       try {
         this.oneSignal.startInit(GLOBAL.ONESIGNAL_APPID, GLOBAL.SENDER_ID);
-        this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+        this.oneSignal.inFocusDisplaying(0);
+        this.oneSignal.getIds().then(identity => {
+          localStorage.setItem('pushtoken', identity.pushToken);
+          localStorage.setItem('devicetoken', identity.userId);
+        }).catch((e) => {
+          console.log("Error :" + e);
+        })
         this.oneSignal.handleNotificationReceived().subscribe(() => {
           // do something when notification is received
         });
-        this.oneSignal.handleNotificationOpened().subscribe(() => {
-          // do something when a notification is opened
+        this.oneSignal.handleNotificationOpened().subscribe((x) => {
+          this.handleNotification(x.notification.payload.additionalData);
         });
         this.oneSignal.endInit();
-        this.oneSignal.getIds().then(identity => {
-          alert(identity.pushToken + ' its PUSHTOKEN'); 
-          alert(identity.userId + 'its USERID');
-        });
       } catch (error) {
         console.log('not supperted device or platform');
       }
@@ -90,6 +92,12 @@ export class MyApp {
       this.splashScreen.hide();
     });
     this.initTranslate();
+  }
+
+  handleNotification(data) {
+    if (data.redirectScreen == 1) {
+      this.nav.push('HomePage');
+    }
   }
 
   initTranslate() {
