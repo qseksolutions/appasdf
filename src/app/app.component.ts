@@ -58,9 +58,16 @@ export class MyApp {
       this.statusBar.backgroundColorByHexString('#0366fc');
       // this.statusBar.styleBlackOpaque()
       this.statusBar.styleBlackTranslucent()
-      this.uniqueDeviceID.get()
-        .then((uuid: any) => alert(uuid))
-        .catch((error: any) => console.log(error));
+      this.uniqueDeviceID.get().then((uuid: any) => {
+        localStorage.setItem('device_id', uuid);
+      }).catch((error: any) => console.log(error));
+
+      this.oneSignal.getIds().then(identity => {
+        localStorage.setItem('pushtoken', identity.pushToken);
+        localStorage.setItem('devicetoken', identity.userId);
+      }).catch((e) => {
+        console.log("Error :" + e);
+      })
         
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -72,16 +79,7 @@ export class MyApp {
       try {
         this.oneSignal.startInit(GLOBAL.ONESIGNAL_APPID, GLOBAL.SENDER_ID);
         this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
-        this.oneSignal.getIds().then(identity => {
-          localStorage.setItem('pushtoken', identity.pushToken);
-          localStorage.setItem('devicetoken', identity.userId);
-          this.user.login(identity.userId).subscribe((resp: any) => {
-            if (resp.status) {
-            }
-          });
-        }).catch((e) => {
-          console.log("Error :" + e);
-        })
+        
         this.oneSignal.handleNotificationReceived().subscribe(() => {
           // do something when notification is received
         });

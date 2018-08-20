@@ -101,12 +101,13 @@ export class User {
     return this.api.post('updateuser', body).share();
   }
   
-  updatedevicetoken(token) {
+  updatedevicetoken() {
     if (this.user_id != '' && this.user_id != null) {
       let body = new FormData();
       body.append('header', this.header);
       body.append('user_id', this.user_id);
-      body.append('devicetoken', token);
+      body.append('devicetoken', GLOBAL.DEVICETOKEN);
+      body.append('device_id', GLOBAL.DEVICE_ID);
   
       return this.api.post('updatedevicetoken', body).share();
     }

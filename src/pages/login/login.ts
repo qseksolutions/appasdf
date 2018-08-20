@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController, AlertController, MenuController, LoadingController } from 'ionic-angular';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 import { User } from '../../providers';
 
@@ -22,7 +23,9 @@ export class LoginPage {
     public alertCtrl: AlertController,
     public menuCtrl: MenuController,
     public loadingCtrl: LoadingController,
-    public translateService: TranslateService) {
+    public translateService: TranslateService,
+    private uniqueDeviceID: UniqueDeviceID
+  ) {
 
     this.menuCtrl.swipeEnable(false);
   }
@@ -45,6 +48,15 @@ export class LoginPage {
           position: 'bottom'
         });
         toast.present();
+
+        this.uniqueDeviceID.get().then((uuid: any) => {
+          localStorage.setItem('device_id', uuid);
+        }).catch((error: any) => console.log(error));
+        this.user.updatedevicetoken().subscribe((resp: any) => {
+          if (resp.status) {
+            alert(resp.message)
+          }
+        });
       }
     }, (err) => {
       // Unable to log in

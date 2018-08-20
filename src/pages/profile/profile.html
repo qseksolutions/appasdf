@@ -23,6 +23,7 @@
         <div class="profile-name">
             <h3>{{userdata.username}}</h3>
             <span class="user-status">{{userdata.about_me}}</span>
+            <button *ngIf="user_id==userdata.id" ion-button outline small color="light-dark" (click)="sendnoti()">Notification</button>
             <button *ngIf="user_id==userdata.id" ion-button outline small color="light-dark" (click)="gotoEditProfils()">Edit Profile</button>
             <button *ngIf="user_id==userdata.id" ion-button outline small icon-only color="light-dark" (click)="gotoSettings()"><ion-icon name="cog"></ion-icon></button>
         </div>
