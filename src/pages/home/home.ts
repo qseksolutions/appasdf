@@ -243,7 +243,7 @@ export class HomePage {
             post.is_like = resp.like;
             post.like_count = resp.like_count;
             if (resp.like == '1') {
-              this.sendnotification(resp.devicetoken, resp.post_data);
+              this.sendnotification(resp.devicetoken, resp.post_data, resp.notification);
             }
           }
           resolve();
@@ -265,20 +265,21 @@ export class HomePage {
     }
   }
 
-  sendnotification(devicetoken,post) {
+  sendnotification(devicetoken,post, noti) {
     this.oneSignal.getIds().then(identity => {
       // alert(devicetoken);
       var notificationObj = {
-        contents: { en: "Like your post" },
+        contents: { en: noti.msg },
         data: { post: post },
         include_player_ids: [devicetoken],
-        small_icon: 'https://fuskk.com/images/favicon.ico',
-        large_icon: 'https://fuskk.com/images/small-icon.png',
+        small_icon: 'https://fuskk.com/images/small-icon',
+        large_icon: noti.img,
         // ios_attachments: { id1: "https://cdn.pixabay.com/photo/2017/09/16/16/09/sea-2755908_960_720.jpg" }
       };
 
       window["plugins"].OneSignal.postNotification(notificationObj,
         function (successResponse) {
+          // alert(JSON.stringify(successResponse));
           console.log("Notification Post Success:", successResponse);
         },
         function (failedResponse) {
