@@ -3,7 +3,6 @@ import { IonicPage, NavController, PopoverController, AlertController, NavParams
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { User } from '../../providers/user/user';
 import { Posts } from '../../providers/posts/posts';
-import { OneSignal } from '@ionic-native/onesignal';
 import { GLOBAL } from '../../app/global';
 
 import * as $ from "jquery";
@@ -41,7 +40,6 @@ export class ProfilePage {
     public posts: Posts,
     public user: User,
     public events: Events,
-    private oneSignal: OneSignal,
     public toastCtrl: ToastController,
     public navCtrl: NavController,
     public popoverCtrl: PopoverController,
@@ -118,30 +116,6 @@ export class ProfilePage {
         }
       });
     });
-  }
-
-  sendnoti() {
-    this.oneSignal.getIds().then(identity => {
-      var notificationObj = {
-        contents: { en: "message with image" },
-        data: { data_key: "data_value", openURL: "https://imgur.com/" },
-        include_player_ids: [identity.userId],
-        ios_attachments: { id1: "https://cdn.pixabay.com/photo/2017/09/16/16/09/sea-2755908_960_720.jpg" }
-      };
-
-      window["plugins"].OneSignal.postNotification(notificationObj,
-        function (successResponse) {
-          alert(successResponse);
-          console.log("Notification Post Success:", successResponse);
-        },
-        function (failedResponse) {
-          console.log("Notification Post Failed: ", failedResponse);
-          alert("Notification Post Failed:\n" + JSON.stringify(failedResponse));
-        }
-      );
-    }).catch((e) => {
-      console.log("Error :" + e);
-    })
   }
 
   ionViewWillEnter() {
@@ -239,7 +213,7 @@ export class ProfilePage {
   postlike(post): Promise<any> {
     if (GLOBAL.IS_LOGGEDIN) {
       return new Promise((resolve) => {
-        this.posts.postlike(post.id).subscribe((resp: any) => {
+        this.posts.postlike(post.id, post.user_id).subscribe((resp: any) => {
           if (resp.status) {
             post.is_like = resp.like;
             post.like_count = resp.like_count;

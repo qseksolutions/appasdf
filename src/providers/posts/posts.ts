@@ -24,10 +24,11 @@ export class Posts {
     return this.api.post('postlist', body).share();
   }
  
-  postlike(post_id) {
+  postlike(post_id, owner_id) {
     let body = new FormData();
     body.append('post_id', post_id);
     body.append('user_id', this.user_id);
+    body.append('owner_id', owner_id);
     body.append('header', this.header);
 
     return this.api.post('postlike', body).share();

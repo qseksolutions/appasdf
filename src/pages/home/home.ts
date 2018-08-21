@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, PopoverController, AlertController, NavParams, ActionSheetController, ModalController, LoadingController, ToastController, Events } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Posts } from '../../providers/posts/posts';
+import { OneSignal } from '@ionic-native/onesignal';
 import { GLOBAL } from '../../app/global';
 
 import * as $ from "jquery";
@@ -34,6 +35,7 @@ export class HomePage {
     public events: Events,
     public toastCtrl: ToastController,
     public navCtrl: NavController,
+    private oneSignal: OneSignal,
     public popoverCtrl: PopoverController,
     public actionSheetCtrl: ActionSheetController,
     public modalCtrl: ModalController,
@@ -236,10 +238,13 @@ export class HomePage {
   postlike(post): Promise<any> {
     if(GLOBAL.IS_LOGGEDIN){
       return new Promise((resolve) => {
-        this.posts.postlike(post.id).subscribe((resp: any) => {
+        this.posts.postlike(post.id, post.user_id).subscribe((resp: any) => {
           if (resp.status) {
             post.is_like = resp.like;
             post.like_count = resp.like_count;
+            if (resp.like == '1') {
+              this.sendnotification(resp.devicetoken, resp.post_data);
+            }
           }
           resolve();
         }, (err) => {
@@ -258,6 +263,31 @@ export class HomePage {
       });
       toast.present();
     }
+  }
+
+  sendnotification(devicetoken,post) {
+    this.oneSignal.getIds().then(identity => {
+      alert(devicetoken);
+      var notificationObj = {
+        contents: { en: "Like your post" },
+        data: { post: post },
+        include_player_ids: [devicetoken],
+        // ios_attachments: { id1: "https://cdn.pixabay.com/photo/2017/09/16/16/09/sea-2755908_960_720.jpg" }
+      };
+
+      window["plugins"].OneSignal.postNotification(notificationObj,
+        function (successResponse) {
+          alert(successResponse.id);
+          console.log("Notification Post Success:", successResponse);
+        },
+        function (failedResponse) {
+          console.log("Notification Post Failed: ", failedResponse);
+          alert("Notification Post Failed:\n" + JSON.stringify(failedResponse));
+        }
+      );
+    }).catch((e) => {
+      console.log("Error :" + e);
+    })
   }
 
   postreport(post) {

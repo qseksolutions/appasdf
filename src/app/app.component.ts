@@ -97,9 +97,8 @@ export class MyApp {
   }
 
   handleNotification(data) {
-    if (data.redirectScreen == 1) {
-      this.nav.push('HomePage');
-    }
+    alert(JSON.stringify(data))
+    this.nav.push('PostPage', { post: data.post });
   }
 
   initTranslate() {

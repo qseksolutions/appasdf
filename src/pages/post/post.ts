@@ -356,7 +356,7 @@ export class PostPage {
   postlike(post) {
     if (this.is_login()) {
       return new Promise((resolve) => {
-        this.posts.postlike(post.id).subscribe((resp: any) => {
+        this.posts.postlike(post.id, post.user_id).subscribe((resp: any) => {
           if (resp.status) {
             post.is_like = resp.like;
             post.like_count = resp.like_count;
