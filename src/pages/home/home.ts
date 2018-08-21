@@ -267,22 +267,23 @@ export class HomePage {
 
   sendnotification(devicetoken,post) {
     this.oneSignal.getIds().then(identity => {
-      alert(devicetoken);
+      // alert(devicetoken);
       var notificationObj = {
         contents: { en: "Like your post" },
         data: { post: post },
         include_player_ids: [devicetoken],
+        small_icon: 'https://fuskk.com/images/favicon.ico',
+        large_icon: 'https://fuskk.com/images/small-icon.png',
         // ios_attachments: { id1: "https://cdn.pixabay.com/photo/2017/09/16/16/09/sea-2755908_960_720.jpg" }
       };
 
       window["plugins"].OneSignal.postNotification(notificationObj,
         function (successResponse) {
-          alert(successResponse.id);
           console.log("Notification Post Success:", successResponse);
         },
         function (failedResponse) {
           console.log("Notification Post Failed: ", failedResponse);
-          alert("Notification Post Failed:\n" + JSON.stringify(failedResponse));
+          // alert("Notification Post Failed:\n" + JSON.stringify(failedResponse));
         }
       );
     }).catch((e) => {

@@ -97,7 +97,6 @@ export class MyApp {
   }
 
   handleNotification(data) {
-    alert(JSON.stringify(data))
     this.nav.push('PostPage', { post: data.post });
   }
 
