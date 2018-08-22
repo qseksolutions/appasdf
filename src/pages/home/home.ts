@@ -269,9 +269,12 @@ export class HomePage {
     this.oneSignal.getIds().then(identity => {
       // alert(devicetoken);
       var notificationObj = {
+        headings: { en: 'Fuskk' },
         contents: { en: noti.msg },
         data: { post: post },
         include_player_ids: [devicetoken],
+        android_accent_color: '0366fc',
+        android_background_layout: { "headings_color": "0366fc" },
         small_icon: 'https://fuskk.com/images/small-icon',
         large_icon: noti.img,
         // ios_attachments: { id1: "https://cdn.pixabay.com/photo/2017/09/16/16/09/sea-2755908_960_720.jpg" }
