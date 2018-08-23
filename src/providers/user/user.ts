@@ -85,10 +85,10 @@ export class User {
     return this.api.get('category', { header: GLOBAL.API_HEADER }).share();
   }
 
-  updateuser(udata) {
+  updateuser(udata, user_id) {
     let body = new FormData();
     body.append('header', this.header);
-    body.append('user_id', this.user_id);
+    body.append('user_id', user_id);
     body.append('name', udata.username);
     body.append('username', udata.user_slug);
     body.append('email', udata.email);
@@ -101,11 +101,11 @@ export class User {
     return this.api.post('updateuser', body).share();
   }
   
-  updatedevicetoken() {
+  updatedevicetoken(user_id) {
     if (this.user_id != '' && this.user_id != null) {
       let body = new FormData();
       body.append('header', this.header);
-      body.append('user_id', this.user_id);
+      body.append('user_id', user_id);
       body.append('devicetoken', GLOBAL.DEVICETOKEN);
       body.append('device_id', GLOBAL.DEVICE_ID);
   
@@ -113,20 +113,28 @@ export class User {
     }
   }
   
-  changepassword(udata) {
+  getnotification(user_id) {
     let body = new FormData();
     body.append('header', this.header);
-    body.append('user_id', this.user_id);
+    body.append('user_id', user_id);
+
+    return this.api.post('notification', body).share();
+  }
+  
+  changepassword(udata, user_id) {
+    let body = new FormData();
+    body.append('header', this.header);
+    body.append('user_id', user_id);
     body.append('oldpassword', udata.oldpassword);
     body.append('newpassword', udata.newpassword);
 
     return this.api.post('changepassword', body).share();
   }
 
-  addpost(post) {
+  addpost(post, user_id) {
     let body = new FormData();
     body.append('header', this.header);
-    body.append('user_id', this.user_id);
+    body.append('user_id', user_id);
     body.append('title', post.title);
     body.append('category', post.category);
     if (post.tag1 != '' && post.tag2 != '' && post.tag3 != '') {

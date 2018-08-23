@@ -14,71 +14,71 @@ export class Posts {
     }
   }
 
-  postlist(fdata) {
+  postlist(fdata, user_id) {
     let body = new FormData();
     body.append('order_by', fdata.order);
     body.append('page', fdata.page);
-    body.append('user_id', this.user_id);
+    body.append('user_id', user_id);
     body.append('header', this.header);
 
     return this.api.post('postlist', body).share();
   }
  
-  postlike(post_id, owner_id) {
+  postlike(post_id, owner_id, user_id) {
     let body = new FormData();
     body.append('post_id', post_id);
-    body.append('user_id', this.user_id);
+    body.append('user_id', user_id);
     body.append('owner_id', owner_id);
     body.append('header', this.header);
 
     return this.api.post('postlike', body).share();
   }
   
-  commentlike(cmt) {
+  commentlike(cmt, user_id) {
     let body = new FormData();
     body.append('comment_id', cmt.id);
     body.append('post_id', cmt.post_id);
-    body.append('user_id', this.user_id);
+    body.append('user_id', user_id);
     body.append('header', this.header);
 
     return this.api.post('commentlike', body).share();
   }
   
-  addsubcomment(cmt) {
+  addsubcomment(cmt, user_id) {
     let body = new FormData();
     body.append('comment_id', cmt.comment_id);
     body.append('post_id', cmt.post_id);
     body.append('comment', cmt.comment_text);
-    body.append('user_id', this.user_id);
+    body.append('user_id', user_id);
     body.append('header', this.header);
 
     return this.api.post('addsubcomment', body).share();
   }
   
-  addcomment(cmt) {
+  addcomment(cmt, user_id) {
     let body = new FormData();
     body.append('post_id', cmt.post_id);
     body.append('comment', cmt.comment_text);
-    body.append('user_id', this.user_id);
+    body.append('user_id', user_id);
     body.append('header', this.header);
 
     return this.api.post('addcomment', body).share();
   }
   
-  deletecomment(cmt) {
+  deletecomment(cmt, user_id) {
     let body = new FormData();
     body.append('id', cmt.id);
-    body.append('user_id', this.user_id);
+    body.append('user_id', user_id);
     body.append('header', this.header);
 
     return this.api.post('deletecomment', body).share();
   }
   
-  postreport(report) {
+  postreport(report, user_id) {
     let body = new FormData();
 
     body.append('post_id', report.id);
-    body.append('user_id', this.user_id);
+    body.append('user_id', user_id);
     body.append('reason', report.reason);
     body.append('detail', report.detail);
     body.append('header', this.header);
@@ -86,11 +86,11 @@ export class Posts {
     return this.api.post('postreport', body).share();
   }
 
-  commentreport(report) {
+  commentreport(report, user_id) {
     let body = new FormData();
 
     body.append('comment_id', report.id);
-    body.append('user_id', this.user_id);
+    body.append('user_id', user_id);
     body.append('reason', report.reason);
     body.append('detail', report.detail);
     body.append('header', this.header);
@@ -98,44 +98,44 @@ export class Posts {
     return this.api.post('commentreport', body).share();
   }
 
-  singlepost(post_id) {
+  singlepost(post_id, user_id) {
     let body = new FormData();
     body.append('post_id', post_id);
-    body.append('user_id', this.user_id);
+    body.append('user_id', user_id);
     body.append('header', this.header);
 
     return this.api.post('singlepost', body).share();
   }
   
-  categorypost(fdata) {
+  categorypost(fdata, user_id) {
     let body = new FormData();
     body.append('order_by', fdata.order);
     body.append('page', fdata.page);
     body.append('cat_id', fdata.cat_id);
-    body.append('user_id', this.user_id);
+    body.append('user_id', user_id);
     body.append('header', this.header);
 
     return this.api.post('postlist', body).share();
   }
 
-  loadmorecomment(post){
+  loadmorecomment(post, user_id){
     let body = new FormData();
 
     body.append('post_id', post.id);
     body.append('page', post.page);
-    body.append('user_id', this.user_id);
+    body.append('user_id', user_id);
     body.append('header', this.header);
 
     return this.api.post('loadmorecomment', body).share();
   }
   
-  loadsubcomment(cmt){
+  loadsubcomment(cmt, user_id){
     let body = new FormData();
 
     body.append('comment_id', cmt.id);
     body.append('post_id', cmt.post_id);
     body.append('page', cmt.page);
-    body.append('user_id', this.user_id);
+    body.append('user_id', user_id);
     body.append('header', this.header);
 
     return this.api.post('loadsubcomment', body).share();

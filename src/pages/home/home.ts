@@ -15,6 +15,7 @@ import * as $ from "jquery";
 export class HomePage {
 
   user_email = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.email : '';
+  user_id = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.id : '';
 
   report_detail:any;
   login: boolean = false;
@@ -116,7 +117,7 @@ export class HomePage {
         load_tab_data = this.Tfilter;
       }
       if (load_tab_data) {
-        this.posts.postlist(load_tab_data).subscribe((resp: any) => {
+        this.posts.postlist(load_tab_data, this.user_id).subscribe((resp: any) => {
           if (resp.status) {
             if (curent_tab == 'letest') {
               for (var i = 0; i < resp.data.length; i++) {
@@ -147,7 +148,7 @@ export class HomePage {
   }
 
   postlist(flt) {
-    this.posts.postlist(flt).subscribe((resp: any) => {
+    this.posts.postlist(flt, this.user_id).subscribe((resp: any) => {
       if (resp.status) {
         if (flt.tab == 'letest') {
           this.Ldata = resp.data;
@@ -238,7 +239,7 @@ export class HomePage {
   postlike(post): Promise<any> {
     if(GLOBAL.IS_LOGGEDIN){
       return new Promise((resolve) => {
-        this.posts.postlike(post.id, post.user_id).subscribe((resp: any) => {
+        this.posts.postlike(post.id, post.user_id, this.user_id).subscribe((resp: any) => {
           if (resp.status) {
             post.is_like = resp.like;
             post.like_count = resp.like_count;

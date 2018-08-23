@@ -54,7 +54,7 @@ export class PostPage {
   ionViewDidLoad() {
     this.viewCtrl.setBackButtonText('');
     try {
-      this.posts.singlepost(this.post.id).subscribe((resp: any) => {
+      this.posts.singlepost(this.post.id, this.user_id).subscribe((resp: any) => {
         if (resp.status) {
           this.item = resp.data;
           if (this.item.comments.length==10){
@@ -120,7 +120,7 @@ export class PostPage {
       console.log(this.new_comment);
       if (this.new_comment.replay_type==1){
         return new Promise((resolve) => {
-          this.posts.addsubcomment(this.new_comment).subscribe((resp: any) => {
+          this.posts.addsubcomment(this.new_comment, this.user_id).subscribe((resp: any) => {
             if (resp.status) {
               if (this.comment_data.subs){
                 this.comment_data.subs.unshift(resp.data);
@@ -140,7 +140,7 @@ export class PostPage {
       }
       else if (this.new_comment.replay_type == 2) {
         return new Promise((resolve) => {
-          this.posts.addsubcomment(this.new_comment).subscribe((resp: any) => {
+          this.posts.addsubcomment(this.new_comment, this.user_id).subscribe((resp: any) => {
             if (resp.status) {
               this.comment_data.sub_comment_count++;
               this.comment_data.subs.unshift(resp.data);
@@ -159,7 +159,7 @@ export class PostPage {
         this.new_comment.post_id = this.item.id;
         console.log(this.new_comment);
         return new Promise((resolve) => {
-          this.posts.addcomment(this.new_comment).subscribe((resp: any) => {
+          this.posts.addcomment(this.new_comment, this.user_id).subscribe((resp: any) => {
             if (resp.status) {
               console.log(this.item.comments);
               this.item.comments.unshift(resp.data);
@@ -182,7 +182,7 @@ export class PostPage {
     if (this.is_login()) {
       return new Promise((resolve) => {
 
-        this.posts.deletecomment(this.comment_report_detail).subscribe((resp: any) => {
+        this.posts.deletecomment(this.comment_report_detail, this.user_id).subscribe((resp: any) => {
           if (resp.status) {
             if (this.comment_report_detail.cmt_type == "parent") {
               this.item.comments.splice(this.item.comments.indexOf(this.comment_report_detail), 1);
@@ -214,7 +214,7 @@ export class PostPage {
 
   loadmorecomment(post){
     return new Promise((resolve) => {
-      this.posts.loadmorecomment(post).subscribe((resp: any) => {
+      this.posts.loadmorecomment(post, this.user_id).subscribe((resp: any) => {
         if (resp.status) {
           for (var i = 0; i < resp.data.length; i++) {
             this.item.comments.push(resp.data[i]);
@@ -242,7 +242,7 @@ export class PostPage {
     // if (this.is_login()) 
     {
       return new Promise((resolve) => {
-        this.posts.loadsubcomment(cmt).subscribe((resp: any) => {
+        this.posts.loadsubcomment(cmt, this.user_id).subscribe((resp: any) => {
           if (resp.status) {
             cmt.subs = resp.data;
             if (resp.data.length == 10) {
@@ -267,7 +267,7 @@ export class PostPage {
     // if (this.is_login()) 
     {
       return new Promise((resolve) => {
-        this.posts.loadsubcomment(cmt).subscribe((resp: any) => {
+        this.posts.loadsubcomment(cmt, this.user_id).subscribe((resp: any) => {
           if (resp.status) {
             for (var i = 0; i < resp.data.length; i++) {
               cmt.subs.push(resp.data[i]);
@@ -360,7 +360,7 @@ export class PostPage {
   postlike(post) {
     if (this.is_login()) {
       return new Promise((resolve) => {
-        this.posts.postlike(post.id, post.user_id).subscribe((resp: any) => {
+        this.posts.postlike(post.id, post.user_id, this.user_id).subscribe((resp: any) => {
           if (resp.status) {
             post.is_like = resp.like;
             post.like_count = resp.like_count;
@@ -411,7 +411,7 @@ export class PostPage {
   commentlike(post) {
     if (this.is_login()) {
       return new Promise((resolve) => {
-        this.posts.commentlike(post).subscribe((resp: any) => {
+        this.posts.commentlike(post, this.user_id).subscribe((resp: any) => {
           if (resp.status) {
             post.comment_like = resp.like;
             post.comment_like_count = resp.like_count;

@@ -215,7 +215,7 @@ export class ProfilePage {
   postlike(post): Promise<any> {
     if (GLOBAL.IS_LOGGEDIN) {
       return new Promise((resolve) => {
-        this.posts.postlike(post.id, post.user_id).subscribe((resp: any) => {
+        this.posts.postlike(post.id, post.user_id, this.user_id).subscribe((resp: any) => {
           if (resp.status) {
             post.is_like = resp.like;
             post.like_count = resp.like_count;

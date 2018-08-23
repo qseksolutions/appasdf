@@ -3,6 +3,7 @@ import { FormBuilder} from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ViewController, LoadingController, ToastController } from 'ionic-angular';
 import { User } from '../../providers/user/user';
+import { GLOBAL } from '../../app/global';
 
 /**
  * Generated class for the ChangePasswordPage page.
@@ -18,6 +19,7 @@ import { User } from '../../providers/user/user';
 })
 export class ChangePasswordPage {
   userdata = [];
+  user_id = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.id : '';
   constructor(
     public user: User,
     public navCtrl: NavController,
@@ -50,7 +52,7 @@ export class ChangePasswordPage {
         content: 'Please wait...'
       });
       loading.present();
-      this.user.changepassword(this.userdata).subscribe((resp: any) => {
+      this.user.changepassword(this.userdata, this.user_id).subscribe((resp: any) => {
         loading.dismiss();
         if (resp.status) {
           this.userdata['oldpassword'] = '';

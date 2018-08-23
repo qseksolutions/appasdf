@@ -4,6 +4,7 @@ import { IonicPage, NavController, ToastController, AlertController, MenuControl
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 import { User } from '../../providers';
+import { GLOBAL } from '../../app/global';
 
 @IonicPage()
 @Component({
@@ -16,6 +17,7 @@ export class LoginPage {
     email: 'admin@qseksolutions.com',
     password: 'admin@1234'
   };
+  user_id = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.id : '';
 
   constructor(public navCtrl: NavController,
     public user: User,
@@ -52,7 +54,7 @@ export class LoginPage {
         this.uniqueDeviceID.get().then((uuid: any) => {
           localStorage.setItem('device_id', uuid);
         }).catch((error: any) => console.log(error));
-        this.user.updatedevicetoken().subscribe((resp: any) => {
+        this.user.updatedevicetoken(this.user_id).subscribe((resp: any) => {
           if (resp.status) {
             alert(resp.message)
           }

@@ -11,7 +11,7 @@ import { GLOBAL } from '../../../app/global';
 export class ReportModalPage {
   
   report_details: { id: number, title: string, reason: string, detail: string } = { id: 0, title:'',reason: '', detail: '' };
-  
+  user_id = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.id : '';
 
   constructor(
     public posts: Posts,
@@ -34,7 +34,7 @@ export class ReportModalPage {
   doReport(){
     if (GLOBAL.IS_LOGGEDIN) {
       return new Promise((resolve) => {
-        this.posts.postreport(this.report_details).subscribe((resp: any) => {
+        this.posts.postreport(this.report_details, this.user_id).subscribe((resp: any) => {
           if (resp.status) {
             this.report_details.reason = '';
             this.report_details.detail = '';

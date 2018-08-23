@@ -16,7 +16,7 @@ export class CaregoryPage {
   user_email = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.email : '';
 
   report_detail: any;
-
+  user_id = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.id : '';
 
   Lfilter = { page: 1, cat_id: 0, tab: 0, is_last: false, order: 'id' };
   Hfilter = { page: 1, cat_id: 0, tab: 1, is_last: false, order: 'total_comment' };
@@ -86,7 +86,7 @@ export class CaregoryPage {
         load_tab_data = this.Hfilter;
       }
       if (load_tab_data) {
-        this.posts.postlist(load_tab_data).subscribe((resp: any) => {
+        this.posts.postlist(load_tab_data, this.user_id).subscribe((resp: any) => {
           if (resp.status) {
             if (this.tabs == "0") {
               for (var i = 0; i < resp.data.length; i++) {
@@ -116,7 +116,7 @@ export class CaregoryPage {
   }
 
   categorypost(flt) {
-    this.posts.categorypost(flt).subscribe((resp: any) => {
+    this.posts.categorypost(flt, this.user_id).subscribe((resp: any) => {
       if (resp.status) {
         if (flt.tab == 0) {
           this.Ldata = resp.data;
@@ -174,7 +174,7 @@ export class CaregoryPage {
   postlike(post): Promise<any> {
     if (GLOBAL.IS_LOGGEDIN) {
       return new Promise((resolve) => {
-        this.posts.postlike(post.id, post.user_id).subscribe((resp: any) => {
+        this.posts.postlike(post.id, post.user_id, this.user_id).subscribe((resp: any) => {
           if (resp.status) {
             post.is_like = resp.like;
             post.like_count = resp.like_count;

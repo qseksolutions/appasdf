@@ -16,6 +16,7 @@ export class EditProfilePage {
   isReadyToSave: boolean;
   country = [];
   userdata = [];
+  user_id = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.id : '';
 
   item: any;
 
@@ -74,7 +75,7 @@ export class EditProfilePage {
       content: 'Please wait...'
     });
     loading.present();
-    this.user.updateuser(this.userdata).subscribe((resp: any) => {
+    this.user.updateuser(this.userdata, this.user_id).subscribe((resp: any) => {
       loading.dismiss();
       if (resp.status) {
         this.userdata = resp.data;
