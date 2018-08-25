@@ -9,6 +9,9 @@
 
 
 <ion-content >
+  <ion-list text-center style="margin: 20px;" *ngIf="notification == ''">
+    <ion-spinner></ion-spinner>
+  </ion-list>
   <ion-list class="noti-list" *ngIf="pennotification" style="margin: 0;">
     <ion-item class="new_noti" *ngFor="let notif of pennotification">
       <div class="noti_box">
@@ -28,7 +31,7 @@
       </div>
     </ion-item>
   </ion-list>
-  <ion-list class="noti-list" *ngIf="notification">
+  <ion-list class="noti-list" *ngIf="notification" style="margin: 0;">
     <ion-item *ngFor="let noti of notification">
       <div class="noti_box" *ngIf="noti.action == '0'">
         <ion-avatar item-start>
@@ -79,5 +82,9 @@
         </div>
       </div>
     </ion-item>
+    <ion-infinite-scroll *ngIf="!nonoti" (ionInfinite)="$event.waitFor(doInfinite())">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </ion-list>
+  <h6 *ngIf="nonoti" text-center>No more notification</h6>
 </ion-content>

@@ -3,8 +3,6 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { User } from '../../providers/user/user';
 import { GLOBAL } from '../../app/global';
 
-import * as $ from "jquery";
-
 /**
  * Generated class for the NotificationPage page.
  *
@@ -21,6 +19,8 @@ export class NotificationPage {
 
   pennotification = [];
   notification = [];
+  page = 1;
+  nonoti : Boolean = false;
   user_id = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.id : '';
   
   constructor(public user: User, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
@@ -31,14 +31,36 @@ export class NotificationPage {
     this.viewCtrl.setBackButtonText('');
   }
 
+  doInfinite(): Promise<any> {
+    return new Promise((resolve) => {
+
+      this.page = this.page + 1;
+      this.user.getnotification(this.user_id, this.page).subscribe((resp: any) => {
+        if (resp.status) {
+          this.nonoti = false;
+          for (var i = 0; i < resp.notification.length; i++) {
+            this.notification.push(resp.data[i]);
+          }
+        }
+        resolve();
+      }, (err) => {
+        resolve();
+        this.nonoti = true;
+        console.log(err);
+      });
+    });
+  }
+
   ionViewWillEnter() {
-    this.user.getnotification(this.user_id).subscribe((resp: any) => {
+    this.user.getnotification(this.user_id, this.page).subscribe((resp: any) => {
       if (resp.status) {
+        this.nonoti = false;
         this.notification = resp.notification;
         this.pennotification = resp.pennotification;
         console.log(this.notification);
       }
     }, (err) => {
+      this.nonoti = true;
       console.log(err);
     });
   }

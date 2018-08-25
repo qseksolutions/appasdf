@@ -113,10 +113,11 @@ export class User {
     }
   }
   
-  getnotification(user_id) {
+  getnotification(user_id, page) {
     let body = new FormData();
     body.append('header', this.header);
     body.append('user_id', user_id);
+    body.append('page', page);
 
     return this.api.post('notification', body).share();
   }

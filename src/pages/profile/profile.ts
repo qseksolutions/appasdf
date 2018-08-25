@@ -264,7 +264,7 @@ export class ProfilePage {
         },
         function (failedResponse) {
           // console.log("Notification Post Failed: ", failedResponse);
-          alert("Notification Post Failed:\n" + JSON.stringify(failedResponse));
+          // alert("Notification Post Failed:\n" + JSON.stringify(failedResponse));
         }
       );
     }).catch((e) => {
