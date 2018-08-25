@@ -144,4 +144,21 @@ page-home {
             @include justify-content(flex-start);
         }
     }
+    .noti-btn {
+        position: relative;
+        .noti_count {
+            position: absolute;
+            right: 0px;
+            color: $white;
+            top: 0;
+            background-color: #f04;
+            min-width: 15px;
+            text-align: center;
+            height: 15px;
+            border-radius: 50%;
+            font-size: 10px;
+            vertical-align: middle;
+            line-height: 15px;
+        }
+    }
 }

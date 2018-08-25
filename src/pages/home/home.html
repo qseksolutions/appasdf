@@ -8,10 +8,11 @@
         <ion-title center>
             Home
         </ion-title>
-        <ion-buttons end>
+        <ion-buttons end class="noti-btn">
             <button ion-button icon-only color="white" (click)="gotoNotification()">
                 <ion-icon name="notifications"></ion-icon>
             </button>
+            <span *ngIf="notification" class="noti_count">{{notification}}</span>
         </ion-buttons>
     </ion-navbar>
     <ion-segment [(ngModel)]="tabs" (ionChange)="changed(tabs)">

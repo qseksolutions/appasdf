@@ -2,21 +2,23 @@
     
 
     <ion-content>
-        <ion-list class="side-profile" *ngIf="_user">
-            <ion-item menuClose (click)="openProfile()">
-                <ion-avatar item-start>
-                    <img src="{{_user.image}}">
-                </ion-avatar>
-                <h2>{{_user.username}}</h2>
-            </ion-item>
-            
-        </ion-list>
-        <ion-list class="side-cat-list">
-            <button menuClose ion-item (click)="openHome()">
-                <ion-icon name="home" class="cate-img"></ion-icon>
-                <span>Home</span>
-            </button>
-        </ion-list>
+        <div class="side-top-fix">
+            <ion-list class="side-profile" *ngIf="_user">
+                <ion-item menuClose (click)="openProfile()">
+                    <ion-avatar item-start>
+                        <img src="{{_user.image}}">
+                    </ion-avatar>
+                    <h2>{{_user.username}}</h2>
+                </ion-item>
+                
+            </ion-list>
+            <ion-list class="side-home-list">
+                <button menuClose ion-item (click)="openHome()">
+                    <ion-icon name="home" class="cate-img"></ion-icon>
+                    <span>Home</span>
+                </button>
+            </ion-list>
+        </div>
         <ion-list class="side-cat-list">
             <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
                 <img class="cate-img" src="{{p.image}}" onerror="this.src='assets/img/default-user-avatars.png'" />
@@ -25,7 +27,7 @@
         </ion-list>
     </ion-content>
     <ion-footer *ngIf="_user">
-        <ion-list class="side-cat-list">
+        <ion-list class="side-login-btn">
             <button menuClose ion-item (click)="logout()">
                 <ion-icon name="log-out" class="cate-img"></ion-icon>
                 <span>Logout</span>
@@ -33,7 +35,7 @@
         </ion-list>
     </ion-footer>
     <ion-footer *ngIf="!_user">
-        <ion-list class="side-cat-list">
+        <ion-list class="side-login-btn">
             <button menuClose ion-item (click)="login()">
                 <ion-icon name="log-in" class="cate-img"></ion-icon>
                 <span>Login</span>

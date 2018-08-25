@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { User } from '../../providers/user/user';
 import { GLOBAL } from '../../app/global';
+
+import * as $ from "jquery";
+
 /**
  * Generated class for the NotificationPage page.
  *
@@ -16,6 +19,7 @@ import { GLOBAL } from '../../app/global';
 })
 export class NotificationPage {
 
+  pennotification = [];
   notification = [];
   user_id = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.id : '';
   
@@ -30,7 +34,8 @@ export class NotificationPage {
   ionViewWillEnter() {
     this.user.getnotification(this.user_id).subscribe((resp: any) => {
       if (resp.status) {
-        this.notification = resp.data;
+        this.notification = resp.notification;
+        this.pennotification = resp.pennotification;
         console.log(this.notification);
       }
     }, (err) => {

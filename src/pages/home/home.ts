@@ -16,6 +16,7 @@ export class HomePage {
 
   user_email = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.email : '';
   user_id = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.id : '';
+  notification : any;
 
   report_detail:any;
   login: boolean = false;
@@ -119,6 +120,7 @@ export class HomePage {
       if (load_tab_data) {
         this.posts.postlist(load_tab_data, this.user_id).subscribe((resp: any) => {
           if (resp.status) {
+            this.notification = resp.notification
             if (curent_tab == 'letest') {
               for (var i = 0; i < resp.data.length; i++) {
                 this.Ldata.push(resp.data[i]);
@@ -150,6 +152,7 @@ export class HomePage {
   postlist(flt) {
     this.posts.postlist(flt, this.user_id).subscribe((resp: any) => {
       if (resp.status) {
+        this.notification = resp.notification
         if (flt.tab == 'letest') {
           this.Ldata = resp.data;
         }
@@ -364,6 +367,7 @@ export class HomePage {
   }
 
   gotoNotification() {
+    this.notification = 0;
     this.navCtrl.push('NotificationPage');
   }
 

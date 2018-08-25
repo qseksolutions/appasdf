@@ -9,47 +9,74 @@
 
 
 <ion-content >
-  <ion-list class="noti-list">
-    <ion-item class="new_noti">
-      <ion-avatar item-start>
-        <img src="assets/img/ian-avatar.png">
-      </ion-avatar>
-      <div class="noti-text">
-        <h2>Mr toretto <span>Like your post</span></h2>
-        <span>16 hours ago</span>
-      </div>
-      <div class="post-img">
-        <img src="assets/img/advance-card-tmntr.jpg" />
-      </div>
-    </ion-item>
-
-    <ion-item>
-      <ion-avatar item-start>
-        <img src="assets/img/ian-avatar.png">
-      </ion-avatar>
-      <div class="noti-text">
-        <h2>Mr toretto
-          <span>Like your post</span>
-        </h2>
-        <span>16 hours ago</span>
-      </div>
-      <div class="post-img">
-        <img src="assets/img/advance-card-tmntr.jpg" />
+  <ion-list class="noti-list" *ngIf="pennotification" style="margin: 0;">
+    <ion-item class="new_noti" *ngFor="let notif of pennotification">
+      <div class="noti_box">
+        <ion-avatar item-start>
+          <img src="{{notif.uimage}}">
+        </ion-avatar>
+        <div class="noti-text">
+          <h2 *ngIf="notif.action == '0'">{{notif.user_slug}} <span>like your post</span></h2>
+          <h2 *ngIf="notif.action == '1'">{{notif.user_slug}} <span>comment on your post</span></h2>
+          <h2 *ngIf="notif.action == '2'">{{notif.user_slug}} <span>like your comment</span></h2>
+          <h2 *ngIf="notif.action == '3'">{{notif.user_slug}} <span>reply your comment</span></h2>
+          <span>{{notif.insert_date}}</span>
+        </div>
+        <div class="post-img">
+          <img src="{{notif.media}}" />
+        </div>
       </div>
     </ion-item>
-
-    <ion-item>
-      <ion-avatar item-start>
-        <img src="assets/img/ian-avatar.png">
-      </ion-avatar>
-      <div class="noti-text">
-        <h2>Mr toretto
-          <span>Comment your post</span>
-        </h2>
-        <span>16 hours ago</span>
+  </ion-list>
+  <ion-list class="noti-list" *ngIf="notification">
+    <ion-item *ngFor="let noti of notification">
+      <div class="noti_box" *ngIf="noti.action == '0'">
+        <ion-avatar item-start>
+          <img src="{{noti.likeimage}}">
+        </ion-avatar>
+        <div class="noti-text">
+          <h2>{{noti.likeuser}} <span>like your post</span> {{noti.title}}</h2>
+          <span>16 hours ago</span>
+        </div>
+        <div class="post-img">
+          <img src="{{noti.media}}" />
+        </div>
       </div>
-      <div class="post-img">
-        <img src="assets/img/advance-card-tmntr.jpg" />
+      <div class="noti_box" *ngIf="noti.action == '1'">
+        <ion-avatar item-start>
+          <img src="{{noti.cmtimage}}">
+        </ion-avatar>
+        <div class="noti-text">
+          <h2>{{noti.cmtuser}} <span>comment on your post</span> {{noti.title}}</h2>
+          <span>16 hours ago</span>
+        </div>
+        <div class="post-img">
+          <img src="{{noti.media}}" />
+        </div>
+      </div>
+      <div class="noti_box" *ngIf="noti.action == '2'">
+        <ion-avatar item-start>
+          <img src="{{noti.cmtlikeimage}}">
+        </ion-avatar>
+        <div class="noti-text">
+          <h2>{{noti.cmtlikeuser}} <span>like your comment</span> {{noti.title}}</h2>
+          <span>16 hours ago</span>
+        </div>
+        <div class="post-img">
+          <img src="{{noti.media}}" />
+        </div>
+      </div>
+      <div class="noti_box" *ngIf="noti.action == '3'">
+        <ion-avatar item-start>
+          <img src="{{noti.rplyimage}}">
+        </ion-avatar>
+        <div class="noti-text">
+          <h2>{{noti.rplyuser}} <span>reply your comment</span> {{noti.title}}</h2>
+          <span>16 hours ago</span>
+        </div>
+        <div class="post-img">
+          <img src="{{noti.media}}" />
+        </div>
       </div>
     </ion-item>
   </ion-list>
