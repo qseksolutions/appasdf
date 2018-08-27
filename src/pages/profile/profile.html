@@ -28,12 +28,12 @@
         </div>
     </div>
 
-    <ion-list>
+    <!-- <ion-list>
         <ion-item (click)="gotoPtabs('overview')">Overview</ion-item>
         <ion-item (click)="gotoPtabs('posts')">Posts</ion-item>
         <ion-item (click)="gotoPtabs('likes')">Likes</ion-item>
         <ion-item (click)="gotoPtabs('comments')">Comments</ion-item>
-    </ion-list>
+    </ion-list> -->
 
     <ion-segment [(ngModel)]="ptabs" (ionChange)="changed(ptabs)">
         <ion-segment-button value="overview">

@@ -17,7 +17,7 @@ export class LoginPage {
     email: 'admin@qseksolutions.com',
     password: 'admin@1234'
   };
-  user_id = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.id : '';
+  user_id : any;
 
   constructor(public navCtrl: NavController,
     public user: User,
@@ -54,9 +54,10 @@ export class LoginPage {
         this.uniqueDeviceID.get().then((uuid: any) => {
           localStorage.setItem('device_id', uuid);
         }).catch((error: any) => console.log(error));
+        this.user_id = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.id : '';
         this.user.updatedevicetoken(this.user_id).subscribe((resp: any) => {
           if (resp.status) {
-            alert(resp.message)
+            // alert(resp.message)
           }
         });
       }

@@ -46,7 +46,6 @@ export class MyApp {
       GLOBAL.USER = user;
       this._user = user;
     });
-    console.log(this._user)
     this.user.category().subscribe((resp: any) => {
       if (resp.status) {
         this.pages = resp.data;

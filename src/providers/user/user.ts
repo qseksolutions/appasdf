@@ -102,9 +102,6 @@ export class User {
   }
   
   updatedevicetoken(user_id) {
-    alert(user_id);
-    alert(GLOBAL.DEVICETOKEN);
-    alert(GLOBAL.DEVICE_ID);
     let body = new FormData();
     body.append('header', this.header);
     body.append('user_id', user_id);

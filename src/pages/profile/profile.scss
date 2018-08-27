@@ -125,19 +125,19 @@ page-profile {
     }
   }
   .segment-ios {
-      @extend .segment-md ;
-      .segment-button {
-          border: none;
-          border-bottom-width: 2px;
-          border-bottom-style: solid;
-          border-bottom-color: rgba(0, 0, 0, 0.1);
-          
-          &:last-of-type {
-              border-radius: 0px;
-          }
-          &:first-of-type {
-              border-radius: 0px;
-          }
+    @extend .segment-md ;
+    .segment-button {
+      border: none;
+      border-bottom-width: 2px;
+      border-bottom-style: solid;
+      border-bottom-color: rgba(0, 0, 0, 0.1);
+      
+      &:last-of-type {
+        border-radius: 0px;
       }
+      &:first-of-type {
+        border-radius: 0px;
+      }
+    }
   }
 }

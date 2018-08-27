@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController, AlertController, ActionSheetController, ModalController, ViewController, ToastController, Events } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Posts } from '../../providers/posts/posts';
-import { OneSignal } from '@ionic-native/onesignal';
 import { GLOBAL } from '../../app/global';
 
 import * as $ from "jquery";
@@ -35,7 +34,6 @@ export class PostPage {
     private events: Events,
     public toastCtrl: ToastController, 
     public navCtrl: NavController, 
-    private oneSignal: OneSignal,
     public popoverCtrl: PopoverController,
     private socialSharing: SocialSharing,
     public alertCtrl: AlertController,
@@ -129,7 +127,6 @@ export class PostPage {
               this.comment_data.sub_comment_count++;
               
               this.new_comment = { comment_text: "", comment_id: 0, post_id: 0, replay_type: 0 };
-              this.sendnotification(resp.devicetoken, resp.post_data, resp.notification);
             }
             resolve();
           }, (err) => {
@@ -146,7 +143,6 @@ export class PostPage {
               this.comment_data.subs.unshift(resp.data);
 
               this.new_comment = { comment_text: "", comment_id: 0, post_id: 0, replay_type: 0 };
-              this.sendnotification(resp.devicetoken, resp.post_data, resp.notification);
             }
             resolve();
           }, (err) => {
@@ -166,7 +162,6 @@ export class PostPage {
               this.post.total_comment++;
 
               this.new_comment = { comment_text: "", comment_id: 0, post_id: 0, replay_type: 0 };
-              this.sendnotification(resp.devicetoken, resp.post_data, resp.notification);
             }
             resolve();
           }, (err) => {
@@ -339,16 +334,7 @@ export class PostPage {
 
   share(post) {
     // Check if sharing via email is supported
-    this.socialSharing.canShareViaEmail().then(() => {
-      // Sharing via email is possible
-      console.log('haring via email is possible');
-    }).catch((e) => {
-      console.log(e, 'Sharing via email is not possible');
-      // Sharing via email is not possible
-    });
-
-    // Share via email
-    this.socialSharing.shareViaEmail('https://fuskk.com/' + post.post_slug, post.title, [this.user_email]).then(() => {
+    this.socialSharing.share(post.title, post.title, post.media, 'https://fuskk.com/' + post.post_slug).then(() => {
       // Success!
       console.log('Success!');
     }).catch((e) => {
@@ -364,9 +350,6 @@ export class PostPage {
           if (resp.status) {
             post.is_like = resp.like;
             post.like_count = resp.like_count;
-            if (resp.like == '1') {
-              this.sendnotification(resp.devicetoken, resp.post_data, resp.notification);
-            }
           }
           resolve();
         }, (err) => {
@@ -378,36 +361,6 @@ export class PostPage {
     }
   }
 
-  sendnotification(devicetoken, post, noti) {
-    this.oneSignal.getIds().then(identity => {
-      // alert(devicetoken);
-      var notificationObj = {
-        headings: { en: 'Fuskk' },
-        contents: { en: noti.msg },
-        data: { post: post },
-        include_player_ids: [devicetoken],
-        android_accent_color: '0366fc',
-        android_background_layout: { "headings_color": "0366fc" },
-        small_icon: 'https://fuskk.com/images/small-icon',
-        large_icon: noti.img,
-        // ios_attachments: { id1: "https://cdn.pixabay.com/photo/2017/09/16/16/09/sea-2755908_960_720.jpg" }
-      };
-
-      window["plugins"].OneSignal.postNotification(notificationObj,
-        function (successResponse) {
-          // alert(JSON.stringify(successResponse));
-          console.log("Notification Post Success:", successResponse);
-        },
-        function (failedResponse) {
-          // console.log("Notification Post Failed: ", failedResponse);
-          // alert("Notification Post Failed:\n" + JSON.stringify(failedResponse));
-        }
-      );
-    }).catch((e) => {
-      console.log("Error :" + e);
-    })
-  }
-
   commentlike(post) {
     if (this.is_login()) {
       return new Promise((resolve) => {
@@ -415,9 +368,6 @@ export class PostPage {
           if (resp.status) {
             post.comment_like = resp.like;
             post.comment_like_count = resp.like_count;
-            if (resp.like == '1') {
-              this.sendnotification(resp.devicetoken, resp.post_data, resp.notification);
-            }
           }
           resolve();
         }, (err) => {

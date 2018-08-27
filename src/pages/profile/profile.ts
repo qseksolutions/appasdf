@@ -3,7 +3,6 @@ import { IonicPage, NavController, PopoverController, AlertController, NavParams
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { User } from '../../providers/user/user';
 import { Posts } from '../../providers/posts/posts';
-import { OneSignal } from '@ionic-native/onesignal';
 import { GLOBAL } from '../../app/global';
 
 import * as $ from "jquery";
@@ -43,7 +42,6 @@ export class ProfilePage {
     public events: Events,
     public toastCtrl: ToastController,
     public navCtrl: NavController,
-    private oneSignal: OneSignal,
     public popoverCtrl: PopoverController,
     public actionSheetCtrl: ActionSheetController,
     public modalCtrl: ModalController,
@@ -219,9 +217,6 @@ export class ProfilePage {
           if (resp.status) {
             post.is_like = resp.like;
             post.like_count = resp.like_count;
-            if (resp.like == '1') {
-              this.sendnotification(resp.devicetoken, resp.post_data, resp.notification);
-            }
           }
           resolve();
         }, (err) => {
@@ -240,36 +235,6 @@ export class ProfilePage {
       });
       toast.present();
     }
-  }
-
-  sendnotification(devicetoken, post, noti) {
-    this.oneSignal.getIds().then(identity => {
-      // alert(devicetoken);
-      var notificationObj = {
-        headings: { en: 'Fuskk' },
-        contents: { en: noti.msg },
-        data: { post: post },
-        include_player_ids: [devicetoken],
-        android_accent_color : '0366fc',
-        android_background_layout: { "headings_color": "0366fc" },
-        small_icon: 'https://fuskk.com/images/small-icon',
-        large_icon: noti.img,
-        // ios_attachments: { id1: "https://cdn.pixabay.com/photo/2017/09/16/16/09/sea-2755908_960_720.jpg" }
-      };
-
-      window["plugins"].OneSignal.postNotification(notificationObj,
-        function (successResponse) {
-          // alert(JSON.stringify(successResponse));
-          console.log("Notification Post Success:", successResponse);
-        },
-        function (failedResponse) {
-          // console.log("Notification Post Failed: ", failedResponse);
-          // alert("Notification Post Failed:\n" + JSON.stringify(failedResponse));
-        }
-      );
-    }).catch((e) => {
-      console.log("Error :" + e);
-    })
   }
 
   postreport(post) {
@@ -309,16 +274,7 @@ export class ProfilePage {
 
   share(post) {
     // Check if sharing via email is supported
-    this.socialSharing.canShareViaEmail().then(() => {
-      // Sharing via email is possible
-      console.log('haring via email is possible');
-    }).catch((e) => {
-      console.log(e, 'Sharing via email is not possible');
-      // Sharing via email is not possible
-    });
-
-    // Share via email
-    this.socialSharing.shareViaEmail('https://fuskk.com/' + post.post_slug, post.title, [this.user_email]).then(() => {
+    this.socialSharing.share(post.title, post.title, post.media, 'https://fuskk.com/' + post.post_slug).then(() => {
       // Success!
       console.log('Success!');
     }).catch((e) => {
