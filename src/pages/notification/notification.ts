@@ -21,6 +21,7 @@ export class NotificationPage {
   notification = [];
   page = 1;
   nonoti : Boolean = false;
+  show : Boolean = false;
   user_id = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.id : '';
   
   constructor(public user: User, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
@@ -55,12 +56,14 @@ export class NotificationPage {
     this.user.getnotification(this.user_id, this.page).subscribe((resp: any) => {
       if (resp.status) {
         this.nonoti = false;
+        this.show = true;
         this.notification = resp.notification;
         this.pennotification = resp.pennotification;
         console.log(this.notification);
       }
     }, (err) => {
       this.nonoti = true;
+      this.show = true;
       console.log(err);
     });
   }

@@ -102,15 +102,16 @@ export class User {
   }
   
   updatedevicetoken(user_id) {
-    if (this.user_id != '' && this.user_id != null) {
-      let body = new FormData();
-      body.append('header', this.header);
-      body.append('user_id', user_id);
-      body.append('devicetoken', GLOBAL.DEVICETOKEN);
-      body.append('device_id', GLOBAL.DEVICE_ID);
-  
-      return this.api.post('updatedevicetoken', body).share();
-    }
+    alert(user_id);
+    alert(GLOBAL.DEVICETOKEN);
+    alert(GLOBAL.DEVICE_ID);
+    let body = new FormData();
+    body.append('header', this.header);
+    body.append('user_id', user_id);
+    body.append('devicetoken', GLOBAL.DEVICETOKEN);
+    body.append('device_id', GLOBAL.DEVICE_ID);
+
+    return this.api.post('updatedevicetoken', body).share();
   }
   
   getnotification(user_id, page) {

@@ -9,7 +9,7 @@
 
 
 <ion-content >
-  <ion-list text-center style="margin: 20px;" *ngIf="notification == ''">
+  <ion-list text-center style="margin: 20px;" *ngIf="!show">
     <ion-spinner></ion-spinner>
   </ion-list>
   <ion-list class="noti-list" *ngIf="pennotification" style="margin: 0;">
@@ -31,7 +31,7 @@
       </div>
     </ion-item>
   </ion-list>
-  <ion-list class="noti-list" *ngIf="notification" style="margin: 0;">
+  <ion-list class="noti-list" *ngIf="show && notification != ''" style="margin: 0;">
     <ion-item *ngFor="let noti of notification">
       <div class="noti_box" *ngIf="noti.action == '0'">
         <ion-avatar item-start>
