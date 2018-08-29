@@ -77,7 +77,7 @@ export class MyApp {
       }
       try {
         this.oneSignal.startInit(GLOBAL.ONESIGNAL_APPID, GLOBAL.SENDER_ID);
-        this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+        this.oneSignal.inFocusDisplaying(0);
         
         this.oneSignal.handleNotificationReceived().subscribe(() => {
           // do something when notification is received
