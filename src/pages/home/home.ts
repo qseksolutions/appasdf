@@ -311,7 +311,6 @@ export class HomePage {
   }
   
   gotoHome() {
-    
     this.navCtrl.setRoot('HomePage');
   }
 
