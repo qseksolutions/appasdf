@@ -13,13 +13,14 @@ import * as $ from "jquery";
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  cardItems: any[];
-  details: any = [];
-  members: any = [];
-  ptabs = "overview";
-  is_active = "home";
+  // cardItems: any[];
+  // details: any = [];
+  // members: any = [];
+  // is_active = "home";
   report_detail: any;
   cuser: any;
+  _user: any[] = [];
+  login: boolean = false;
 
   user_email = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.email : '';
   user_id = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.id : '';
@@ -34,7 +35,10 @@ export class ProfilePage {
   Ldata = [];
   Cdata = [];
 
- userdata = [];
+  ptabs = "overview";
+  tab = "0";
+
+  userdata = [];
 
   constructor(
     public posts: Posts,
@@ -50,12 +54,43 @@ export class ProfilePage {
     private socialSharing: SocialSharing,
     public navParams: NavParams,
   ) {
+    if (GLOBAL.IS_LOGGEDIN) {
+      this.login = true;
+    }
+    this._user = GLOBAL.USER;
+    this.events.subscribe('user:loggedin', (user) => {
+      GLOBAL.IS_LOGGEDIN = true;
+      GLOBAL.USER = user;
+      this._user = user;
+    });
     this.cuser = this.navParams.get('user_id');
     if (this.cuser == undefined || this.cuser == '') {
       this.cuser = this.user_id;
     }
-    
+
     this.changed('overview');
+  }
+
+  doRefresh(refresher) {
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
+    if (this.ptabs == "overview") {
+      this.Ofilter.page = 1;
+      this.postlist(this.Ofilter);
+    }
+    else if (this.ptabs == "posts") {
+      this.Pfilter.page = 1;
+      this.postlist(this.Pfilter);
+    }
+    else if (this.ptabs == "likes") {
+      this.Lfilter.page = 1;
+      this.postlist(this.Lfilter);
+    }
+    else if (this.ptabs == "comments") {
+      this.Cfilter.page = 1;
+      this.postlist(this.Cfilter);
+    }
   }
 
   changed(segment) {
@@ -96,8 +131,32 @@ export class ProfilePage {
   // ionViewDidLoad() {
   //   this.viewCtrl.setBackButtonText('');
   // }
+  gotoHome() {
+    this.navCtrl.setRoot('HomePage');
+  }
+
+  gotoProfile() {
+    this.navCtrl.setRoot('ProfilePage');
+  }
+  gotoLogin() {
+    this.navCtrl.push('LoginPage');
+  }
 
   ionViewDidLoad() {
+    this.events.subscribe('is_repost', (is_repost) => {
+      if (this.ptabs == 'overview') {
+        this.Odata.splice(this.Odata.indexOf(is_repost), 1);
+      }
+      else if (this.ptabs == 'posts') {
+        this.Pdata.splice(this.Pdata.indexOf(is_repost), 1);
+      }
+      else if (this.ptabs == 'likes') {
+        this.Ldata.splice(this.Ldata.indexOf(is_repost), 1);
+      }
+      else if (this.ptabs == 'comments') {
+        this.Cdata.splice(this.Cdata.indexOf(is_repost), 1);
+      }
+    });
     $('.scroll-content').scroll(function (e) {
       // console.log('call');
       var offsetRange = $('.scroll-content').height() / 3,
@@ -276,7 +335,7 @@ export class ProfilePage {
     // Check if sharing via email is supported
     this.socialSharing.share(post.title, post.title, post.media, 'https://fuskk.com/' + post.post_slug).then(() => {
       // Success!
-      console.log('Success!');
+      console.log('success')
     }).catch((e) => {
       // Error!
       console.log(e, 'Error!');
@@ -298,21 +357,28 @@ export class ProfilePage {
       return false;
     }
   }
- 
-  gotoSettings(){
+
+  gotoSettings() {
     this.navCtrl.push('SettingsPage');
   }
 
   gotoViewProfile() {
     this.navCtrl.push('ViewProfilePage');
   }
-  
-  gotoPtabs(ptabs){
-    this.navCtrl.push('ViewProfilePage', { ptabs: ptabs});
+
+  gotoPtabs(ptabs) {
+    this.navCtrl.push('ViewProfilePage', { ptabs: ptabs });
   }
 
   gotoEditProfils() {
     this.navCtrl.push('EditProfilePage');
   }
-  
+
+  logout() {
+    GLOBAL.IS_LOGGEDIN = false;
+    GLOBAL.USER = null;
+    this._user = null;
+    localStorage.removeItem('is_loggedin');
+    this.navCtrl.setRoot('LoginPage');
+  }
 }

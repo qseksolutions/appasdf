@@ -38,6 +38,9 @@ page-home {
             @include flexbox();
             @include align-items(center);
             @include justify-content(space-between);
+            h2 {
+                white-space: pre-line;
+            }
         }
     }
     .tabs-ios {

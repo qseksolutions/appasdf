@@ -315,7 +315,7 @@ export class HomePage {
   }
 
   gotoProfile() {
-    this.navCtrl.push('ProfilePage');
+    this.navCtrl.setRoot('ProfilePage');
   }
   gotoLogin() {
     this.navCtrl.push('LoginPage');

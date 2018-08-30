@@ -50,7 +50,9 @@
         </ion-segment-button>
     </ion-segment>
     
-
+    <!-- <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher> -->
     <div [ngSwitch]="ptabs">
         <ion-list *ngSwitchCase="'overview'">
             <ion-card *ngFor="let item1 of Odata">
@@ -241,3 +243,32 @@
         </ion-list>
     </div>
 </ion-content>
+<ion-footer no-border text-center>
+  <ion-toolbar>
+    <ion-buttons left>
+      <button ion-button icon-only clear color="dark" (click)="gotoHome()">
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons class="add-btn">
+      <button *ngIf="login" ion-button icon-only clear color="dark" (click)="addPost()">
+        <ion-icon>
+          <img src="assets/img/add.svg" />
+        </ion-icon>
+      </button>
+      <button *ngIf="!login" ion-button icon-only clear color="dark" (click)="gotoLogin()">
+        <ion-icon>
+          <img src="assets/img/add.svg" />
+        </ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons right>
+      <button *ngIf="login" ion-button icon-only clear color="dark" (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+      <button *ngIf="!login" ion-button icon-only clear color="dark" (click)="gotoLogin()">
+        <ion-icon name="log-in"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
