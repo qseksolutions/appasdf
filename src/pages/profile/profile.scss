@@ -19,6 +19,9 @@ page-profile {
       display: none;
     }
   }
+  .profile-tabs {
+    height: calc(100% - 92px);
+  }
   .content-md {
       background-color: $body-bg;
   }
@@ -45,6 +48,10 @@ page-profile {
           @include flexbox();
           @include align-items(center);
           @include justify-content(space-between);
+          
+          h2 {
+            white-space: pre-line;
+          }
       }
   } 
   .profile-top {

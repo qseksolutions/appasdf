@@ -369,12 +369,4 @@ export class ProfilePage {
   gotoEditProfils() {
     this.navCtrl.push('EditProfilePage');
   }
-
-  logout() {
-    GLOBAL.IS_LOGGEDIN = false;
-    GLOBAL.USER = null;
-    this._user = null;
-    localStorage.removeItem('is_loggedin');
-    this.navCtrl.setRoot('LoginPage');
-  }
 }

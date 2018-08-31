@@ -14,6 +14,7 @@
         </ion-buttons> -->
     </ion-navbar>
 </ion-header>
+
 <ion-content class="card-background-page" overflow-scroll="true">
     <div class="profile-top">
         <div class="profile-img">
@@ -50,10 +51,10 @@
         </ion-segment-button>
     </ion-segment>
     
-    <!-- <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
-    </ion-refresher> -->
-    <div [ngSwitch]="ptabs">
+    </ion-refresher>
+    <div class="profile-tabs" [ngSwitch]="ptabs">
         <ion-list *ngSwitchCase="'overview'">
             <ion-card *ngFor="let item1 of Odata">
                 <ion-item class="post-title">

@@ -134,7 +134,7 @@ export class MyApp {
     this.nav.setRoot('HomePage');
   }
   openProfile() {
-    this.nav.push('ProfilePage');
+    this.nav.setRoot('ProfilePage');
   }
   login() {
     this.nav.push('LoginPage');

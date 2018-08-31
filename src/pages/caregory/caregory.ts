@@ -4,6 +4,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { Posts } from '../../providers/posts/posts';
 import { GLOBAL } from '../../app/global';
 
+import * as $ from "jquery";
+
 @IonicPage()
 @Component({
   selector: 'page-caregory',
@@ -53,6 +55,24 @@ export class CaregoryPage {
   ionViewDidLoad() {
     this.categorypost(this.Lfilter);
     this.categorypost(this.Hfilter);
+    $('.scroll-content').scroll(function (e) {
+      // console.log('call');gotoProfile
+      var offsetRange = $('.scroll-content').height() / 3,
+        offsetTop = $('.scroll-content').scrollTop() + offsetRange + $("ion-header").outerHeight(true),
+        offsetBottom = offsetTop + offsetRange + 100;
+
+      $(".visible-video").each(function () {
+        var y1 = $(this).offset().top;
+        var y2 = offsetTop;
+        if (y1 + $(this).outerHeight(true) < y2 || y1 > offsetBottom) {
+          this.pause();
+        } else {
+          var newWidth = $(this).width();
+          $(this).parent().css('width', newWidth);
+          this.play();
+        }
+      });
+    });
   }
   doRefresh(refresher){
     setTimeout(() => {

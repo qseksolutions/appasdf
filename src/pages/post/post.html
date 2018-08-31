@@ -12,9 +12,9 @@
       </button>
     </ion-item>
     <img *ngIf="post.type=='image'" [src]="post.media" (load)="post.loaded = true" [hidden]="!post.loaded" onerror="this.src='assets/img/blur.jpg'"
-      (click)="post(post)" [alt]="post.title" />
+      [alt]="post.title" />
     <img *ngIf="post.type=='image'" [src]="post.media_thumb" [hidden]="post.loaded" onerror="this.src='assets/img/blur.jpg'"
-      (click)="post(post)" [alt]="post.title">
+      [alt]="post.title">
     
     <video *ngIf="post.type=='video'" width="100%" controls muted [poster]="post.media_thumb">
       <source [src]="post.media" type="video/mp4">
