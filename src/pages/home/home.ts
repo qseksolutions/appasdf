@@ -28,6 +28,8 @@ export class HomePage {
   Hdata = [];
   Tdata = [];
 
+  _user: any[] = [];
+
   tabs = "letest";
   tab = "0";
   
@@ -48,6 +50,12 @@ export class HomePage {
     if (GLOBAL.IS_LOGGEDIN) {
       this.login = true;
     }
+    this._user = GLOBAL.USER;
+    this.events.subscribe('user:loggedin', (user) => {
+      GLOBAL.IS_LOGGEDIN = true;
+      GLOBAL.USER = user;
+      this._user = user;
+    });
     this.changed('letest');
   } 
 

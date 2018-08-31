@@ -200,7 +200,9 @@
         </ion-buttons>
         <ion-buttons right>
             <button *ngIf="login" ion-button icon-only clear color="dark" (click)="gotoProfile()">
-                <ion-icon name="contact"></ion-icon>
+                <ion-icon>
+                    <img src="{{_user.image}}">
+                </ion-icon>
             </button>
             <button *ngIf="!login" ion-button icon-only clear color="dark" (click)="gotoLogin()">
                 <ion-icon name="log-in"></ion-icon>

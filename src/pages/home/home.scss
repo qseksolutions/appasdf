@@ -128,14 +128,18 @@ page-home {
                 }
                 ion-icon {
                     img {
-                        width: 30px;
+                        border-radius: 100%;
+                        width: 25px;
                     }
                 }
-    
+                
                 &.add-btn {
                     opacity: 1;
                     ion-icon {
                         line-height: 18px;
+                        img {
+                            width: 35px;
+                        }
                     }
                 }   
             }   

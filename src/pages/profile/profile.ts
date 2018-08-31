@@ -19,7 +19,6 @@ export class ProfilePage {
   // is_active = "home";
   report_detail: any;
   cuser: any;
-  _user: any[] = [];
   login: boolean = false;
 
   user_email = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.email : '';
@@ -57,12 +56,6 @@ export class ProfilePage {
     if (GLOBAL.IS_LOGGEDIN) {
       this.login = true;
     }
-    this._user = GLOBAL.USER;
-    this.events.subscribe('user:loggedin', (user) => {
-      GLOBAL.IS_LOGGEDIN = true;
-      GLOBAL.USER = user;
-      this._user = user;
-    });
     this.cuser = this.navParams.get('user_id');
     if (this.cuser == undefined || this.cuser == '') {
       this.cuser = this.user_id;
@@ -137,6 +130,9 @@ export class ProfilePage {
 
   gotoProfile() {
     this.navCtrl.setRoot('ProfilePage');
+  }
+  backTohome() {
+    this.navCtrl.setRoot('HomePage');
   }
   gotoLogin() {
     this.navCtrl.push('LoginPage');
