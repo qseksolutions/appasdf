@@ -346,7 +346,6 @@ export class HomePage {
   addVideoPost() {
     const video_modal = this.modalCtrl.create('ModalAddVideoUrlPage');
     video_modal.present();
-
   }
 
   addImageFromGalleryPost() {
