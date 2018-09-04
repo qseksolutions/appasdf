@@ -28,12 +28,11 @@
         z-index: 2;
     }
     .side-profile {
-        padding-top: 15px;
-        padding-bottom: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
         margin-bottom: 0px;
     }
     .side-cat-list {
-        padding-top: 133px;
         padding-bottom: 5px;
         margin-bottom: 0px;
     }
@@ -46,8 +45,12 @@
         
     }
     .menu-inner {
-        ion-list {
+        ion-header {
             border-bottom: solid 1px $light;
+        }
+        ion-footer {
+            border-top: solid 1px $light;
+
         }
         .item-ios {
             color: $white;
