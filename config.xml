@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.fuskk.android" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>fuskk</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
@@ -89,4 +89,9 @@
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.2" />
     <engine name="android" spec="7.1.1" />
     <engine name="ios" spec="4.5.5" />
+    <plugin name="cordova-plugin-facebook4" spec="^3.1.0">
+        <variable name="APP_ID" value="305717630045865" />
+        <variable name="APP_NAME" value="Fuskk APK" />
+        <variable name="FACEBOOK_ANDROID_SDK_VERSION" value="4.37.0" />
+    </plugin>
 </widget>

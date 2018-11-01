@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController, AlertController, MenuController, LoadingController } from 'ionic-angular';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 
 import { User } from '../../providers';
 import { GLOBAL } from '../../app/global';
@@ -26,7 +27,8 @@ export class LoginPage {
     public menuCtrl: MenuController,
     public loadingCtrl: LoadingController,
     public translateService: TranslateService,
-    private uniqueDeviceID: UniqueDeviceID
+    private uniqueDeviceID: UniqueDeviceID,
+    public fb: Facebook
   ) {
 
     this.menuCtrl.swipeEnable(false);
@@ -108,5 +110,50 @@ export class LoginPage {
   
   skip() {
     this.navCtrl.setRoot('HomePage');
+  }
+
+  fbloginAction() {
+    // Login with permissions
+    this.fb.login(['public_profile', 'user_photos', 'email', 'user_birthday'])
+      .then((res: FacebookLoginResponse) => {
+
+        // The connection was successful
+        if (res.status == "connected") {
+
+          // Get user ID and Token
+          // const fb_id = res.authResponse.userID;
+          // const fb_token = res.authResponse.accessToken;
+
+          // Get user infos from the API
+          this.fb.api("/me?fields=name,gender,birthday,email", []).then((user) => {
+
+            // Get the connected user details
+            const gender = user.gender;
+            const birthday = user.birthday;
+            const name = user.name;
+            const email = user.email;
+
+            console.log("=== USER INFOS ===");
+            console.log("Gender : " + gender);
+            console.log("Birthday : " + birthday);
+            console.log("Name : " + name);
+            console.log("Email : " + email);
+
+            // => Open user session and redirect to the next page
+
+          });
+
+        }
+        // An error occurred while loging-in
+        else {
+
+          console.log("An error occurred...");
+
+        }
+
+      })
+      .catch((e) => {
+        console.log('Error logging into Facebook', e);
+      });
   }
 }
