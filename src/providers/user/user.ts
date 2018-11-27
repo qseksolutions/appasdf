@@ -58,6 +58,27 @@ export class User {
 
     return this.api.post('register', body).share();
   }
+  
+  socialloginapi(accountInfo,from) {
+    let body = new FormData();
+    body.append('header', this.header);
+    if(from == 'facebook') {
+      body.append('email', accountInfo.email);
+      body.append('password', accountInfo.id);
+      body.append('image', accountInfo.picture.data.url);
+      body.append('user_from', '2');
+      body.append('status', '1');
+    }
+    else if(from == 'google') {
+      body.append('email', accountInfo.email);
+      body.append('password', accountInfo.userId);
+      body.append('image', accountInfo.imageUrl);
+      body.append('user_from', '3');
+      body.append('status', '1');
+    }
+
+    return this.api.post('sociallogin', body).share();
+  }
 
   userpostlist(fdata, user_id) {
     let body = new FormData();

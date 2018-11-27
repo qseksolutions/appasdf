@@ -21,6 +21,7 @@ import { Network } from '@ionic-native/network';
 import { OneSignal } from '@ionic-native/onesignal';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { Facebook } from '@ionic-native/facebook';
+import { GooglePlus } from '@ionic-native/google-plus';
 
 
 // The translate loader needs to know where to load i18n files
@@ -82,7 +83,8 @@ export function provideSettings(storage: Storage) {
     Network,
     OneSignal,
     UniqueDeviceID,
-    Facebook
+    Facebook,
+    GooglePlus
   ]
 })
 export class AppModule { }

@@ -6,6 +6,7 @@ import { Config, Nav, Platform, MenuController, Events } from 'ionic-angular';
 import { NetworkProvider } from '../providers/network/network';
 import { OneSignal } from '@ionic-native/onesignal';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+import { Facebook } from '@ionic-native/facebook';
 
 
 import { FirstRunPage } from '../pages';
@@ -35,6 +36,7 @@ export class MyApp {
     private splashScreen: SplashScreen,
     private menuCtrl: MenuController,
     private oneSignal: OneSignal,
+    public fb: Facebook,
     private uniqueDeviceID: UniqueDeviceID
   ) {
     if (GLOBAL.IS_LOGGEDIN) {
@@ -144,6 +146,9 @@ export class MyApp {
     GLOBAL.IS_LOGGEDIN = false;
     GLOBAL.USER = null;
     this._user = null;
+    this.fb.logout()
+      .then(res => GLOBAL.IS_LOGGEDIN = false)
+      .catch(e => console.log('Error logout from Facebook', e));
     localStorage.removeItem('is_loggedin');
     this.nav.setRoot('LoginPage');
     this.menuCtrl.close();
