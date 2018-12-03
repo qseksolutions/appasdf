@@ -158,4 +158,8 @@ page-caregory {
             @include justify-content(flex-start);
         }
     }
+    .more-btn {
+        font-size: 1.7rem !important;
+        margin-right: -2px !important;
+    }
 }

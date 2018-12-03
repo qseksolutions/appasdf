@@ -192,4 +192,11 @@ page-profile {
             }   
         } 
     }
+    .more-btn {
+      font-size: 1.7rem !important;
+      margin-right: -2px !important;
+    }
+    :first-child .card {
+      margin-top: 0;
+    }
 }

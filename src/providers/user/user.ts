@@ -122,6 +122,14 @@ export class User {
     return this.api.post('updateuser', body).share();
   }
   
+  deleteuser(user_id) {
+    let body = new FormData();
+    body.append('header', this.header);
+    body.append('user_id', user_id);
+
+    return this.api.post('deleteuser', body).share();
+  }
+  
   updatedevicetoken(user_id) {
     let body = new FormData();
     body.append('header', this.header);

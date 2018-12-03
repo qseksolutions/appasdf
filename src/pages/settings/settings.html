@@ -27,7 +27,7 @@
     <h2>Privancy Policy</h2> 
   </ion-item>
 
-  <ion-item>
+  <ion-item (click)="userdelete()">
     <ion-icon item-start>
       <img src="assets/img/delete.svg" />
     </ion-icon>
@@ -35,8 +35,6 @@
   </ion-item>
 </ion-list>
 <ion-list>
-  <ion-list-header>
-  </ion-list-header>
   <ion-item (click)="logout()">
     <ion-icon item-start><img src="assets/img/logout.svg" /></ion-icon> Log out
   </ion-item>

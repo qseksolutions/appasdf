@@ -60,7 +60,7 @@
                 <ion-item class="post-title">
                     <h2 (click)="post(item1)">{{item1.title}}</h2>
             
-                    <button ion-button clear icon-only end color="dark" (click)="postreport(item1)">
+                    <button class="more-btn" ion-button clear icon-only end color="dark" (click)="postreport(item1)">
                         <ion-icon name="more"></ion-icon>
                     </button>
                 </ion-item>
@@ -97,7 +97,7 @@
                     </ion-col>
                 </ion-row>
             </ion-card>
-            <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite('overview'))">
+            <ion-infinite-scroll *ngIf="!nopost" (ionInfinite)="$event.waitFor(doInfinite('overview'))">
                 <ion-infinite-scroll-content></ion-infinite-scroll-content>
             </ion-infinite-scroll>
         </ion-list>
@@ -107,7 +107,7 @@
                 <ion-item class="post-title">
                     <h2 (click)="post(item2)">{{item2.title}}</h2>
             
-                    <button ion-button clear icon-only end color="dark" (click)="postreport(item2)">
+                    <button class="more-btn" ion-button clear icon-only end color="dark" (click)="postreport(item2)">
                         <ion-icon name="more"></ion-icon>
                     </button>
                 </ion-item>
@@ -144,7 +144,7 @@
                     </ion-col>
                 </ion-row>
             </ion-card>
-            <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite('posts'))">
+            <ion-infinite-scroll *ngIf="!nopost" (ionInfinite)="$event.waitFor(doInfinite('posts'))">
                 <ion-infinite-scroll-content></ion-infinite-scroll-content>
             </ion-infinite-scroll>
         </ion-list>
@@ -154,7 +154,7 @@
                 <ion-item class="post-title">
                     <h2 (click)="post(item3)">{{item3.title}}</h2>
             
-                    <button ion-button clear icon-only end color="dark" (click)="postreport(item3)">
+                    <button class="more-btn" ion-button clear icon-only end color="dark" (click)="postreport(item3)">
                         <ion-icon name="more"></ion-icon>
                     </button>
                 </ion-item>
@@ -191,7 +191,7 @@
                     </ion-col>
                 </ion-row>
             </ion-card>
-            <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite('likes'))">
+            <ion-infinite-scroll *ngIf="!nopost" (ionInfinite)="$event.waitFor(doInfinite('likes'))">
                 <ion-infinite-scroll-content></ion-infinite-scroll-content>
             </ion-infinite-scroll>
         </ion-list>
@@ -201,7 +201,7 @@
                 <ion-item class="post-title">
                     <h2 (click)="post(item4)">{{item4.title}}</h2>
             
-                    <button ion-button clear icon-only end color="dark" (click)="postreport(item4)">
+                    <button class="more-btn" ion-button clear icon-only end color="dark" (click)="postreport(item4)">
                         <ion-icon name="more"></ion-icon>
                     </button>
                 </ion-item>
@@ -238,9 +238,10 @@
                     </ion-col>
                 </ion-row>
             </ion-card>
-            <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite('comments'))">
+            <ion-infinite-scroll *ngIf="!nopost" (ionInfinite)="$event.waitFor(doInfinite('comments'))">
                 <ion-infinite-scroll-content></ion-infinite-scroll-content>
             </ion-infinite-scroll>
         </ion-list>
+        <h6 *ngIf="nopost" text-center>No more post</h6>
     </div>
 </ion-content>

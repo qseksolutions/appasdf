@@ -7,7 +7,7 @@
   <ion-card *ngIf="post">
     <ion-item class="post-title">
       <h2>{{post.title}}</h2>
-      <button ion-button clear icon-only end color="dark" (click)="postreport(post)">
+      <button class="more-btn" ion-button clear icon-only end color="dark" (click)="postreport(post)">
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-item>
@@ -148,4 +148,4 @@
       </button>
     </ion-buttons>
   </form>
-  </ion-footer>
+</ion-footer>

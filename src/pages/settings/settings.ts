@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, ToastController, ViewController } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
+import { User } from '../../providers/user/user';
 import { Settings } from '../../providers';
 import { GLOBAL } from '../../app/global';
+import { Events } from 'ionic-angular';
+// import { TIMEOUT } from 'dns';
 
 @IonicPage()
 @Component({
@@ -36,7 +39,12 @@ export class SettingsPage {
     public formBuilder: FormBuilder,
     public navParams: NavParams,
     public viewCtrl: ViewController,
+    public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController,
     public translate: TranslateService,
+    public toastCtrl: ToastController,
+    public user: User,
+    public events: Events,
     private iab: InAppBrowser
   ) {
   }
@@ -94,6 +102,7 @@ export class SettingsPage {
     GLOBAL.IS_LOGGEDIN = false;
     GLOBAL.USER = null;
     localStorage.removeItem('is_loggedin');
+    this.events.publish('user:loggedin');
     this.navCtrl.setRoot('LoginPage');
   }
 
@@ -115,5 +124,60 @@ export class SettingsPage {
     }); */
 
     browser.close();
+  }
+
+  userdelete() {
+    let alert = this.alertCtrl.create({
+      title: 'Confirm Delete',
+      message: 'Do you want delete this account?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            // alert.dismiss();
+          }
+        },
+        {
+          text: 'Delete account',
+          handler: () => {
+            let loading = this.loadingCtrl.create({
+              content: 'Please wait...'
+            });
+            loading.present();
+            this.user.deleteuser(GLOBAL.USER.id).subscribe((resp: any) => {
+              if (resp.status) {
+                GLOBAL.IS_LOGGEDIN = false;
+                GLOBAL.USER = null;
+                localStorage.removeItem('is_loggedin');
+                let toast = this.toastCtrl.create({
+                  message: resp.msg,
+                  duration: 3000,
+                  cssClass: 'toast-error',
+                  position: 'bottom'
+                });
+                toast.present();
+                loading.dismiss();
+                GLOBAL.IS_LOGGEDIN = false;
+                GLOBAL.USER = null;
+                localStorage.removeItem('is_loggedin');
+                this.events.publish('user:loggedin');
+                this.navCtrl.setRoot('LoginPage');
+              }
+            }, (err) => {
+              let toast = this.toastCtrl.create({
+                message: err,
+                duration: 3000,
+                cssClass: 'toast-error',
+                position: 'bottom'
+              });
+              toast.present();
+              console.log(err);
+            });
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }

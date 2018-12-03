@@ -13,8 +13,8 @@ import * as $ from "jquery";
 })
 export class HomePage {
 
-  user_email = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.email : '';
-  user_id = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.id : '';
+  // user_email = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.email : '';
+  user_id : any;
   notification : any;
 
   report_detail:any;
@@ -45,16 +45,22 @@ export class HomePage {
     public alertCtrl: AlertController,
     private socialSharing: SocialSharing,
     public navParams: NavParams) {
-
     // postlist
+    this.user_id = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.id : ''
     if (GLOBAL.IS_LOGGEDIN) {
       this.login = true;
     }
     this._user = GLOBAL.USER;
     this.events.subscribe('user:loggedin', (user) => {
-      GLOBAL.IS_LOGGEDIN = true;
-      GLOBAL.USER = user;
-      this._user = user;
+      if (user != undefined) {
+        GLOBAL.IS_LOGGEDIN = true;
+        GLOBAL.USER = user;
+        this._user = user;
+      }
+      else {
+        GLOBAL.IS_LOGGEDIN = false;
+        this._user = null;
+      }
     });
     this.changed('letest');
   } 
@@ -219,7 +225,7 @@ export class HomePage {
             this.addImageFromGalleryPost();
             console.log('Gallery clicked');
           }
-        }, {
+        }, /* {
           icon: 'image',
           text: 'Paste Image URL',
           role: 'image',
@@ -227,7 +233,7 @@ export class HomePage {
             this.addImagePost();
             console.log('Image URL clicked');
           }
-        }, {
+        }, */ {
           icon: 'videocam',
           text: 'Choose Video Gallery',
           role: 'video',

@@ -44,9 +44,15 @@ export class MyApp {
     }
     this._user = GLOBAL.USER;
     this.events.subscribe('user:loggedin', (user) => {
-      GLOBAL.IS_LOGGEDIN = true;
-      GLOBAL.USER = user;
-      this._user = user;
+      if(user != undefined) {
+        GLOBAL.IS_LOGGEDIN = true;
+        GLOBAL.USER = user;
+        this._user = user;
+      }
+      else {
+        GLOBAL.IS_LOGGEDIN = false;
+        this._user = null;
+      }
     });
     this.user.category().subscribe((resp: any) => {
       if (resp.status) {
@@ -54,6 +60,10 @@ export class MyApp {
       }
     }, (err) => {
     });
+
+    if (!GLOBAL.IS_LOGGEDIN) {
+      this._user = null;
+    }
 
     platform.ready().then(() => {
       this.statusBar.backgroundColorByHexString('#0366fc');

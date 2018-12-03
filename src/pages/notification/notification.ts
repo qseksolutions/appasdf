@@ -40,7 +40,7 @@ export class NotificationPage {
         if (resp.status) {
           this.nonoti = false;
           for (var i = 0; i < resp.notification.length; i++) {
-            this.notification.push(resp.data[i]);
+            this.notification.push(resp.notification[i]);
           }
         }
         resolve();
@@ -66,6 +66,10 @@ export class NotificationPage {
       this.show = true;
       console.log(err);
     });
+  }
+
+  post(post) {
+    this.navCtrl.push('PostPage', { post: post });
   }
 
 }

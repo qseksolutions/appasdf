@@ -20,6 +20,7 @@ export class ProfilePage {
   report_detail: any;
   cuser: any;
   login: boolean = false;
+  nopost: boolean = false;
 
   user_email = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.email : '';
   user_id = GLOBAL.IS_LOGGEDIN ? GLOBAL.USER.id : '';
@@ -226,9 +227,11 @@ export class ProfilePage {
                 this.Cdata.push(resp.data[l]);
               }
             }
+            this.nopost = false;
           }
           resolve();
         }, (err) => {
+          this.nopost = true;
           resolve();
           console.log(err);
         });
@@ -254,9 +257,10 @@ export class ProfilePage {
         else if (flt.tab == 'comments') {
           this.Cdata = resp.data;
         }
+        this.nopost = false;
       }
     }, (err) => {
-      // Unable to log in
+      this.nopost = true;
       console.log(err);
     });
   }
