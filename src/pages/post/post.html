@@ -43,13 +43,17 @@
     </ion-row>
   </ion-card>
 
-  <ion-list class="comm-list">
-    <ion-list-header>
+  <ion-list class="comm-list" *ngIf="item">
+    <ion-list-header *ngIf="item.comments == ''">
+      No Comments
+    </ion-list-header>
+
+    <ion-list-header *ngIf="item.comments != ''">
       Comments
     </ion-list-header>
   
     
-    <ion-item *ngIf="item">
+    <ion-item *ngIf="item.comments != ''">
       <div class="comm-item" *ngFor="let comment of item.comments">
         <div class="comm-item-child main-comment" *ngIf="!comment.is_reported">
           <div class="comm-head">

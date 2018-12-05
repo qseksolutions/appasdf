@@ -42,7 +42,6 @@ export class PostPage {
     public actionSheetCtrl: ActionSheetController ,
     navParams: NavParams) {
     this.post = navParams.get('post');
-    
   }
   
   ionViewWillEnter(){
@@ -90,7 +89,7 @@ export class PostPage {
       this.new_comment.comment_id       = cmt.id;
       this.new_comment.post_id          = cmt.post_id;
       this.new_comment.replay_type      = 1;
-      
+
       $('input[name="comment_text"]').val(this.new_comment.comment_text).focus();
     }
   }
@@ -107,7 +106,7 @@ export class PostPage {
       this.new_comment.comment_id       = cmt.parent_id;
       this.new_comment.post_id          = cmt.post_id;
       this.new_comment.replay_type      = 2;
-      
+
       $('input[name="comment_text"]').val(this.new_comment.comment_text).focus();
     }
   }
@@ -120,7 +119,7 @@ export class PostPage {
         return new Promise((resolve) => {
           this.posts.addsubcomment(this.new_comment, this.user_id).subscribe((resp: any) => {
             if (resp.status) {
-              if (this.comment_data.subs){
+              if (this.comment_data.subs) {
                 this.comment_data.subs.unshift(resp.data);
               }
 
@@ -152,12 +151,11 @@ export class PostPage {
         });
       }
       else{
-        this.new_comment.post_id = this.item.id;
+        this.new_comment.post_id = this.post.id;
         console.log(this.new_comment);
         return new Promise((resolve) => {
           this.posts.addcomment(this.new_comment, this.user_id).subscribe((resp: any) => {
             if (resp.status) {
-              console.log(this.item.comments);
               this.item.comments.unshift(resp.data);
               this.post.total_comment++;
 

@@ -19,6 +19,7 @@ export class HomePage {
 
   report_detail:any;
   login: boolean = false;
+  nopost: boolean = false;
 
   Lfilter = { order: 'id', page: 1, tab: 'letest', is_last: false };
   Hfilter = { order: 'total_comment', page: 1, tab: 'hot', is_last: false };
@@ -132,7 +133,12 @@ export class HomePage {
       if (load_tab_data) {
         this.posts.postlist(load_tab_data, this.user_id).subscribe((resp: any) => {
           if (resp.status) {
-            this.notification = resp.notification
+            if (resp.notification == '0') {
+              this.notification = false;
+            }
+            else {
+              this.notification = resp.notification
+            }
             if (curent_tab == 'letest') {
               for (var i = 0; i < resp.data.length; i++) {
                 this.Ldata.push(resp.data[i]);
@@ -148,9 +154,11 @@ export class HomePage {
                 this.Tdata.push(resp.data[k]);
               }
             }
+            this.nopost = false;
           }
           resolve();
         }, (err) => {
+          this.nopost = true;
           resolve();
           console.log(err);
         });
@@ -164,7 +172,12 @@ export class HomePage {
   postlist(flt) {
     this.posts.postlist(flt, this.user_id).subscribe((resp: any) => {
       if (resp.status) {
-        this.notification = resp.notification
+        if (resp.notification == '0') {
+          this.notification = false;
+        }
+        else {
+          this.notification = resp.notification
+        }
         if (flt.tab == 'letest') {
           this.Ldata = resp.data;
         }
@@ -174,9 +187,11 @@ export class HomePage {
         else if (flt.tab == 'trading') {
           this.Tdata = resp.data;
         }
+        this.nopost = false;
       }
     }, (err) => {
       // Unable to log in
+      this.nopost = true;
       console.log(err);
     });
   }
@@ -195,16 +210,24 @@ export class HomePage {
     });
     $('.scroll-content').scroll(function (e) {
       // console.log('call');gotoProfile
-      var offsetRange = $('.scroll-content').height() / 3,
+      var offsetRange = $('.scroll-content').outerHeight(true) / 3,
         offsetTop = $('.scroll-content').scrollTop() + offsetRange + $("ion-header").outerHeight(true),
-        offsetBottom = offsetTop + offsetRange + 100;
+        offsetBottom = offsetTop + offsetRange + 250;
+
+      console.log(offsetRange);
 
       $(".visible-video").each(function () {
         var y1 = $(this).offset().top;
         var y2 = offsetTop;
+        // var cust = 0;
+        console.log(y1, y2, $(this).outerHeight(true), offsetBottom, offsetRange, offsetBottom);
         if (y1 + $(this).outerHeight(true) < y2 || y1 > offsetBottom) {
           this.pause();
-        } else {
+        } 
+        else if (y1 < 0) { 
+          this.pause(); 
+        }
+        else {
           var newWidth = $(this).width();
           $(this).parent().css('width', newWidth);
           this.play();
@@ -232,6 +255,7 @@ export class HomePage {
           handler: () => {
             this.addImagePost();
             console.log('Image URL clicked');
+            
           }
         }, */ {
           icon: 'videocam',
@@ -336,7 +360,7 @@ export class HomePage {
   }
 
   gotoNotification() {
-    this.notification = 0;
+    this.notification = false;
     this.navCtrl.push('NotificationPage');
   }
 
