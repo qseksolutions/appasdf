@@ -339,7 +339,7 @@ export class ProfilePage {
     // Check if sharing via email is supported
     this.socialSharing.share(post.title, post.title, post.media, 'https://fuskk.com/' + post.post_slug).then(() => {
       // Success!
-      console.log('success')
+      console.log('success');
     }).catch((e) => {
       // Error!
       console.log(e, 'Error!');

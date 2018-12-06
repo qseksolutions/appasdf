@@ -214,13 +214,10 @@ export class HomePage {
         offsetTop = $('.scroll-content').scrollTop() + offsetRange + $("ion-header").outerHeight(true),
         offsetBottom = offsetTop + offsetRange + 250;
 
-      console.log(offsetRange);
-
       $(".visible-video").each(function () {
         var y1 = $(this).offset().top;
         var y2 = offsetTop;
         // var cust = 0;
-        console.log(y1, y2, $(this).outerHeight(true), offsetBottom, offsetRange, offsetBottom);
         if (y1 + $(this).outerHeight(true) < y2 || y1 > offsetBottom) {
           this.pause();
         } 

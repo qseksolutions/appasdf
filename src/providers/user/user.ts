@@ -59,6 +59,14 @@ export class User {
     return this.api.post('register', body).share();
   }
   
+  forgotpassword(email) {
+    let body = new FormData();
+    body.append('header', this.header);
+    body.append('email', email);
+
+    return this.api.post('forgotpassword', body).share();
+  }
+  
   socialloginapi(accountInfo,from) {
     let body = new FormData();
     body.append('header', this.header);

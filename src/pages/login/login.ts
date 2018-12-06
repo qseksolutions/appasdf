@@ -86,6 +86,7 @@ export class LoginPage {
       message: "Forgot your password",
       inputs: [
         {
+          id: 'Email',
           name: 'Email',
           placeholder: 'Email Address'
         },
@@ -100,7 +101,34 @@ export class LoginPage {
         {
           text: 'Send',
           handler: data => {
-            console.log('Send clicked');
+            let loading = this.loadingCtrl.create({
+              content: 'Please wait...'
+            });
+            loading.present();
+            this.user.forgotpassword(data.Email).subscribe((resp: any) => {
+              loading.dismiss();
+              if (resp.status) {
+                this.navCtrl.setRoot('LoginPage');
+
+                let toast = this.toastCtrl.create({
+                  message: resp.message,
+                  duration: 3000,
+                  cssClass: 'toast-success',
+                  position: 'bottom'
+                });
+                toast.present();
+              }
+            }, (err) => {
+              // Unable to log in
+              loading.dismiss();
+              let toast = this.toastCtrl.create({
+                message: err.error.message,
+                duration: 3000,
+                cssClass: 'toast-error',
+                position: 'bottom'
+              });
+              toast.present();
+            });
           }
         }
       ]
